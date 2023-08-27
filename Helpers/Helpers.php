@@ -13,6 +13,17 @@ function pie($data="")
     $VistaP = "Views/Template/footer.php";
     require_once($VistaP);
 }
+
+function encabezadologin($data="")
+{
+    $VistaHL = "Views/Template/header_login.php";
+    require_once($VistaHL);
+}
+function pielogin($data="")
+{
+    $VistaPL = "Views/Template/footer_login.php";
+    require_once($VistaPL);
+}
 function Limpiar($cadena)
 {
     $String = trim($String);

@@ -17,41 +17,7 @@ class Usuarios extends Controllers
         $this->views->getView($this, "Listar", "", $data1);
     }
 
-    //Añade un nuevo usuario
-    public function insertar()
-    {
-        $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $correo = $_POST['correo'];
-        $clave = $usuario; //Por defecto de pone número de usuario
-        $rol = $_POST['rol'];
-        $hash = hash("SHA256", $clave);
-        $insert = $this->model->insertarUsuarios($nombre, $usuario, $hash, $rol, $correo);
-        if ($insert == 'existe') {
-            $data1 = $this->model->editarUsuariosC($correo);
-            if ($data1['estado'] == 2) {
-                $estado = 1;
-                $id = $data1['id'];
-                $actualizar = $this->model->actualizarUsuarios($nombre, $usuario, $rol, $id, $correo);
-                $cambio =$this->model->cambiarContra($hash, $id);
-                $eliminar = $this->model->eliminarUsuarios($id, $estado);
-                    if ($actualizar == 1) {
-                        $alert = 'registrado';
-                    } else {
-                        $alert =  'error';
-                    }
-            } else {
-                $alert = 'existe';
-            }
-        } else if ($insert > 0) {
-            $alert = 'registrado';
-        } else {
-            $alert = 'error';
-        }
-        $data1 = $this->model->selectUsuarios(); 
-        header("location: " . base_url() . "Usuarios/Listar?msg=$alert");
-        die();   
-    }
+
 
     //Seleciona los datos de un Usuario
     public function editar()
@@ -126,29 +92,6 @@ class Usuarios extends Controllers
         die();
     }
 
-    //Iniciar sesión
-    public function login()
-    {
-        if (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
-            $usuario = $_POST['usuario'];
-            $clave = $_POST['clave'];
-            $hash = hash("SHA256", $clave);
-            $data = $this->model->selectUsuario($usuario, $hash);
-            if (!empty($data)) {
-                    $_SESSION['id'] = $data['id'];
-                    $_SESSION['nombre'] = $data['nombre'];
-                    $_SESSION['correo'] = $data['correo'];
-                    $_SESSION['usuario'] = $data['usuario'];
-                    $_SESSION['rol'] = $data['rol'];
-                    $_SESSION['perfil'] = $data['perfil'];
-                    $_SESSION['activo'] = true;
-                    header('location: '.base_url(). 'Dashboard/Listar');
-            } else {
-                $error = 0;
-                header("location: ".base_url(). 'Login/loginprof'."?msg=$error");
-            }
-        }
-    }
 
     //Cambiar contraseña
     public function cambiar()
