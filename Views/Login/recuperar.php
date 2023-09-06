@@ -31,7 +31,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="<?php echo base_url(); ?>Login/registrar">Create an Account!</a>
+                                        <a class="small" href="<?php echo base_url(); ?>Login/registrar">Crear una cuenta</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?php echo base_url(); ?>">Already have an account? Login!</a>
@@ -48,4 +48,4 @@
 
     </div>
 
-<?php footerlogin() ?>
+<?php pielogin() ?>

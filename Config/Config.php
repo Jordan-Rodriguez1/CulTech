@@ -9,7 +9,7 @@
     //AJUSTA EL HORARIO AL LOCAL
     date_default_timezone_set('America/Mexico_City'); 
 	setlocale(LC_ALL,'es_ES', 'Spanish_Spain', 'Spanish');
-    error_reporting(0); 
+    //error_reporting(0); 
 
     //PONE EL DOMINIO PARA EL SIDEBAR
     const DOM = "CulTech";
