@@ -14,9 +14,9 @@
             $this->views->getView($this, "Lista");
         }
 
-        public function Editar()
+        public function Inactivas()
         {
-            $this->views->getView($this, "Editar");
+            $this->views->getView($this, "Inactivas");
         }
 
         public function Detalle()

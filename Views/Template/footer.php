@@ -1,14 +1,48 @@
-        <footer class="footer"">
-            <div class="footer__block block no-margin-bottom">
-                <div class="container-fluid text-center">
-                    <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-                    <p class="no-margin-bottom"><?php echo date("Y"); ?> &copy; Jordan Solutions.</p>
-                    <p class="no-margin-bottom">Contacto: mrodriguez74@ucol.mx</p>
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Jordalis Solutions V 1.0.0</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Quires cerrar sesión?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Seleccione "Salir" a continuación si está listo para finalizar su sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="<?= base_url(); ?>Usuarios/salir">Salir</a>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
-</div>
+</body>
+
 <div id="cambiarPass" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -40,25 +74,7 @@
         </div>
     </div>
 </div>
-<div id="logout" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="my-modal-title">Pregunta</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>¿Esta seguro que desea salir</p>
-            </div>
-            <div class="modal-footer ml-auto">
-                <a href="<?php echo base_url(); ?>Usuarios/salir" class="btn btn-danger">Si</a>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">No</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div id="cambiarPic" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -143,16 +159,21 @@
         </div>
     </div>
 </div>
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="<?= base_url(); ?>Assets/vendor/jquery/jquery.min.js"></script>
+<script src="<?= base_url(); ?>Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="<?= base_url(); ?>Assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="<?= base_url(); ?>Assets/js/sb-admin-2.min.js"></script>
 <!-- JavaScript files-->
-<script src="<?php echo base_url(); ?>Assets/js/jquery.min.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/Funciones.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/chartjs.min.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/all.min.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/front.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/sweetalert2@9.js"></script>
-<script src="<?php echo base_url(); ?>Assets/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url(); ?>Assets/DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+<script src="<?= base_url(); ?>Assets/js/Funciones.js"></script>
+<script src="<?= base_url(); ?>Assets/js/chartjs.min.js"></script>
+<script src="<?= base_url(); ?>Assets/js/sweetalert2@9.js"></script>
+<script src="<?= base_url(); ?>Assets/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url(); ?>Assets/DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function() {
         $('#Table').DataTable({

@@ -4,32 +4,39 @@
         {
         session_start();
             if (!empty($_SESSION['activo'])) {
-                header("location: " . base_url()."Admin/Listar");
+                header("location: " . base_url()."Dashboard/Inicio");
             }
             parent::__construct();
         }
         
+        //VISTAS LOGIN
         public function login()
         {
             $this->views->getView($this, "login");
         }
 
+        //VISTA RECUPERAR CONTRASEÑA
         public function recuperar()
         {
             $this->views->getView($this, "recuperar");
         }
 
+        //VISTA PARA REGISTRO
         public function registrar()
         {
             $this->views->getView($this, "registrar");
         }
         
+        /*--------------------------------------------------------- 
+        --------------CONTROLADORES VISTAS LOGIN -------------------
+        ----------------------------------------------------------*/
+
         //Iniciar sesión
         public function ingresar()
         {
             if (!empty($_POST['Email']) || !empty($_POST['Password'])) {
-                $usuario = $_POST['Email'];
-                $clave = $_POST['Password'];
+                $usuario = Limpiar($_POST['Email']);
+                $clave = Limpiar($_POST['Password']);
                 $hash = hash("SHA256", $clave);
                 $data = $this->model->selectUsuario($usuario, $hash);
                 if (!empty($data)) {
@@ -50,6 +57,10 @@
             }
         }
 
+        /*--------------------------------------------------------- 
+        ---------CONTROLADORES VISTAS RECUPERAR -------------------
+        ----------------------------------------------------------*/
+
         //Manda correo para cambiar contraseña
         public function restablecer()
         {
@@ -58,14 +69,18 @@
             die();   
         }
 
+        /*--------------------------------------------------------- 
+        ----------CONTROLADORES VISTAS REGISTRO -------------------
+        ----------------------------------------------------------*/
+
         //Añade un nuevo usuario
         public function insertar()
         {
-            $nombre = $_POST['FirstName'];
-            $apellido = $_POST['LastName'];
-            $correo = $_POST['Email'];
-            $clave = $_POST['Password'];
-            $clave2 = $_POST['RepeatPassword'];
+            $nombre = Limpiar($_POST['FirstName']);
+            $apellido = Limpiar($_POST['LastName']);
+            $correo = Limpiar($_POST['Email']);
+            $clave = Limpiar($_POST['Password']);
+            $clave2 = Limpiar($_POST['RepeatPassword']);
             $hash = hash("SHA256", $clave);
             if ($clave == $clave2) {
                 $insert = $this->model->insertarUsuarios($nombre, $apellido,  $correo, $hash);

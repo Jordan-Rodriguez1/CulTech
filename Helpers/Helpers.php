@@ -28,25 +28,15 @@ function pielogin($data="")
     require_once($VistaPL);
 }
 
-function Limpiar($cadena)
+function Limpiar($dato)
 {
-    $String = trim($String);
-    $String = stripslashes($String);
-    $String = str_ireplace("<script>", "",$String);
-    $String = str_ireplace("<script>", "",$String);
-    $String = str_ireplace("<script src>", "",$String);
-    $String = str_ireplace("</script type>", "", $String);
-    $String = str_ireplace("SELECT * FROM ", "", $String);
-    $String = str_ireplace("DELETE FROM", "", $String);
-    $String = str_ireplace("INSERT INTO", "", $String);
-    $String = str_ireplace("SELECT COUNT(*) FROM", "", $String);
-    $String = str_ireplace("DROP TABLE", "", $String);
-    $String = str_ireplace("OR '1' = '1", "", $String);
-    $String = str_ireplace('OR "1" = "1"', "", $String);
-    $String = str_ireplace('OR ´1" = "1"', "", $String);
-    $String = str_ireplace("</script type>", "", $String);
-    $String = str_ireplace("</script type>", "", $String);
-    $String = str_ireplace("</script type>", "", $String);
+    // Eliminar espacios en blanco al principio y al final
+    $dato = trim($dato);
+    // Eliminar barras invertidas
+    $dato = stripslashes($dato);
+    // Convertir caracteres especiales en entidades HTML
+    $dato = htmlspecialchars($dato);
+    return $dato;
 }
 
 // Utilizar los espacios de nombres necesarios
