@@ -39,7 +39,7 @@
                 <hr class="sidebar-divider my-0">
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="<?= base_url(); ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Inicio</span></a>
                 </li>
@@ -59,7 +59,7 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Opciones:</h6>
-                            <a class="collapse-item" href="buttons.html">Monitoreo</a>
+                            <a class="collapse-item" href="<?= base_url(); ?>Cultivos/Lista">Monitoreo</a>
                             <a class="collapse-item" href="<?= base_url(); ?>Plantillas/Lista">Plantillas</a>
                         </div>
                     </div>
@@ -72,19 +72,19 @@
                 </div>
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="<?= base_url(); ?>Control/Placas">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Placas</span></a>
                 </li>
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
+                    <a class="nav-link" href="<?= base_url(); ?>Control/Configuracion">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Configuración</span></a>
                 </li>
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
+                    <a class="nav-link" href="<?= base_url(); ?>Guia/Ayuda">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Guia</span></a>
                 </li>
@@ -156,7 +156,7 @@
                                             Spending Alert: We've noticed unusually high spending for your account.
                                         </div>
                                     </a>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="<?= base_url(); ?>Dashboard/Notificaciones">Mostrar Todas Las Alertas</a>
                                 </div>
                             </li>
 

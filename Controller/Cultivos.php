@@ -19,9 +19,20 @@
             $this->views->getView($this, "Inactivos");
         }
 
+        public function Monitoreo()
+        {
+            $this->views->getView($this, "Monitoreo");
+        }
+
         public function Detalle()
         {
             $this->views->getView($this, "Detalle");
         }
+
+        public function Configuracion()
+        {
+            $this->views->getView($this, "Configuracion");
+        }
+
     }
 ?>

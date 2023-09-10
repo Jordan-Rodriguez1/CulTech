@@ -18,10 +18,5 @@
         {
             $this->views->getView($this, "Notificaciones");
         }
-
-        public function Configuracion()
-        {
-            $this->views->getView($this, "Configuracion");
-        }
     }
 ?>

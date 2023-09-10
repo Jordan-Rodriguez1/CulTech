@@ -5,9 +5,9 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Cultivos Inactivos</h1>
+            <h1 class="h3 mb-0 text-gray-800">Placas Inactivas</h1>
             <div class="d-sm-inline-block">
-                <a href="<?= base_url(); ?>Cultivos/Lista" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Regresar</a>
+                <a href="<?= base_url(); ?>Control/Placas" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Regresar</a>
             </div>
         </div>
         <div class="row">
@@ -20,9 +20,10 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">Tomates</div>
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">SKU: 102030</div>
                                 </div>
                                 <div class="col-auto">
-                                    <img src="<?= base_url(); ?>Assets/img/cultivos/tomates.png" height="120px">
+                                    <img src="<?= base_url(); ?>Assets/img/ESP8266.png" height="120px">
                                 </div>
                             </div>
                         </a>
