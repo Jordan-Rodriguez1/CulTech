@@ -52,6 +52,61 @@ $(document).ready(function () {
       }
     });
   });
+
+  //Mensaje de alerta al inactivar placa
+  $(".inactpla").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de inactivar la plantilla?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al activar placa
+  $(".activarpla").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de activar la plantilla?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al eliminar placa
+  $(".elimpla").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de eliminar permanentemente la plantilla?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
 });
 
 //EDITAR PLACA DESDE MODAL
