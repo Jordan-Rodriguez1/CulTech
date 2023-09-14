@@ -14,6 +14,7 @@
         {
             $data1 = $this->model->plantillasactivas();
             $this->views->getView($this, "Lista",'',$data1);
+            die();
         }
 
         //VISTA DE PLANTILLAS INACTIVAS
@@ -21,12 +22,24 @@
         {
             $data1 = $this->model->plantillasInactivas();
             $this->views->getView($this, "Inactivas",'',$data1);
+            die();
         }
 
         //VISTA DE DETALLE DE PLANTILLAS
         public function Detalle()
         {
-            $this->views->getView($this, "Detalle");
+            if (!isset($_GET['id'])) {
+                header("location: " . base_url() . "Plantillas/Lista");
+            } else {
+                $id = Limpiar($_GET['id']);
+                $data1 = $this->model->datosplantilla($id);
+                if ($data1 == null) {
+                    header("location: " . base_url() . "Plantillas/Lista");    
+                } else {
+                    $this->views->getView($this, "Detalle", '', $data1);
+                }
+                die();
+            }
         }
 
         /*--------------------------------------------------------- 
@@ -34,12 +47,12 @@
         ----------------------------------------------------------*/
 
         //INGRESA UNA NUEVA PLANTILLA
-        public function Registroplaca()
+        public function Registroplantilla()
         {
             $nombre = Limpiar($_POST['nombre']);
             $tem_max = Limpiar($_POST['tem_max']);
             $tem_min = Limpiar($_POST['tem_min']);
-            $humedad_max = Limpiar($_POST['key']);
+            $humedad_max = Limpiar($_POST['humedad_max']);
             $humedad_min = Limpiar($_POST['humedad_min']);
             $stem_max = Limpiar($_POST['stem_max']);
             $stem_min = Limpiar($_POST['stem_min']);
@@ -101,9 +114,9 @@
         {
             $id = Limpiar($_GET['id']);
             $estado = 0;
-            $insert = $this->model->EstadoPlaca($id, $estado);
+            $insert = $this->model->EstadoPlantilla($id, $estado);
             $alert = 'reactivo';
-            header("location: " . base_url() . "Control/Inactivas?msg=$alert");
+            header("location: " . base_url() . "Plantillas/Inactivas?msg=$alert");
             die();   
         }
 
@@ -112,20 +125,19 @@
         {
             $id = Limpiar($_GET['id']);
             $estado = 2;
-            $insert = $this->model->EstadoPlaca($id, $estado);
+            $insert = $this->model->EstadoPlantilla($id, $estado);
             $alert = 'eliminado';
-            header("location: " . base_url() . "Control/Inactivas?msg=$alert");
+            header("location: " . base_url() . "Plantillas/Inactivas?msg=$alert");
             die();   
         }
 
 
-
-
-
-
+        /*--------------------------------------------------------- 
+        --------------CONTROLADORES VISTAS DETALLE ----------------
+        ----------------------------------------------------------*/
 
         //EDITAR UNA PLACA
-        public function EditarPlaca()
+        public function ActualizarPlantilla()
         {
             $nombre = Limpiar($_POST['nombree']);
             $key = Limpiar($_POST['keye']);
@@ -148,7 +160,7 @@
         }
 
         //Cambiar Imagen Perfil
-        public function cambiarpic()
+        public function ImagenPlantilla()
         {
             $usuario = $this->model->editarUsuarios($_SESSION['id']);
             $imgactual = $usuario['perfil'];

@@ -71,7 +71,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form id="formulario1" method="post" action="<?php echo base_url(); ?>Plantillas/Registroplaca" autocomplete="off" enctype="multipart/form-data">
+                <form id="formulario1" method="post" action="<?php echo base_url(); ?>Plantillas/Registroplantilla" autocomplete="off" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group">
                           <label for="nombre">Nombre de la Plantilla</label>

@@ -11,10 +11,11 @@
         ----------------------------------------------------------*/
 
         //SELECCIONA LOS DATOS DE UNA PLACA
-        public function datosplaca(int $id)
+        public function datosplantilla(int $id)
         {
             $this->id = $id;
-            $sql = "SELECT * FROM placas WHERE id = '{$this->id}'";
+            $this->user = $_SESSION['id'];
+            $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}' AND id_usuario = '{$this->user}'";
             $res = $this->select($sql);
             return $res;
         }
@@ -25,7 +26,7 @@
             $return = "";
             $this->id = $id;
             $this->estado = $estado;
-            $query = "UPDATE placas SET estado = ? WHERE id=?";
+            $query = "UPDATE plantillas SET estado = ? WHERE id=?";
             $data = array($this->estado, $this->id);
             $resul = $this->update($query, $data);
             $return = $resul;
@@ -40,7 +41,7 @@
         public function plantillasactivas()
         {
             $this->user = $_SESSION['id'];
-            $sql = "SELECT * FROM plantillas WHERE estado = 0  AND id_usuario = '{$this->user}'";
+            $sql = "SELECT * FROM plantillas WHERE estado = 0 AND id_usuario = '{$this->user}'";
             $res = $this->select_all($sql);
             return $res;
         }
@@ -70,7 +71,7 @@
             $this->dias = $dias;
             $this->usuario = $usuario;
             $this->nombre_nuevo = $nombre_nuevo;
-            $query = "INSERT INTO plantillass(nombre, tem_max, tem_min, humedad_max, humedad_min, stem_max, stem_min, shumedad_max, shumedad_min, altura, dias, id_usuario, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO plantillas(nombre, tem_max, tem_min, humedad_max, humedad_min, stem_max, stem_min, shumedad_max, shumedad_min, altura, dias, id_usuario, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->usuario, $this->nombre_nuevo);
             $resul = $this->insert($query, $data);
             $return = "registrado";
