@@ -10,17 +10,17 @@
         --------------MODELOS COMPARTIDOS  ------------------------
         ----------------------------------------------------------*/
 
-        //SELECCIONA LOS DATOS DE UNA PLACA
+        //SELECCIONA LOS DATOS DE UNA PLANTILLA
         public function datosplantilla(int $id)
         {
             $this->id = $id;
             $this->user = $_SESSION['id'];
-            $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}' AND id_usuario = '{$this->user}'";
+            $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}' AND id_usuario = '{$this->user}' AND estado = 0";
             $res = $this->select($sql);
             return $res;
         }
 
-        //CAMBIA EL ESTADO DE UNA PLACA
+        //CAMBIA EL ESTADO DE UNA PLANTILLA
         public function EstadoPlantilla(int $id, int $estado)
         {
             $return = "";
@@ -34,7 +34,7 @@
         }
     
         /*--------------------------------------------------------- 
-        --------------MODELOS VISTAS PLACA ------------------
+        --------------MODELOS VISTAS PLANTILLA ------------------
         ----------------------------------------------------------*/
 
         //SELECCIONA PLACAS ACTIVAS
@@ -46,7 +46,7 @@
             return $res;
         }
 
-        //SELECCIONA PLACAS ACTIVAS
+        //SELECCIONA PLANTILLA ACTIVAS
         public function contarplantillas()
         {
             $sql = "SELECT COUNT(*) AS total FROM plantillas";
@@ -78,26 +78,6 @@
             return $return;
         }
 
-        //EDITAR UNA PLACA
-        public function EditarPlaca(string $nombre, string $key, string $id)
-        {
-            $return = "";
-            $this->nombre = $nombre;
-            $this->key = $key;
-            $this->id = $id;
-            $sql = "SELECT * FROM placas WHERE id_placa = '{$this->key}'";
-            $result = $this->selecT($sql);
-            if (empty($result)) {
-                $query = "UPDATE placas SET nombre = ?, id_placa = ? WHERE id=?";
-                $data = array($this->nombre, $this->key, $this->id);
-                $resul = $this->update($query, $data);
-                $return = "registrado";
-            }else {
-                $return = "existe";
-            }
-            return $return;
-        }
-
         /*--------------------------------------------------------- 
         --------------MODELOS VISTAS INACTIVAS -------------------
         ----------------------------------------------------------*/
@@ -109,6 +89,46 @@
             $sql = "SELECT * FROM plantillas WHERE estado = 1 AND id_usuario = '{$this->user}'";
             $res = $this->select_all($sql);
             return $res;
+        }
+
+        /*--------------------------------------------------------- 
+        --------------MODELOS VISTAS DETALLE -------------------
+        ----------------------------------------------------------*/
+
+        //EDITAR UNA PLACA
+        public function EditarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, 
+                                        string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $id)
+        {
+            $return = "";
+            $this->nombre = $nombre;
+            $this->tem_max = $tem_max;
+            $this->tem_min = $tem_min;
+            $this->humedad_max = $humedad_max;
+            $this->humedad_min = $humedad_min;
+            $this->stem_max = $stem_max;
+            $this->stem_min = $stem_min;
+            $this->shumedad_max = $shumedad_max;
+            $this->shumedad_min = $shumedad_min;
+            $this->altura = $altura;
+            $this->dias = $dias;
+            $this->id = $id;
+            $query = "UPDATE plantillas SET nombre=?, tem_max=?, tem_min=?, humedad_max=?, humedad_min=?, stem_max=?, stem_min=?, 
+                        shumedad_max=?, shumedad_min=?, altura=?, dias=? WHERE id=?";
+            $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, 
+                        $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->id);
+            $resul = $this->update($query, $data);
+            return $resul;
+        }
+
+        //EDITAR IMAGEN PLANTILLA
+        public function EditarImgPlantilla(string $nombre, string $id)
+        {
+            $return = "";
+            $this->nombre = $nombre;
+            $this->id = $id;
+            $query = "UPDATE plantillas SET foto=? WHERE id=?";
+            $data = array($this->nombre, $this->id);
+            $resul = $this->update($query, $data);
         }
     
     }
