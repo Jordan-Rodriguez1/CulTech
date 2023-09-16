@@ -26,7 +26,7 @@
                               <div class="h5 mb-0 font-weight-bold" style="color: black;"><?= $data1['nombre']; ?></div>
                           </div>
                           <div class="col-auto">
-                              <img src="<?= base_url(); ?>Assets/img/cultivos/<?= $data1['foto']; ?>" height="120px">
+                              <img src="<?= base_url(); ?>Assets/img/cultivos/plantillas/<?= $data1['foto']; ?>" height="120px">
                           </div>
                       </div>
                     </div>
@@ -67,7 +67,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Actualizar Imagen</h6>
                     </div>
                     <div class="card-body text-center">
-                      <img style="margin: 0 0 10px 0;" src="<?= base_url(); ?>Assets/img/cultivos/<?= $data1['foto']; ?>" height="120px">
+                      <img style="margin: 0 0 10px 0;" src="<?= base_url(); ?>Assets/img/cultivos/plantillas/<?= $data1['foto']; ?>" height="120px">
                       <div class="my-2"></div>
                       <form id="formulario2" method="post" action="<?php echo base_url(); ?>Plantillas/ImagenPlantilla" autocomplete="off" enctype="multipart/form-data">
                           <div class="form-group">

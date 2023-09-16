@@ -27,7 +27,7 @@
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $activas['nombre'];?></div>
                                 </div>
                                 <div class="col-auto">
-                                    <img src="<?= base_url(); ?>Assets/img/cultivos/<?= $activas['foto'];?>" height="120px">
+                                    <img src="<?= base_url(); ?>Assets/img/cultivos/plantillas/<?= $activas['foto'];?>" height="120px" width="120px">
                                 </div>
                             </div>
                         </div>

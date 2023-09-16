@@ -37,7 +37,7 @@
         --------------MODELOS VISTAS PLANTILLA ------------------
         ----------------------------------------------------------*/
 
-        //SELECCIONA PLACAS ACTIVAS
+        //SELECCIONA PLANTILLAS ACTIVAS
         public function plantillasactivas()
         {
             $this->user = $_SESSION['id'];
@@ -46,7 +46,7 @@
             return $res;
         }
 
-        //SELECCIONA PLANTILLA ACTIVAS
+        //CUENTA LAS PLANTILLAS EXISTENTES
         public function contarplantillas()
         {
             $sql = "SELECT COUNT(*) AS total FROM plantillas";
@@ -82,7 +82,7 @@
         --------------MODELOS VISTAS INACTIVAS -------------------
         ----------------------------------------------------------*/
 
-        //SELECCIONA PLACAS ACTIVAS
+        //SELECCIONA PLANTILLA INACTIVAS
         public function plantillasInactivas()
         {
             $this->user = $_SESSION['id'];
@@ -95,7 +95,7 @@
         --------------MODELOS VISTAS DETALLE -------------------
         ----------------------------------------------------------*/
 
-        //EDITAR UNA PLACA
+        //EDITAR UNA PLANTILLA
         public function EditarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, 
                                         string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $id)
         {

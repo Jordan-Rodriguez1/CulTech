@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-09-2023 a las 17:52:28
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.6
+-- Tiempo de generación: 16-09-2023 a las 20:44:03
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `acciones` (
   `descripcion` varchar(100) NOT NULL,
   `codigo` varchar(10) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -46,15 +46,14 @@ CREATE TABLE `configuracion` (
   `id_cultivo` int(10) NOT NULL,
   `tem_max` decimal(10,2) NOT NULL,
   `tem_min` decimal(10,2) NOT NULL,
-  `humedad_max` decimal(10,2) NOT NULL,
-  `humedad_min` decimal(10,2) NOT NULL,
+  `humendad_max` decimal(10,2) NOT NULL,
+  `humendad_min` decimal(10,2) NOT NULL,
   `stem_max` decimal(10,2) NOT NULL,
-  `stem_min` decimal(10,2) NOT NULL,
-  `shumedad_max` decimal(10,2) NOT NULL,
-  `shumedad_min` decimal(10,2) NOT NULL,
+  `shumendad_max` decimal(10,2) NOT NULL,
+  `shumendad_min` decimal(10,2) NOT NULL,
   `altura` decimal(10,2) NOT NULL,
   `dias` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -64,10 +63,13 @@ CREATE TABLE `configuracion` (
 
 CREATE TABLE `cultivos` (
   `id` int(10) NOT NULL,
+  `id_usuario` int(10) NOT NULL,
   `id_placa` int(10) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `fecha` date NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `fecha` date NOT NULL DEFAULT current_timestamp(),
+  `estado` int(1) NOT NULL DEFAULT 0,
+  `alerta` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -87,7 +89,7 @@ CREATE TABLE `monitoreo` (
   `shumendad_max` decimal(10,2) NOT NULL,
   `shumendad_min` decimal(10,2) NOT NULL,
   `altura` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,7 @@ CREATE TABLE `notificaciones` (
   `id_usuario` int(10) NOT NULL,
   `relevancia` int(2) NOT NULL,
   `descripcion` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -115,7 +117,7 @@ CREATE TABLE `placas` (
   `nombre` varchar(50) NOT NULL,
   `estado` int(1) NOT NULL DEFAULT 0,
   `uso` int(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `placas`
@@ -147,16 +149,15 @@ CREATE TABLE `plantillas` (
   `dias` int(11) NOT NULL,
   `foto` varchar(50) NOT NULL,
   `estado` int(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `plantillas`
 --
 
 INSERT INTO `plantillas` (`id`, `id_usuario`, `nombre`, `tem_max`, `tem_min`, `humedad_max`, `humedad_min`, `stem_max`, `stem_min`, `shumedad_max`, `shumedad_min`, `altura`, `dias`, `foto`, `estado`) VALUES
-(1, 1, 'Pepinos', '10.00', '9.00', '8.00', '7.00', '6.00', '5.00', '4.00', '3.00', '2.00', 10, '1.png', 0),
-(2, 1, 'Chiles Verdes', '1.00', '2.00', '3.00', '4.00', '5.00', '6.00', '7.00', '8.00', '9.00', 10, '2.png', 0),
-(3, 1, 'Tomates', '5.00', '5.00', '5.00', '5.00', '5.00', '5.00', '5.00', '5.00', '5.00', 5, '3.png', 0);
+(1, 1, 'Pepinos', 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1, '1.png', 0),
+(2, 1, 'Chiles Verdes', 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1, '2.png', 0);
 
 -- --------------------------------------------------------
 
@@ -171,7 +172,7 @@ CREATE TABLE `usuarios` (
   `correo` varchar(50) NOT NULL,
   `clave` varchar(100) NOT NULL,
   `perfil` varchar(100) NOT NULL DEFAULT 'undraw_profile.svg'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -204,7 +205,8 @@ ALTER TABLE `configuracion`
 --
 ALTER TABLE `cultivos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_placa` (`id_placa`);
+  ADD KEY `id_placa` (`id_placa`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `monitoreo`
@@ -280,13 +282,13 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `placas`
 --
 ALTER TABLE `placas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `plantillas`
 --
 ALTER TABLE `plantillas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -308,7 +310,8 @@ ALTER TABLE `configuracion`
 -- Filtros para la tabla `cultivos`
 --
 ALTER TABLE `cultivos`
-  ADD CONSTRAINT `cultivos_ibfk_1` FOREIGN KEY (`id_placa`) REFERENCES `placas` (`id_placa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cultivos_ibfk_1` FOREIGN KEY (`id_placa`) REFERENCES `placas` (`id_placa`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cultivos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `notificaciones`

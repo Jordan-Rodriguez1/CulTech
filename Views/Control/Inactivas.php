@@ -28,7 +28,7 @@
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">SKU: <?= $activas['id_placa'];?></div>
                                 </div>
                                 <div class="col-auto">
-                                    <img src="<?= base_url(); ?>Assets/img/ESP8266.png" height="120px">
+                                    <img src="<?= base_url(); ?>Assets/img/otros/ESP8266.png" height="120px" width="120px">
                                 </div>
                             </div>
                         </div>
