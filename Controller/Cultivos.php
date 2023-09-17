@@ -25,24 +25,18 @@
             $this->views->getView($this, "Inactivos", '', $data1);
         }
 
-        //VISTA DE ULTIMAS MEDICIONES
+        //VISTA DE ULTIMAS MEDICIONES*****
         public function Monitoreo()
         {
-            $this->views->getView($this, "Monitoreo");
-        }
-
-        //VISTA DE DETALLE DE PLANTILLAS
-        public function DetalleP()
-        {
             if (!isset($_GET['id'])) {
-                header("location: " . base_url() . "Plantillas/Lista");
+                header("location: " . base_url() . "Cultivos/Lista");
             } else {
                 $id = Limpiar($_GET['id']);
-                $data1 = $this->model->datosplantilla($id);
+                $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Plantillas/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista");    
                 } else {
-                    $this->views->getView($this, "Detalle", '', $data1);
+                    $this->views->getView($this, "Monitoreo", '', $data1);
                 }
                 die();
             }
@@ -51,13 +45,30 @@
         //VISTA DE MONITOREO HISTÓRICO
         public function Detalle()
         {
-            $this->views->getView($this, "Detalle");
+            $this->views->getView($this, "DetalleTablas");
         }
 
-        //VISTA PARA CAMBIAR LA CONFIGURACIÓN
+        //VISTA DE MONITOREO HISTÓRICO
+        public function Graficas()
+        {
+            $this->views->getView($this, "DetalleGraficas");
+        }
+
+        //VISTA PARA CAMBIAR LA CONFIGURACIÓN******
         public function Configuracion()
         {
-            $this->views->getView($this, "Configuracion");
+            if (!isset($_GET['id'])) {
+                header("location: " . base_url() . "Cultivos/Lista");
+            } else {
+                $id = Limpiar($_GET['id']);
+                $data1 = $this->model->datoscultivo($id);
+                if ($data1 == null) {
+                    header("location: " . base_url() . "Cultivos/Lista");    
+                } else {
+                    $this->views->getView($this, "Configuracion", '', $data1);
+                }
+                die();
+            }
         }
 
         /*--------------------------------------------------------- 
@@ -123,6 +134,9 @@
             $id = Limpiar($_GET['id']);
             $estado = 1;
             $insert = $this->model->EstadoCultivo($id, $estado);
+            $cultivo = $this->model->DatosCultivo($id);
+            $uso = 0;
+            $cambio = $this->model->UsoPlaca($cultivo['id_placa'], $uso);
             $alert = 'inactivo';
             header("location: " . base_url() . "Cultivos/Lista?msg=$alert");
             die();   
@@ -132,34 +146,12 @@
         ----------CONTROLADORES VISTAS INACTIVAS -----------------
         ----------------------------------------------------------*/
 
-        //CAMBIA DE ESTADO UNA PLANTILLA
-        public function ActivarPlantilla()
-        {
-            $id = Limpiar($_GET['id']);
-            $estado = 0;
-            $insert = $this->model->EstadoPlantilla($id, $estado);
-            $alert = 'reactivo';
-            header("location: " . base_url() . "Plantillas/Inactivas?msg=$alert");
-            die();   
-        }
-
-        //CAMBIA DE ESTADO UNA PLANTILLA
-        public function EliminarPlantilla()
-        {
-            $id = Limpiar($_GET['id']);
-            $estado = 2;
-            $insert = $this->model->EstadoPlantilla($id, $estado);
-            $alert = 'eliminado';
-            header("location: " . base_url() . "Plantillas/Inactivas?msg=$alert");
-            die();   
-        }
-
 
         /*--------------------------------------------------------- 
         --------------CONTROLADORES VISTAS DETALLE ----------------
         ----------------------------------------------------------*/
 
-        //EDITAR UNA PLANTILLA
+        //EDITAR UNA PLANTILLA***********
         public function ActualizarPlantilla()
         {
             $nombre = Limpiar($_POST['nombre']);
@@ -184,7 +176,7 @@
             die();   
         }
 
-        //Cambiar Imagen Perfil
+        //Cambiar Imagen Perfil****************
         public function ImagenPlantilla()
         {
             $id = Limpiar($_POST['id']);

@@ -13,7 +13,17 @@
             </div>
         </div>
         <div class="row">
-            <?php foreach ($data1 as $activas) { ?>
+            <?php foreach ($data1 as $activas) { 
+                // Obtener la fecha actual
+                $fechaHoy = new DateTime(); 
+                // Supongamos que tienes otra fecha en formato "Y-m-d", por ejemplo:
+                $otraFecha = $activas['fecha'];
+                // Crear un objeto DateTime para la otra fecha
+                $fechaOtra = new DateTime($otraFecha);
+                // Calcular la diferencia en días
+                $diferencia = $fechaHoy->diff($fechaOtra);
+                // Acceder al número de días de la diferencia
+                $diasDiferencia = $diferencia->days;?>
                 <!-- Tarjeta de Cultivos -->
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card <?php if ($activas['alerta'] == 0) { echo 'border-left-success'; }else { echo 'border-left-danger'; }?> shadow h-100 py-2">
@@ -21,10 +31,11 @@
                             <form action="<?= base_url(); ?>Cultivos/InactivarCultivo?id=<?= $activas['id'];?>" method="post" class="inactcult">
                                 <button class="d-sm-inline-block float-right btn btn-light" type="submit"><i class="fas fa-times fa-sm"></i></button>
                             </form>
-                            <a href="<?= base_url(); ?>Cultivos/Detalle?id=<?= $activas['id'];?>">
+                            <a href="<?= base_url(); ?>Cultivos/Monitoreo?id=<?= $activas['id'];?>">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $activas['nombre'];?></div>
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $diasDiferencia;?> Días de cultivo.</div>
                                     </div>
                                     <div class="col-auto">
                                         <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $activas['foto'];?>" height="120px" width="120px">

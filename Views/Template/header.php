@@ -49,20 +49,11 @@
                 <div class="sidebar-heading">
                     Administración
                 </div>
-                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Cultivos</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Opciones:</h6>
-                            <a class="collapse-item" href="<?= base_url(); ?>Cultivos/Lista">Monitoreo</a>
-                            <a class="collapse-item" href="<?= base_url(); ?>Plantillas/Lista">Plantillas</a>
-                        </div>
-                    </div>
+                    <a class="nav-link" href="<?= base_url(); ?>Cultivos/Lista">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Cultivos</Plantillas></a>
                 </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -72,15 +63,15 @@
                 </div>
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url(); ?>Plantillas/Lista">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Plantillas</span></a>
+                </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
                     <a class="nav-link" href="<?= base_url(); ?>Control/Placas">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Placas</span></a>
-                </li>
-                <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url(); ?>Control/Configuracion">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Configuración</span></a>
                 </li>
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">

@@ -11,11 +11,20 @@
         ----------------------------------------------------------*/
 
         //SELECCIONA LOS DATOS DE UNA PLANTILLA
-        public function datosplantilla(int $id)
+        public function DatosPlantilla(int $id)
         {
             $this->id = $id;
             $this->user = $_SESSION['id'];
             $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}'";
+            $res = $this->select($sql);
+            return $res;
+        }
+
+        //SELECCIONA LOS DATOS DE UN CULTIVO
+        public function DatosCultivo(int $id)
+        {
+            $this->id = $id;
+            $sql = "SELECT * FROM cultivos WHERE id = '{$this->id}'";
             $res = $this->select($sql);
             return $res;
         }

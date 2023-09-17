@@ -8,13 +8,6 @@
             }
             parent::__construct();
         }
-        
-        // AUN NO ESTÁ DEFINIDO QUE HARÁ
-        public function Configuracion()
-        {
-            $this->views->getView($this, "Configuracion");
-            die(); 
-        }
 
         //MUESTRA LA LISTA DE PLACAS ACTIVAS
         public function Placas()
