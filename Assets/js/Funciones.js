@@ -107,7 +107,26 @@ $(document).ready(function () {
     });
   });
 
+  //Mensaje de alerta al inactivar placa
+  $(".inactcult").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de inactivar el cultivo?, no se podrá activar de nuevo.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
 });
+
+
 
 //EDITAR PLACA DESDE MODAL
 document.querySelectorAll('[data-toggle="modal"]').forEach(function (element) {

@@ -15,18 +15,31 @@
         {
             $this->id = $id;
             $this->user = $_SESSION['id'];
-            $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}' AND id_usuario = '{$this->user}' AND estado = 0";
+            $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}'";
             $res = $this->select($sql);
             return $res;
         }
 
-        //CAMBIA EL ESTADO DE UNA PLANTILLA
-        public function EstadoPlantilla(int $id, int $estado)
+        //CAMBIA EL ESTADO DE UN CULTIVO
+        public function EstadoCultivo(int $id, int $estado)
         {
             $return = "";
             $this->id = $id;
             $this->estado = $estado;
-            $query = "UPDATE plantillas SET estado = ? WHERE id=?";
+            $query = "UPDATE cultivos SET estado = ? WHERE id=?";
+            $data = array($this->estado, $this->id);
+            $resul = $this->update($query, $data);
+            $return = $resul;
+            return $return;
+        }
+
+        //CAMBIA EL USO DE UNA PLACA
+        public function UsoPlaca(int $id, int $estado)
+        {
+            $return = "";
+            $this->id = $id;
+            $this->estado = $estado;
+            $query = "UPDATE placas SET uso = ? WHERE id_placa=?";
             $data = array($this->estado, $this->id);
             $resul = $this->update($query, $data);
             $return = $resul;
@@ -59,24 +72,29 @@
         public function CultivosActivos()
         {
             $this->user = $_SESSION['id'];
-            $sql = "SELECT * FROM cultivos WHERE estado = 0 AND id_usuario = '{$this->user}'";
+            $sql = "SELECT cultivos.*, configuracion.foto FROM cultivos, configuracion WHERE estado = 0 AND id_usuario = '{$this->user}' AND configuracion.id_cultivo = cultivos.id";
             $res = $this->select_all($sql);
             return $res;
         }
 
-        //SELECCIONA PLANTILLA ACTIVAS
-        public function contarplantillas()
-        {
-            $sql = "SELECT COUNT(*) AS total FROM plantillas";
-            $res = $this->select($sql);
-            return $res;
-        }
-
         //Registra una nueva plantilla
-        public function insertarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $usuario, string $nombre_nuevo)
+        public function insertarCultivo(string $nombre, string $placa)
         {
             $return = "";
             $this->nombre = $nombre;
+            $this->placa = $placa;
+            $this->user = $_SESSION['id'];
+            $query = "INSERT INTO cultivos(nombre, id_placa, id_usuario) VALUES (?,?,?)";
+            $data = array($this->nombre, $this->placa, $this->user);
+            $resul = $this->insert($query, $data);
+            $return = "registrado";
+            return $return;
+        }
+
+        //Registra una nueva plantilla
+        public function insertarConfiguracion(string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $id_cultivo, string $nombre_nuevo)
+        {
+            $return = "";
             $this->tem_max = $tem_max;
             $this->tem_min = $tem_min;
             $this->humedad_max = $humedad_max;
@@ -87,14 +105,23 @@
             $this->shumedad_min = $shumedad_min;
             $this->altura = $altura;
             $this->dias = $dias;
-            $this->usuario = $usuario;
+            $this->id_cultivo = $id_cultivo;
             $this->nombre_nuevo = $nombre_nuevo;
-            $query = "INSERT INTO plantillas(nombre, tem_max, tem_min, humedad_max, humedad_min, stem_max, stem_min, shumedad_max, shumedad_min, altura, dias, id_usuario, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->usuario, $this->nombre_nuevo);
+            $query = "INSERT INTO configuracion(tem_max, tem_min, humedad_max, humedad_min, stem_max, stem_min, shumedad_max, shumedad_min, altura, dias, id_cultivo, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            $data = array($this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->id_cultivo, $this->nombre_nuevo);
             $resul = $this->insert($query, $data);
             $return = "registrado";
             return $return;
         }
+
+        //SELECCIONA PLANTILLA ACTIVAS
+        public function contarCultivos()
+        {
+            $sql = "SELECT COUNT(*) AS total FROM cultivos";
+            $res = $this->select($sql);
+            return $res;
+        }
+
 
         /*--------------------------------------------------------- 
         --------------MODELOS VISTAS INACTIVAS -------------------
@@ -104,7 +131,7 @@
         public function CultivosInactivos()
         {
             $this->user = $_SESSION['id'];
-            $sql = "SELECT * FROM cultivos WHERE estado = 1 AND id_usuario = '{$this->user}'";
+            $sql = "SELECT cultivos.*, configuracion.foto FROM cultivos, configuracion WHERE estado = 1 AND id_usuario = '{$this->user}' AND configuracion.id_cultivo = cultivos.id";
             $res = $this->select_all($sql);
             return $res;
         }

@@ -71,63 +71,60 @@
             //DATOS PLACA
             $placa = Limpiar($_POST['placa']);
             //ACTUALIZA EL USO DE LA PLACA
-            
+            $estado = 1;
+            $this->model->UsoPlaca($placa, $estado);
             //DATOS PLANTILLA
             $plantilla = Limpiar($_POST['plantilla']);
-
+            //SELECCIONA LOS DATOS DE LA PLANTILLA
+            $datos = $this->model->DatosPlantilla($plantilla);
             //PASA LOS DATOS DE LA PLANTILLA A CONFIG
-            $tem_max = Limpiar($_POST['tem_max']);
-            $tem_min = Limpiar($_POST['tem_min']);
-            $humedad_max = Limpiar($_POST['humedad_max']);
-            $humedad_min = Limpiar($_POST['humedad_min']);
-            $stem_max = Limpiar($_POST['stem_max']);
-            $stem_min = Limpiar($_POST['stem_min']);
-            $shumedad_max = Limpiar($_POST['shumedad_max']);
-            $shumedad_min = Limpiar($_POST['shumedad_min']);
-            $altura = Limpiar($_POST['altura']);
-            $dias = Limpiar($_POST['dias']);
-            $usuario = $_SESSION['id'];
-            $noregistro = $this->model->contarplantillas();
+            $tem_max = $datos['tem_max'];
+            $tem_min = $datos['tem_min'];
+            $humedad_max = $datos['humedad_max'];
+            $humedad_min = $datos['humedad_min'];
+            $stem_max = $datos['stem_max'];
+            $stem_min = $datos['stem_min'];
+            $shumedad_max = $datos['shumedad_max'];
+            $shumedad_min = $datos['shumedad_min'];
+            $altura = $datos['altura'];
+            $dias = $datos['dias'];
+            //DATOS FOTO PLANTILLA
+            $noregistro = $this->model->contarCultivos();
             $noregistro = $noregistro['total']+1;
-            $name = pathinfo($_FILES["archivo"]["name"]);
-            $nombre_archivo = $_FILES["archivo"]["name"];
-            $nombre_nuevo = $noregistro.".".$name["extension"];
-            $tipo_archivo = $_FILES["archivo"]["type"];
-            $tamano_archivo = $_FILES["archivo"]["size"];
-            $ruta_temporal = $_FILES["archivo"]["tmp_name"];
-            $error_archivo = $_FILES["archivo"]["error"];
-            $tmaximo = 20 * 1024 * 1024;
-            if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
-                if ($error_archivo == UPLOAD_ERR_OK) {
-                    $ruta_destino = "Assets/img/cultivos/".$nombre_nuevo;
-                    if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-                        $insert = $this->model->insertarPlantilla($nombre, $tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $usuario, $nombre_nuevo);
-                        if ($insert > 0) {
-                            $alert = 'registrado';
-                        } else {
-                            $alert = 'error';
-                        }
-                    } else {
-                        $alert =  'noimagen';
-                    }
-                } else {
-                $alert =  'noimagen';
-                }
+            // Ruta del archivo original
+            $archivoOriginal = 'Assets/img/cultivos/plantillas/'.$datos['foto'];
+            // Ruta de la carpeta de destino
+            $carpetaDestino = 'Assets/img/cultivos/monitoreo/';
+            // Separar el nombre del archivo en partes usando el punto como delimitador
+            $partes = explode(".", $datos['foto']);
+            $extension = $partes[1];
+            // Nuevo nombre para el archivo 
+            $nuevoNombre = $noregistro.'.'.$extension;
+            // Combinar la ruta de la carpeta de destino con el nuevo nombre
+            $rutaDestinoCompleta = $carpetaDestino.$nuevoNombre;
+            // Copiar el archivo a la carpeta de destino con el nuevo nombre
+            copy($archivoOriginal, $rutaDestinoCompleta);
+            //INSERTA DATOS AL CULTIVO
+            $agregar = $this->model->insertarCultivo($nombre, $placa);
+            //INSERTA LA CONFIGURACIÓN
+            $insert = $this->model->insertarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $noregistro, $nuevoNombre);
+            if ($insert == 'registrado') {
+                $alert = 'registrado';
             } else {
-                $alert =  'noimagen';
+                $alert = 'error';
             }
-            header("location: " . base_url() . "Plantillas/Lista?msg=$alert");
+            header("location: " . base_url() . "Cultivos/Lista?msg=$alert");
             die();   
         }
 
         //CAMBIA DE ESTADO UNA PLANTILLA
-        public function InactivarPlantilla()
+        public function InactivarCultivo()
         {
             $id = Limpiar($_GET['id']);
             $estado = 1;
-            $insert = $this->model->EstadoPlantilla($id, $estado);
+            $insert = $this->model->EstadoCultivo($id, $estado);
             $alert = 'inactivo';
-            header("location: " . base_url() . "Plantillas/Lista?msg=$alert");
+            header("location: " . base_url() . "Cultivos/Lista?msg=$alert");
             die();   
         }
 

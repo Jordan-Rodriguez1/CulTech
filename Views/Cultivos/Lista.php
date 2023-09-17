@@ -14,20 +14,20 @@
         </div>
         <div class="row">
             <?php foreach ($data1 as $activas) { ?>
-                <!-- Tarjeta de plantillas -->
+                <!-- Tarjeta de Cultivos -->
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card <?php if ($activas['alerta'] == 0) { echo 'border-left-success'; }else { echo 'border-left-danger'; }?> shadow h-100 py-2">
                         <div class="card-body text-center">
-                            <form action="<?= base_url(); ?>Plantillas/InactivarPlantilla?id=<?= $activas['id'];?>" method="post" class="inactpla">
+                            <form action="<?= base_url(); ?>Cultivos/InactivarCultivo?id=<?= $activas['id'];?>" method="post" class="inactcult">
                                 <button class="d-sm-inline-block float-right btn btn-light" type="submit"><i class="fas fa-times fa-sm"></i></button>
                             </form>
-                            <a href="<?= base_url(); ?>Plantillas/Detalle?id=<?= $activas['id'];?>">
+                            <a href="<?= base_url(); ?>Cultivos/Detalle?id=<?= $activas['id'];?>">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $activas['nombre'];?></div>
                                     </div>
                                     <div class="col-auto">
-                                        <img src="<?= base_url(); ?>Assets/img/cultivos/<?= $activas['foto'];?>" height="120px" width="120px">
+                                        <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $activas['foto'];?>" height="120px" width="120px">
                                     </div>
                                 </div>
                             </a>

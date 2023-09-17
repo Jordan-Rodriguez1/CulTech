@@ -16,18 +16,15 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-dark shadow h-100 py-2">
                         <div class="card-body text-center">
-                            <form action="<?= base_url(); ?>Plantillas/EliminarPlantilla?id=<?= $activas['id'];?>" method="post" class="elimpla">
-                                <button class="d-sm-inline-block float-right btn btn-light" type="submit"><i class="fas fa-times fa-sm"></i></button>
-                            </form>
-                            <form action="<?= base_url(); ?>Plantillas/ActivarPlantilla?id=<?= $activas['id'];?>" method="post" class="activarpla">
-                                <button class="d-sm-inline-block float-right btn btn-light" type="submit"><i class="fas fa-undo-alt fa-sm"></i></button>
-                            </form> 
+                            <a href="<?= base_url(); ?>Plantillas/EliminarPlantilla?id=<?= $activas['id'];?>" class="d-sm-inline-block float-right btn btn-light">
+                                <i class="fas fa-eye fa-sm"></i>
+                            </a>
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $activas['nombre'];?></div>
                                 </div>
                                 <div class="col-auto">
-                                    <img src="<?= base_url(); ?>Assets/img/cultivos/<?= $activas['foto'];?>" height="120px" width="120px">
+                                    <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $activas['foto'];?>" height="120px" width="120px">
                                 </div>
                             </div>
                         </div>

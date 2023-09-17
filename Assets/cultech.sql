@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-09-2023 a las 20:44:03
+-- Tiempo de generación: 17-09-2023 a las 07:45:35
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -46,13 +46,15 @@ CREATE TABLE `configuracion` (
   `id_cultivo` int(10) NOT NULL,
   `tem_max` decimal(10,2) NOT NULL,
   `tem_min` decimal(10,2) NOT NULL,
-  `humendad_max` decimal(10,2) NOT NULL,
-  `humendad_min` decimal(10,2) NOT NULL,
+  `humedad_max` decimal(10,2) NOT NULL,
+  `humedad_min` decimal(10,2) NOT NULL,
   `stem_max` decimal(10,2) NOT NULL,
-  `shumendad_max` decimal(10,2) NOT NULL,
-  `shumendad_min` decimal(10,2) NOT NULL,
+  `stem_min` decimal(10,2) NOT NULL,
+  `shumedad_max` decimal(10,2) NOT NULL,
+  `shumedad_min` decimal(10,2) NOT NULL,
   `altura` decimal(10,2) NOT NULL,
-  `dias` int(11) NOT NULL
+  `dias` int(11) NOT NULL,
+  `foto` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -119,14 +121,6 @@ CREATE TABLE `placas` (
   `uso` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `placas`
---
-
-INSERT INTO `placas` (`id`, `id_placa`, `id_usuario`, `nombre`, `estado`, `uso`) VALUES
-(1, 102081, 1, 'Placa A', 0, 0),
-(2, 152018, 1, 'Placa 2', 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -151,14 +145,6 @@ CREATE TABLE `plantillas` (
   `estado` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `plantillas`
---
-
-INSERT INTO `plantillas` (`id`, `id_usuario`, `nombre`, `tem_max`, `tem_min`, `humedad_max`, `humedad_min`, `stem_max`, `stem_min`, `shumedad_max`, `shumedad_min`, `altura`, `dias`, `foto`, `estado`) VALUES
-(1, 1, 'Pepinos', 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1, '1.png', 0),
-(2, 1, 'Chiles Verdes', 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1, '2.png', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -179,8 +165,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `correo`, `clave`, `perfil`) VALUES
-(1, 'Miguel Jordán', 'Rodríguez Reyes', 'mrodriguez74@ucol.mx', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'undraw_profile.svg'),
-(4, 'Usuario', 'Prueba', 'admin@ucol.mx', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'undraw_profile.svg');
+(1, 'Miguel Jordán', 'Rodríguez Reyes', 'mrodriguez74@ucol.mx', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'undraw_profile.svg');
 
 --
 -- Índices para tablas volcadas
@@ -282,19 +267,19 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `placas`
 --
 ALTER TABLE `placas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `plantillas`
 --
 ALTER TABLE `plantillas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Restricciones para tablas volcadas
