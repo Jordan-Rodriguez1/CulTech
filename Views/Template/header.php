@@ -30,10 +30,10 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url(); ?>">
-                    <div class="sidebar-brand-icon rotate-n-15" style="font-size: 2rem;">
-                        <i class="fab fa-envira"></i>
+                    <div class="sidebar-brand-icon" style="font-size: 2rem;">
+                        <img src="<?=base_url(); ?>Assets/img/logos/CULTECHICONO.png" alt="" height="50px">
                     </div>
-                    <div class="sidebar-brand-text mx-3">Cul-Tech</div>
+                    <div class="sidebar-brand-text mx-3"><img src="<?=base_url(); ?>Assets/img/logos/CULTECHTEXTO.png" alt="" height="50px"></div>
                 </a>
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
