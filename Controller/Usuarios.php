@@ -10,72 +10,54 @@
             parent::__construct();
         }
 
+        //VISTA PARA DATOS DEL PERFIL
         public function Perfil()
         {
             $this->views->getView($this, "Perfil");
         }
 
-        //Seleciona los datos de un Usuario
-        public function editar()
-        {
-            $id = $_GET['id'];
-            $data1 = $this->model->editarUsuarios($id);
-            if ($data1 == 0) {
-                $this->Listar();
-            } else {
-                $this->views->getView($this, "Editar","", $data1);
-            }
-        }
+        /*--------------------------------------------------------- 
+        ------------- CONTROLADORES VISTAS PERFIL -----------------
+        ----------------------------------------------------------*/
 
         //Actualiza los datos de un Usuario
         public function actualizar()
         {
-            $id = $_POST['id'];
-            $nombre = $_POST['nombre'];
-            $usuario = $_POST['usuario'];
-            $rol = $_POST['rol'];
-            $correo = $_POST['correo'];
-            $actualizar = $this->model->actualizarUsuarios($nombre, $usuario, $rol, $id, $correo);     
-                if ($actualizar == 1) {
-                    $alert = 'modificado';
-                } else {
-                    $alert =  'error';
-                }
-            header("location: " . base_url() . "Usuarios/Listar?msg=$alert");
-            die();
-        }
-
-        //Inactiva los datos de un Usuario
-        public function eliminar()
-        {
-            $id = $_GET['id'];
-            $estado = 0;
-            $eliminar = $this->model->eliminarUsuarios($id, $estado);
-            $alert = 'inactivo';
-            $data1 = $this->model->selectUsuarios();
-            header("location: " . base_url() . "Usuarios/Listar?msg=$alert");
+            $id = Limpiar($_POST['id']);
+            $correo = Limpiar($_POST['correo']);
+            $nombre = Limpiar($_POST['nombre']);
+            $apellido = Limpiar($_POST['apellido']); 
+            $actualizar = $this->model->actualizarUsuario($nombre, $apellido, $id, $correo);     
+            if ($actualizar == 1) {
+                $alert = 'editado';
+            } else {
+                $alert =  'error';
+            }
+            header("location: " . base_url() . "Usuarios/Perfil?msg=$alert");
             die();
         }
 
         //Cambiar contraseña
         public function cambiar()
         {
-            $hash = hash("SHA256", $_POST['actual']);
-            $nuevahash = hash("SHA256", $_POST['nueva']);
-            $nueva = $_POST['nueva'];
-            $confirmar = $_POST['confirmar'];
-            if ($nueva == $confirmar) {
-                $data = $this->model->verificarPass($hash, $_SESSION['id']);
+            $actual = Limpiar($_POST['actual']);
+            $id = Limpiar($_POST['id']);
+            $nueva = Limpiar($_POST['nueva']);
+            $nuevar = Limpiar($_POST['nuevar']);
+            $hash = hash("SHA256", $actual);
+            $nuevahash = hash("SHA256", $nueva);
+            if ($nueva == $nuevar) {
+                $data = $this->model->verificarPass($hash, $id);
                 if ($data != null) {
-                    $this->model->cambiarContra($nuevahash, $_SESSION['id']);
-                    $alert =  'cambio';
+                    $this->model->cambiarContra($nuevahash, $id);
+                    $alert =  'editado';
                 }  else{
-                    $alert =  'error';
+                    $alert =  'erronea';
                 }
             } else {
-                $alert =  'noigual';
+                $alert =  'noiguales';
             }
-            header('location: ' . base_url() . "Dashboard/Listar?msg=$alert");  
+            header('location: ' . base_url() . "Usuarios/Perfil?msg=$alert");  
         }
 
         //Cambiar Imagen Perfil
@@ -93,10 +75,10 @@
             $tmaximo = 20 * 1024 * 1024;
             if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
                 if ($error_archivo == UPLOAD_ERR_OK) {
-                    if($imgactual != "perfil.jpg"){
-                        unlink("Assets/img/perfiles/".$imgactual);
+                    if($imgactual != "undraw_profile.svg"){
+                        unlink("Assets/img/users/".$imgactual);
                     }
-                    $ruta_destino = "Assets/img/perfiles/".$nombre_nuevo;
+                    $ruta_destino = "Assets/img/users/".$nombre_nuevo;
                     if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
                         $id = $_SESSION['id'];
                         $this->model->img($nombre_nuevo, $id);
@@ -110,7 +92,7 @@
             } else {
                 $alert =  'noimagen';
             }
-            header('location: ' . base_url() . "Dashboard/Listar?msg=$alert");
+            header('location: ' . base_url() . "Usuarios/Perfil?msg=$alert");
             die();
         }
 

@@ -69,7 +69,7 @@
                     <div class="card-body text-center">
                       <img height="120px" style="margin: 0 0 10px 0;" class="img-profile rounded-circle" src="<?= base_url().'Assets/img/users/'.$_SESSION['perfil'] ?>">
                       <div class="my-2"></div>
-                      <form id="formulario2" method="post" action="<?php echo base_url(); ?>Plantillas/ImagenPlantilla" autocomplete="off" enctype="multipart/form-data">
+                      <form id="formulario2" method="post" action="<?php echo base_url(); ?>Usuarios/cambiarpic" autocomplete="off" enctype="multipart/form-data">
                           <div class="form-group">
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" id="archivo" name="archivo">
@@ -93,7 +93,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Actulizar Datos</h6>
                     </div>
                     <div class="card-body">
-                        <form id="formulario1" method="post" action="<?php echo base_url(); ?>Plantillas/ActualizarPlantilla" autocomplete="off" enctype="multipart/form-data">
+                        <form id="formulario1" method="post" action="<?php echo base_url(); ?>Usuarios/actualizar" autocomplete="off" enctype="multipart/form-data">
                             <div class="form-group">
                               <label for="correo">Correo</label>
                               <input type="text" class="form-control" id="correo" name="correo" value="<?= $_SESSION['correo']; ?>">
@@ -125,7 +125,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Actulizar Datos</h6>
                     </div>
                     <div class="card-body">
-                        <form id="formulario1" method="post" action="<?php echo base_url(); ?>Plantillas/ActualizarPlantilla" autocomplete="off" enctype="multipart/form-data">
+                        <form id="formulario1" method="post" action="<?php echo base_url(); ?>Usuarios/cambiar" autocomplete="off" enctype="multipart/form-data">
                             <div class="form-group">
                               <label for="actual">Contraseña Actual</label>
                               <input type="password" class="form-control" id="actual" name="actual" value="">
@@ -136,8 +136,8 @@
                               <input type="password" class="form-control" id="nueva" name="nueva" value="">
                             </div>
                             <div class="form-group">
-                              <label for="nueva">Repite Nueva Contraseña</label>
-                              <input type="password" class="form-control" id="nueva" name="nueva" value="">
+                              <label for="nuevar">Repite Nueva Contraseña</label>
+                              <input type="password" class="form-control" id="nuevar" name="nuevar" value="">
                             </div>
                             <button type="submit" class="btn btn-success btn-icon-split">
                                 <span class="icon text-white-50">
