@@ -64,7 +64,21 @@
         //Manda correo para cambiar contraseña
         public function restablecer()
         {
-            //REVISAR ICARO
+            $correo = Limpiar($_POST['correo']);
+            $validar = $this->model->editarUsuariosC($correo);
+            if ($validar == 0) {
+                $alert = 'noexiste';
+            } else {
+                $contrasenaAleatoria = generarContrasenaAleatoria(12);
+                $nuevahash = hash("SHA256", $contrasenaAleatoria);
+                $this->model->cambiarContra($nuevahash, $validar['id']);
+                $alert = 'mandado';
+                //Mandar correo de cambio.
+                $asunto = 'RECUPERAR CUENTA';
+                $cuerpo = '<h3>Gracias por usarnuestro servicio</h3><p>Tu para ingresar de nuevo a tu cuenta usa la siguiente contraseña.</p><br><strong>'.$contrasenaAleatoria.'</strong><br>
+                            <p>Recuerda cambiarla una vez dentro para tener más seguridad en tu cuenta.</p>';
+                EnviarCorreo($correo, $$validar['nombre'], $asunto, $cuerpo);
+            }
             header("location: " . base_url() . "Login/recuperar?msg=$alert");
             die();   
         }

@@ -80,7 +80,23 @@ function EnviarCorreo($correo, $nombre, $asunto, $cuerpo)
     
         // Agregar archivo adjunto
         $mail->send();
+}
 
+function generarContrasenaAleatoria($longitud = 12) {
+    // Caracteres que se pueden usar en la contraseña
+    $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+[]{}|;:,.<>?';
+
+    // Generar bytes aleatorios
+    $bytesAleatorios = random_bytes($longitud);
+
+    // Convertir bytes en una cadena legible
+    $contrasena = '';
+    for ($i = 0; $i < $longitud; $i++) {
+        $indice = ord($bytesAleatorios[$i]) % strlen($caracteres);
+        $contrasena .= $caracteres[$indice];
+    }
+
+    return $contrasena;
 }
 
 ?>

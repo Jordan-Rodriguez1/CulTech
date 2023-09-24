@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -17,6 +17,9 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url(); ?>Assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Favicon-->
+    <link rel="icon" href="<?= base_url(); ?>Assets/img/logos/CULTECHFAV.png">
 
 </head>
 

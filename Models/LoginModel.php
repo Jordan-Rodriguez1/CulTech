@@ -48,6 +48,17 @@
             }
             return $return;
         }
+
+        //cambia contraseña actual
+        public function cambiarContra(string $clave, int $id)
+        {
+            $this->clave = $clave;
+            $this->id = $id;
+            $query = "UPDATE usuarios SET clave = ? WHERE id = ?";
+            $data = array($this->clave, $this->id);
+            $resul = $this->update($query, $data);
+            return $resul;
+        }
     
     }
 ?>
