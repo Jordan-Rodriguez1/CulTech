@@ -22,23 +22,25 @@
                     <table class="table table-bordered" id="Table" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Fecha</th>
                                 <th>Temp. Ambiente</th>
                                 <th>Hum. Ambiente</th>
                                 <th>Temp. Suelo</th>
                                 <th>Hum. Suelo</th>
                                 <th>Altura</th>
-                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>XX °C</td>
-                                <td>XX %</td>
-                                <td>XX °C</td>
-                                <td>XX %</td>
-                                <td>XX CM</td>
-                                <td></td>
-                            </tr>
+                            <?php foreach ($data2 as $mon) { ?>
+                                <tr>
+                                    <td><?= $mon['fecha'] ?></td>
+                                    <td><?= $mon['tem'] ?> °C</td>
+                                    <td><?= $mon['humendad'] ?> %</td>
+                                    <td><?= $mon['stem'] ?> °C</td>
+                                    <td><?= $mon['shumendad'] ?> %</td>
+                                    <td><?= $mon['altura'] ?> CM</td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -53,17 +55,19 @@
                     <table class="table table-bordered" id="Table2" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Fecha</th>
                                 <th>Código</th>
                                 <th>Descripción</th>
-                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            <?php foreach ($data3 as $acc) { ?>
+                                <tr>
+                                    <td><?= $acc['fecha'] ?></td>
+                                    <td><?= $acc['codigo'] ?></td>
+                                    <td><?= $acc['descripcion'] ?></td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

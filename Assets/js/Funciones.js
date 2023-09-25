@@ -1253,16 +1253,15 @@ function PastelMateriales6() {
 function TemperaturaAire() {
   var data = google.visualization.arrayToDataTable([
     ["Label", "Value"],
-    ["°C", 80],
+    ["°C", 25], //AQUI VA EL VALOR ACTUAL
   ]);
   var options = {
-    width: 400,
-    height: 120,
-    redFrom: 90,
-    redTo: 100,
-    yellowFrom: 75,
-    yellowTo: 90,
-    minorTicks: 5,
+    max: 40,
+    redFrom: 30, //AQUI ES DESDE EL VALOR MAXIMO
+    redTo: 40,
+    yellowFrom: 0,
+    yellowTo: 10, //AQUI ES DESDE EL VALOR MINIMO
+    minorTicks: 10,
   };
   var chart = new google.visualization.Gauge(
     document.getElementById("TemperaturaAireChart")
@@ -1273,15 +1272,13 @@ function TemperaturaAire() {
 function HumedadAire() {
   var data = google.visualization.arrayToDataTable([
     ["Label", "Value"],
-    ["%", 80],
+    ["%", 80], //AQUI VA EL VALOR ACTUAL
   ]);
   var options = {
-    width: 400,
-    height: 120,
-    redFrom: 90,
+    redFrom: 90, //AQUI ES DESDE EL VALOR MAXIMO
     redTo: 100,
-    yellowFrom: 75,
-    yellowTo: 90,
+    yellowFrom: 0,
+    yellowTo: 60, //AQUI ES DESDE EL VALOR MINIM
     minorTicks: 5,
   };
   var chart = new google.visualization.Gauge(
@@ -1293,16 +1290,15 @@ function HumedadAire() {
 function TemperaturaSuelo() {
   var data = google.visualization.arrayToDataTable([
     ["Label", "Value"],
-    ["°C", 80],
+    ["°C", 80], //AQUI VA EL VALOR ACTUAL
   ]);
   var options = {
-    width: 400,
-    height: 120,
-    redFrom: 90,
-    redTo: 100,
-    yellowFrom: 75,
-    yellowTo: 90,
-    minorTicks: 5,
+    max: 40,
+    redFrom: 30, //AQUI ES DESDE EL VALOR MAXIMO
+    redTo: 40,
+    yellowFrom: 0,
+    yellowTo: 10, //AQUI ES DESDE EL VALOR MINIMO
+    minorTicks: 10,
   };
   var chart = new google.visualization.Gauge(
     document.getElementById("TemperaturaSueloChart")
@@ -1314,15 +1310,13 @@ function HumedadSuelo() {
   
   var data = google.visualization.arrayToDataTable([
     ["Label", "Value"],
-    ["%", 80],
+    ["%", 80], //AQUI VA EL VALOR ACTUAL
   ]);
   var options = {
-    width: 400,
-    height: 120,
-    redFrom: 90,
+    redFrom: 90, //AQUI ES DESDE EL VALOR MAXIMO
     redTo: 100,
-    yellowFrom: 75,
-    yellowTo: 90,
+    yellowFrom: 0,
+    yellowTo: 60, //AQUI ES DESDE EL VALOR MINIM
     minorTicks: 5,
   };
   var chart = new google.visualization.Gauge(

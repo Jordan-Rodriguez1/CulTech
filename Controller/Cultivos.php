@@ -61,49 +61,42 @@
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //VISTA DE MONITOREO HISTÓRICO
         public function Detalle()
         {
-            $this->views->getView($this, "DetalleTablas");
+            if (!isset($_GET['id'])) {
+                header("location: " . base_url() . "Cultivos/Lista");
+            } else {
+                $id = Limpiar($_GET['id']);
+                $data1 = $this->model->datoscultivo($id);
+                if ($data1 == null) {
+                    header("location: " . base_url() . "Cultivos/Lista");    
+                } else {
+                    $data2 = $this->model->datostablas($id);
+                    $data3 = $this->model->datosalertas($id);
+                    $this->views->getView($this, "DetalleTablas", '', $data1, $data2, $data3);
+                }
+                die();
+            }
         }
 
         //VISTA DE MONITOREO HISTÓRICO
         public function Graficas()
         {
-            $this->views->getView($this, "DetalleGraficas");
+            if (!isset($_GET['id'])) {
+                header("location: " . base_url() . "Cultivos/Lista");
+            } else {
+                $id = Limpiar($_GET['id']);
+                $data1 = $this->model->datoscultivo($id);
+                if ($data1 == null) {
+                    header("location: " . base_url() . "Cultivos/Lista");    
+                } else {
+                    $data2 = $this->model->datosconfiguracion($id);
+                    $this->views->getView($this, "DetalleGraficas", '', $data1, $data2);
+                }
+                die();
+            }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /*--------------------------------------------------------- 
         ----- CONTROLADORES VISTAS CULTIVOS ACTIVOS --------------
@@ -253,6 +246,12 @@
             header('location: ' . base_url() . "Cultivos/Configuracion?id=$id&msg=$alert");
             die();
         }
+
+        /*--------------------------------------------------------- 
+        ----------CONTROLADORES VISTAS DETALLE --------------------
+        ----------------------------------------------------------*/
+
+        //EN ESTA VISTA NO SE REALIZA NINGUNA ACCIÓN
 
         /*--------------------------------------------------------- 
         ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------

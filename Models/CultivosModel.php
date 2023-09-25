@@ -204,8 +204,26 @@
         }
 
         /*--------------------------------------------------------- 
-        ---------- MODELOS VISTAS CONFIGURACIÓN -------------------
+        ---------- MODELOS VISTAS DETALLE -------------------------
         ----------------------------------------------------------*/
     
+        //SELECCIONA DATOS DE MONITOREO
+        public function datostablas(int $id)
+        {
+            $this->id = $id;
+            $sql = "SELECT * FROM monitoreo WHERE id_cultivo = '{$this->id}'";
+            $res = $this->select_all($sql);
+            return $res;
+        }
+
+        //SELECCIONA ACCIONES REALIZADAS
+        public function datosalertas(int $id)
+        {
+            $this->id = $id;
+            $sql = "SELECT * FROM acciones WHERE id_cultivo = '{$this->id}'";
+            $res = $this->select_all($sql);
+            return $res;
+        }
+
     }
 ?>

@@ -22,11 +22,11 @@
           </div>
       </div>
         <!-- Content Row -->
-        <div class="row">
+        <div class="row d-flex">
             <!-- Grow In Utility -->
             <div class="col-lg-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Cultivo</h6>
                     </div>
@@ -34,6 +34,7 @@
                       <div class="row no-gutters align-items-center">
                           <div class="col-6">
                               <div class="h5 mb-0 font-weight-bold" style="color: black;"><?= $data1['nombre']; ?></div>
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $data1['fecha'];?></div>
                           </div>
                           <div class="col-auto">
                               <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $data2['foto']; ?>" height="120px">
@@ -55,43 +56,43 @@
             </div>
             <div class="col-lg-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
+                      <div class="row no-gutters align-items-center justify-content-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
-                        <div id="TemperaturaAireChart" style="width: 400px; height: 120px;"></div>
+                        <div class="align-items-center justify-content-center" id="TemperaturaAireChart"></div>
                       </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100"">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Humedad del Aire</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
+                      <div class="row no-gutters align-items-center justify-content-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
-                        <div id="HumedadAireChart" style="width: 400px; height: 120px;"></div>
+                        <div class="align-items-center justify-content-center" id="HumedadAireChart"></div>
                       </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Días de Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
+                            <div class="col mr-2 my-5">
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $data1['fecha'];?></div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['dias']-$diasDiferencia;?> Días para el transplante</div>
                             </div>
                         </div>
                     </div>
@@ -99,15 +100,24 @@
             </div>
             <div class="col-lg-3 py-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100"">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Estado de Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $data1['fecha'];?></div>
+                            <div class="col mr-2 mt-5">
+                                <?php if ($data1['alerta'] == 0) { ?>
+                                    <a href="" class="btn btn-success btn-circle btn-lg">
+                                        <i class="fas fa-check"></i>
+                                    </a>
+                                    <div class="h5 my-2 font-weight-bold text-gray-800">Cultivo en Orden</div>
+                                <?php } else { ?>
+                                    <a href="" class="btn btn-danger btn-circle btn-lg">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </a>
+                                    <div class="h5 my-2 font-weight-bold text-gray-800">Atención algo está mal en el cultivo</div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -115,48 +125,50 @@
             </div>
             <div class="col-lg-3 py-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100"">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Temperatura del Suelo</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
+                      <div class="row no-gutters align-items-center justify-content-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
-                        <div id="TemperaturaSueloChart" style="width: 400px; height: 120px;"></div>
+                        <div class="align-items-center justify-content-center" id="TemperaturaSueloChart"></div>
                       </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 py-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100"">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Humedad del Suelo</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
+                      <div class="row no-gutters align-items-center justify-content-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
-                        <div id="HumedadSueloChart" style="width: 400px; height: 120px;"></div>
+                        <div class="align-items-center justify-content-center" id="HumedadSueloChart"></div>
                       </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 py-3">
                 <!-- Información del perfil -->
-                <div class="card position-relative">
+                <div class="card position-relative h-100"">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Altura Aproximada Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
+                            <div class="col mr-2 my-5">
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['altura']-$diasDiferencia;?> CM para el transplante</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <p><strong>Última Medición: </strong></p>
     </div>
     <!-- /.container-fluid -->
 
