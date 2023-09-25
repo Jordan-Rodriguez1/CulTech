@@ -13,11 +13,11 @@
         </div>
         <!-- Content Row -->
         <div class="row">
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-lg-6">
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Suelo</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
@@ -28,10 +28,44 @@
                         <code>/js/demo/chart-area-demo.js</code> file.
                     </div>
                 </div>
-                <!-- Bar Chart -->
+            </div>
+            <!-- Donut Chart -->
+            <div class="col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Ambiente</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-bar">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <hr>
+                        Styling for the bar chart can be found in the
+                        <code>/js/demo/chart-bar-demo.js</code> file.
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <!-- Area Chart -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Suelo</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="myAreaChart"></canvas>
+                        </div>
+                        <hr>
+                        Styling for the area chart can be found in the
+                        <code>/js/demo/chart-area-demo.js</code> file.
+                    </div>
+                </div>
+            </div>
+            <!-- Donut Chart -->
+            <div class="col-lg-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Ambiente</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
@@ -44,20 +78,18 @@
                 </div>
             </div>
             <!-- Donut Chart -->
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-lg-12">
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Crecimiento de la Planta</h6>
                     </div>
-                    <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-pie pt-4">
-                            <canvas id="myPieChart"></canvas>
+                        <div class="chart-bar">
+                            <canvas id="myBarChart"></canvas>
                         </div>
                         <hr>
-                        Styling for the donut chart can be found in the
-                        <code>/js/demo/chart-pie-demo.js</code> file.
+                        Styling for the bar chart can be found in the
+                        <code>/js/demo/chart-bar-demo.js</code> file.
                     </div>
                 </div>
             </div>
