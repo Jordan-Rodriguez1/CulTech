@@ -1,5 +1,15 @@
 <?php 
     encabezado();
+    // Obtener la fecha actual
+    $fechaHoy = new DateTime(); 
+    // Supongamos que tienes otra fecha en formato "Y-m-d", por ejemplo:
+    $otraFecha = $data1['fecha'];
+    // Crear un objeto DateTime para la otra fecha
+    $fechaOtra = new DateTime($otraFecha);
+    // Calcular la diferencia en días
+    $diferencia = $fechaHoy->diff($fechaOtra);
+    // Acceder al número de días de la diferencia
+    $diasDiferencia = $diferencia->days;
 ?>
 
     <!-- Begin Page Content -->
@@ -78,9 +88,12 @@
                         <h6 class="m-0 font-weight-bold text-primary">Días de Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
-                        <!-- /.AQUÍ VA EL GRÁFICO -->
-                      </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $data1['fecha'];?></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,9 +104,12 @@
                         <h6 class="m-0 font-weight-bold text-primary">Estado de Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
-                        <!-- /.AQUÍ VA EL GRÁFICO -->
-                      </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $data1['fecha'];?></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,9 +148,11 @@
                         <h6 class="m-0 font-weight-bold text-primary">Altura Aproximada Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
-                      <div class="row no-gutters align-items-center">
-                        <!-- /.AQUÍ VA EL GRÁFICO -->
-                      </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
