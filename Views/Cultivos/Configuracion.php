@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Detalle Plantilla</h1>
+          <h1 class="h3 mb-0 text-gray-800">Configuración del Cultivo</h1>
           <div class="d-sm-inline-block">
               <a href="<?= base_url(); ?>Cultivos/Monitoreo?id=<?= $_GET['id']; ?>" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Regresar</a>
           </div>
@@ -18,7 +18,7 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Vista Previa Plantilla</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Vista Previa Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
@@ -26,7 +26,7 @@
                               <div class="h5 mb-0 font-weight-bold" style="color: black;"><?= $data1['nombre']; ?></div>
                           </div>
                           <div class="col-auto">
-                              <img src="<?= base_url(); ?>Assets/img/cultivos/<?= $data1['foto']; ?>" height="120px">
+                              <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $data2['foto']; ?>" height="120px">
                           </div>
                       </div>
                     </div>
@@ -39,7 +39,7 @@
                     if ($alert == "editado") { ?>
                         <div class="alert alert-success" role="alert">
     	                      <h5 class="section-title">REALIZADO</h5>
-    	                      <div class="section-intro">Se actualizó la plantilla con éxito.</div>
+    	                      <div class="section-intro">Se actualizó la configuraciónn del cultivo con éxito.</div>
                         </div>
                     <?php } elseif ($alert == "imagen") { ?>
                         <div class="alert alert-success" role="alert">
@@ -67,9 +67,9 @@
                         <h6 class="m-0 font-weight-bold text-primary">Actualizar Imagen</h6>
                     </div>
                     <div class="card-body text-center">
-                      <img style="margin: 0 0 10px 0;" src="<?= base_url(); ?>Assets/img/cultivos/<?= $data1['foto']; ?>" height="120px">
+                      <img style="margin: 0 0 10px 0;" src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $data2['foto']; ?>" height="120px">
                       <div class="my-2"></div>
-                      <form id="formulario2" method="post" action="<?php echo base_url(); ?>Plantillas/ImagenPlantilla" autocomplete="off" enctype="multipart/form-data">
+                      <form id="formulario2" method="post" action="<?php echo base_url(); ?>Cultivos/ImagenCultivo" autocomplete="off" enctype="multipart/form-data">
                           <div class="form-group">
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" id="archivo" name="archivo">
@@ -90,10 +90,10 @@
                 <!-- Actualizar Datos -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Actualizar Datos</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Actualizar Configuración</h6>
                     </div>
                     <div class="card-body">
-                      <form id="formulario1" method="post" action="<?php echo base_url(); ?>Plantillas/ActualizarPlantilla" autocomplete="off" enctype="multipart/form-data">
+                      <form id="formulario1" method="post" action="<?php echo base_url(); ?>Cultivos/ActualizarConfiguracion" autocomplete="off" enctype="multipart/form-data">
                           <div class="form-group">
                             <label for="nombre">Nombre de la Plantilla</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" value="<?= $data1['nombre']; ?>">
@@ -102,43 +102,43 @@
                           <div class="row">
                               <div class="form-group col-6">
                                 <label for="tem_max">Temperatura Máxima (ºC)</label>
-                                <input type="tem_max" step="0.01" class="form-control" id="tem_max" name="tem_max" value="<?= $data1['tem_max']; ?>">
+                                <input type="tem_max" step="0.01" class="form-control" id="tem_max" name="tem_max" value="<?= $data2['tem_max']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="tem_min">Temperatura Mínima (ºC)</label>
-                                <input type="number" step="0.01" class="form-control" id="tem_min" name="tem_min" value="<?= $data1['tem_min']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="tem_min" name="tem_min" value="<?= $data2['tem_min']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="humedad_max">Humedad Máxima (%)</label>
-                                <input type="number" step="0.01" class="form-control" id="humedad_max" name="humedad_max" value="<?= $data1['humedad_max']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="humedad_max" name="humedad_max" value="<?= $data2['humedad_max']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="humedad_min">Humedad Mínima (%)</label>
-                                <input type="number" step="0.01" class="form-control" id="humedad_min" name="humedad_min" value="<?= $data1['humedad_min']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="humedad_min" name="humedad_min" value="<?= $data2['humedad_min']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="stem_max">Temp. Máxima Suelo (ºC)</label>
-                                <input type="number" step="0.01" class="form-control" id="stem_max" name="stem_max" value="<?= $data1['stem_max']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="stem_max" name="stem_max" value="<?= $data2['stem_max']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="stem_min">Temp. Mínima Suelo (ºC)</label>
-                                <input type="number" step="0.01" class="form-control" id="stem_min" name="stem_min" value="<?= $data1['stem_min']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="stem_min" name="stem_min" value="<?= $data2['stem_min']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="shumedad_max">Hum. Máxima Suelo (%)</label>
-                                <input type="number" step="0.01" class="form-control" id="shumedad_max" name="shumedad_max" value="<?= $data1['shumedad_max']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="shumedad_max" name="shumedad_max" value="<?= $data2['shumedad_max']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="shumedad_min">Hum. Mínima Suelo (%)</label>
-                                <input type="number" step="0.01" class="form-control" id="shumedad_min" name="shumedad_min" value="<?= $data1['shumedad_min']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="shumedad_min" name="shumedad_min" value="<?= $data2['shumedad_min']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="altura">Altura de Transplante (cm)</label>
-                                <input type="number" step="0.01" class="form-control" id="altura" name="altura" value="<?= $data1['altura']; ?>">
+                                <input type="number" step="0.01" class="form-control" id="altura" name="altura" value="<?= $data2['altura']; ?>">
                               </div>
                               <div class="form-group col-6">
                                 <label for="dias">Días de Transplante</label>
-                                <input type="number" class="form-control" id="dias" name="dias" value="<?= $data1['dias']; ?>">
+                                <input type="number" class="form-control" id="dias" name="dias" value="<?= $data2['dias']; ?>">
                               </div>
                           </div>
                           <button type="submit" class="btn btn-success btn-icon-split">

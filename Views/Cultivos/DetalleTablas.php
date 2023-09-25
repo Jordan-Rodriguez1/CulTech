@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-2 text-gray-800">Historial de Registros</h1>
+          <h1 class="h3 mb-2 text-gray-800">Historial de Registros (Tablas)</h1>
           <div class="d-sm-inline-block">
               <a href="<?= base_url(); ?>Cultivos/Monitoreo?id=<?= $_GET['id']; ?>" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Regresar</a>
           </div>

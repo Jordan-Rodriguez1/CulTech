@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+  google.charts.load("current", { packages: ["gauge"] });
+  google.charts.setOnLoadCallback(drawChart);
+
   //Mensaje de alerta al inactivar placa
   $(".inact").submit(function (e) {
     e.preventDefault();
@@ -1245,3 +1249,84 @@ function PastelMateriales6() {
     },
   });
 }
+
+function TemperaturaAire() {
+  var data = google.visualization.arrayToDataTable([
+    ["Label", "Value"],
+    ["°C", 80],
+  ]);
+  var options = {
+    width: 400,
+    height: 120,
+    redFrom: 90,
+    redTo: 100,
+    yellowFrom: 75,
+    yellowTo: 90,
+    minorTicks: 5,
+  };
+  var chart = new google.visualization.Gauge(
+    document.getElementById("TemperaturaAireChart")
+  );
+  chart.draw(data, options);
+};
+
+function HumedadAire() {
+  var data = google.visualization.arrayToDataTable([
+    ["Label", "Value"],
+    ["%", 80],
+  ]);
+  var options = {
+    width: 400,
+    height: 120,
+    redFrom: 90,
+    redTo: 100,
+    yellowFrom: 75,
+    yellowTo: 90,
+    minorTicks: 5,
+  };
+  var chart = new google.visualization.Gauge(
+    document.getElementById("HumedadAireChart")
+  );
+  chart.draw(data, options);
+};
+
+function TemperaturaSuelo() {
+  var data = google.visualization.arrayToDataTable([
+    ["Label", "Value"],
+    ["°C", 80],
+  ]);
+  var options = {
+    width: 400,
+    height: 120,
+    redFrom: 90,
+    redTo: 100,
+    yellowFrom: 75,
+    yellowTo: 90,
+    minorTicks: 5,
+  };
+  var chart = new google.visualization.Gauge(
+    document.getElementById("TemperaturaSueloChart")
+  );
+  chart.draw(data, options);
+};
+
+function HumedadSuelo() {
+  
+  var data = google.visualization.arrayToDataTable([
+    ["Label", "Value"],
+    ["%", 80],
+  ]);
+  var options = {
+    width: 400,
+    height: 120,
+    redFrom: 90,
+    redTo: 100,
+    yellowFrom: 75,
+    yellowTo: 90,
+    minorTicks: 5,
+  };
+  var chart = new google.visualization.Gauge(
+    document.getElementById("HumedadSueloChart")
+  );
+  chart.draw(data, options);
+};

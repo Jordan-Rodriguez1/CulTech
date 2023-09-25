@@ -26,7 +26,7 @@
                               <div class="h5 mb-0 font-weight-bold" style="color: black;"><?= $data1['nombre']; ?></div>
                           </div>
                           <div class="col-auto">
-                              <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $data1['foto']; ?>" height="120px">
+                              <img src="<?= base_url(); ?>Assets/img/cultivos/monitoreo/<?= $data2['foto']; ?>" height="120px">
                           </div>
                       </div>
                     </div>
@@ -52,6 +52,7 @@
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
+                        <div id="TemperaturaAireChart" style="width: 400px; height: 120px;"></div>
                       </div>
                     </div>
                 </div>
@@ -60,11 +61,12 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Aire</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
+                        <div id="HumedadAireChart" style="width: 400px; height: 120px;"></div>
                       </div>
                     </div>
                 </div>
@@ -73,7 +75,7 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Días de Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
@@ -86,7 +88,7 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Estado de Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
@@ -99,11 +101,12 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Suelo</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
+                        <div id="TemperaturaSueloChart" style="width: 400px; height: 120px;"></div>
                       </div>
                     </div>
                 </div>
@@ -112,11 +115,12 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Suelo</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
+                        <div id="HumedadSueloChart" style="width: 400px; height: 120px;"></div>
                       </div>
                     </div>
                 </div>
@@ -125,7 +129,7 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Aire</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Altura Aproximada Cultivo</h6>
                     </div>
                     <div class="card-body text-center">
                       <div class="row no-gutters align-items-center">
@@ -137,6 +141,15 @@
         </div>
     </div>
     <!-- /.container-fluid -->
+
+    <script>
+      window.addEventListener("load", function() {
+        TemperaturaAire();
+        HumedadAire();  
+        TemperaturaSuelo();
+        HumedadSuelo();  
+      })
+    </script>
 
 <?php 
     pie();

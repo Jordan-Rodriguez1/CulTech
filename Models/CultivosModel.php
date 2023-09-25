@@ -21,10 +21,19 @@
         }
 
         //SELECCIONA LOS DATOS DE UN CULTIVO
-        public function DatosCultivo(int $id)
+        public function datoscultivo(int $id)
         {
             $this->id = $id;
             $sql = "SELECT * FROM cultivos WHERE id = '{$this->id}'";
+            $res = $this->select($sql);
+            return $res;
+        }
+
+        //SELECCIONA LOS DATOS DE UN CULTIVO
+        public function datosconfiguracion(int $id)
+        {
+            $this->id = $id;
+            $sql = "SELECT * FROM configuracion WHERE id_cultivo = '{$this->id}'";
             $res = $this->select($sql);
             return $res;
         }
@@ -131,7 +140,6 @@
             return $res;
         }
 
-
         /*--------------------------------------------------------- 
         --------------MODELOS VISTAS INACTIVAS -------------------
         ----------------------------------------------------------*/
@@ -146,15 +154,14 @@
         }
 
         /*--------------------------------------------------------- 
-        --------------MODELOS VISTAS DETALLE -------------------
+        ---------- MODELOS VISTAS CONFIGURACIÓN -------------------
         ----------------------------------------------------------*/
 
-        //EDITAR UNA PLACA
-        public function EditarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, 
+        //EDITAR CONFIGURACION DE CULTIVO
+        public function EditarConfiguracion(string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, 
                                         string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $id)
         {
             $return = "";
-            $this->nombre = $nombre;
             $this->tem_max = $tem_max;
             $this->tem_min = $tem_min;
             $this->humedad_max = $humedad_max;
@@ -166,24 +173,39 @@
             $this->altura = $altura;
             $this->dias = $dias;
             $this->id = $id;
-            $query = "UPDATE plantillas SET nombre=?, tem_max=?, tem_min=?, humedad_max=?, humedad_min=?, stem_max=?, stem_min=?, 
-                        shumedad_max=?, shumedad_min=?, altura=?, dias=? WHERE id=?";
-            $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, 
+            $query = "UPDATE configuracion SET tem_max=?, tem_min=?, humedad_max=?, humedad_min=?, stem_max=?, stem_min=?, 
+                        shumedad_max=?, shumedad_min=?, altura=?, dias=? WHERE id_cultivo=?";
+            $data = array($this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, 
                         $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->id);
             $resul = $this->update($query, $data);
             return $resul;
         }
 
-        //EDITAR IMAGEN PLANTILLA
-        public function EditarImgPlantilla(string $nombre, string $id)
+        //EDITAR NOMBRE CULTIVO
+        public function EditarCultivo(string $nombre, string $id)
         {
             $return = "";
             $this->nombre = $nombre;
             $this->id = $id;
-            $query = "UPDATE plantillas SET foto=? WHERE id=?";
+            $query = "UPDATE cultivos SET nombre=? WHERE id=?";
             $data = array($this->nombre, $this->id);
             $resul = $this->update($query, $data);
         }
+
+        //EDITAR IMAGEN PLANTILLA
+        public function EditarImgCultivo(string $nombre, string $id)
+        {
+            $return = "";
+            $this->nombre = $nombre;
+            $this->id = $id;
+            $query = "UPDATE configuracion SET foto=? WHERE id_cultivo=?";
+            $data = array($this->nombre, $this->id);
+            $resul = $this->update($query, $data);
+        }
+
+        /*--------------------------------------------------------- 
+        ---------- MODELOS VISTAS CONFIGURACIÓN -------------------
+        ----------------------------------------------------------*/
     
     }
 ?>

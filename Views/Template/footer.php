@@ -43,6 +43,7 @@
     </div>
 </body>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- Bootstrap core JavaScript-->
 <script src="<?= base_url(); ?>Assets/vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url(); ?>Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

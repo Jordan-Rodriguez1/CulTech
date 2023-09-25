@@ -25,7 +25,7 @@
             $this->views->getView($this, "Inactivos", '', $data1);
         }
 
-        //VISTA DE ULTIMAS MEDICIONES*****
+        //VISTA DE ULTIMAS MEDICIONES
         public function Monitoreo()
         {
             if (!isset($_GET['id'])) {
@@ -36,11 +36,44 @@
                 if ($data1 == null) {
                     header("location: " . base_url() . "Cultivos/Lista");    
                 } else {
-                    $this->views->getView($this, "Monitoreo", '', $data1);
+                    $data2 = $this->model->datosconfiguracion($id);
+                    $this->views->getView($this, "Monitoreo", '', $data1, $data2);
                 }
                 die();
             }
         }
+
+        //VISTA PARA CAMBIAR LA CONFIGURACIÓN
+        public function Configuracion()
+        {
+            if (!isset($_GET['id'])) {
+                header("location: " . base_url() . "Cultivos/Lista");
+            } else {
+                $id = Limpiar($_GET['id']);
+                $data1 = $this->model->datoscultivo($id);
+                if ($data1 == null) {
+                    header("location: " . base_url() . "Cultivos/Lista");    
+                } else {
+                    $data2 = $this->model->datosconfiguracion($id);
+                    $this->views->getView($this, "Configuracion", '', $data1, $data2);
+                }
+                die();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //VISTA DE MONITOREO HISTÓRICO
         public function Detalle()
@@ -54,25 +87,26 @@
             $this->views->getView($this, "DetalleGraficas");
         }
 
-        //VISTA PARA CAMBIAR LA CONFIGURACIÓN******
-        public function Configuracion()
-        {
-            if (!isset($_GET['id'])) {
-                header("location: " . base_url() . "Cultivos/Lista");
-            } else {
-                $id = Limpiar($_GET['id']);
-                $data1 = $this->model->datoscultivo($id);
-                if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
-                } else {
-                    $this->views->getView($this, "Configuracion", '', $data1);
-                }
-                die();
-            }
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /*--------------------------------------------------------- 
-        ----- CONTROLADORES VISTAS CULTIVOS AVTIVOS --------------
+        ----- CONTROLADORES VISTAS CULTIVOS ACTIVOS --------------
         ----------------------------------------------------------*/
 
         //INGRESA UNA NUEVA PLANTILLA
@@ -134,7 +168,7 @@
             $id = Limpiar($_GET['id']);
             $estado = 1;
             $insert = $this->model->EstadoCultivo($id, $estado);
-            $cultivo = $this->model->DatosCultivo($id);
+            $cultivo = $this->model->datoscultivo($id);
             $uso = 0;
             $cambio = $this->model->UsoPlaca($cultivo['id_placa'], $uso);
             $alert = 'inactivo';
@@ -146,13 +180,22 @@
         ----------CONTROLADORES VISTAS INACTIVAS -----------------
         ----------------------------------------------------------*/
 
+        //EN ESTA VISTA NO SE REALIZA NINGUNA ACCIÓN
 
         /*--------------------------------------------------------- 
-        --------------CONTROLADORES VISTAS DETALLE ----------------
+        ------- CONTROLADORES VISTAS MONITOREO ----------------
+        ----------------------------------------------------------*/
+
+
+
+
+
+        /*--------------------------------------------------------- 
+        ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------
         ----------------------------------------------------------*/
 
         //EDITAR UNA PLANTILLA***********
-        public function ActualizarPlantilla()
+        public function ActualizarConfiguracion()
         {
             $nombre = Limpiar($_POST['nombre']);
             $tem_max = Limpiar($_POST['tem_max']);
@@ -166,22 +209,23 @@
             $altura = Limpiar($_POST['altura']);
             $dias = Limpiar($_POST['dias']);
             $id = Limpiar($_POST['id']);
-            $insert = $this->model->EditarPlantilla($nombre, $tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $id);
+            $insert = $this->model->EditarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $id);
             if ($insert > 0) {
+                $editar = $this->model->EditarCultivo($nombre, $id);
                 $alert = 'editado';
             } else {
                 $alert = 'error';
             }
-            header("location: " . base_url() . "Plantillas/Detalle?id=$id&msg=$alert");
+            header("location: " . base_url() . "Cultivos/Configuracion?id=$id&msg=$alert");
             die();   
         }
 
-        //Cambiar Imagen Perfil****************
-        public function ImagenPlantilla()
+        //Cambiar Imagen de Cultivo
+        public function ImagenCultivo()
         {
             $id = Limpiar($_POST['id']);
-            $data1 = $this->model->datosplantilla($id);
-            $imgactual = $data1['foto'];
+            $data = $this->model->datosconfiguracion($id);
+            $imgactual = $data['foto'];
             $name = pathinfo($_FILES["archivo"]["name"]);
             $nombre_archivo = $_FILES["archivo"]["name"];
             $nombre_nuevo = $id.".".$name["extension"];
@@ -192,10 +236,10 @@
             $tmaximo = 20 * 1024 * 1024;
             if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
                 if ($error_archivo == UPLOAD_ERR_OK) {
-                    unlink("Assets/img/cultivos/".$imgactual);
-                    $ruta_destino = "Assets/img/cultivos/".$nombre_nuevo;
+                    unlink("Assets/img/cultivos/monitoreo/".$imgactual);
+                    $ruta_destino = "Assets/img/cultivos/monitoreo/".$nombre_nuevo;
                     if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-                        $this->model->EditarImgPlantilla($nombre_nuevo, $id);
+                        $this->model->EditarImgCultivo($nombre_nuevo, $id);
                         $alert =  'imagen';
                     } else {
                         $alert =  'noimagen';
@@ -206,9 +250,13 @@
             } else {
                 $alert =  'noimagen';
             }
-            header('location: ' . base_url() . "Plantillas/Detalle?id=$id&msg=$alert");
+            header('location: ' . base_url() . "Cultivos/Configuracion?id=$id&msg=$alert");
             die();
         }
+
+        /*--------------------------------------------------------- 
+        ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------
+        ----------------------------------------------------------*/
 
     }
 ?>
