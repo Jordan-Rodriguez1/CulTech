@@ -150,10 +150,11 @@ function obtenerParametroDeURL(nombreParametro) {
   return urlParams.get(nombreParametro);
 }
 
+//OBTIENE LA BASE URL.
 const base = document.getElementById("url").value;
 
 //Gráfica de Temperatura
-function BarrasTemperatura(elementId) {
+function LineasTemperatura(elementId) {
   var requestData = {
     id: elementId,
   };
@@ -166,68 +167,70 @@ function BarrasTemperatura(elementId) {
       var fecha = [];
       var aire = [];
       var suelo = [];
+      var lastDay = null; // Variable para realizar un seguimiento de la última fecha procesada
       for (var i = 0; i < data.length; i++) {
-        fecha.push(data[i]["fecha"]);
+        var dateTime = data[i]["fecha"];
+        var currentDate = dateTime.split(" ")[0]; // Obtener solo la fecha
+
+        // Comprobar si el día es diferente del último día procesado
+        if (currentDate !== lastDay) {
+          fecha.push(currentDate);
+          lastDay = currentDate; // Actualizar el último día procesado
+        } else {
+          fecha.push(""); // Si es el mismo día, dejar el campo en blanco
+        }
+
         aire.push(data[i]["tem"]);
         suelo.push(data[i]["stem"]);
       }
-      const chartData = {
-        labels: fecha,
-        datasets: [
-          {
-            label: "Ambiente",
-            data: aire,
-            backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
-            borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-            yAxisID: "y",
-          },
-          {
-            label: "Suelo",
-            data: suelo,
-            backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
-            borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-            yAxisID: "y1",
-          },
-        ],
-      };
-      console.log("HOLA2");
+      console.log(fecha);
       // Bar Chart Example
-      var ctx = document.getElementById("BarrasTemperaturaChart");
-      console.log(ctx);
-      console.log("HOLA1");
-  
-          const Colima = {
-            label: "Colima",
-            data: aire,
-            backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
-            borderColor: "rgba(255, 0, 0, 1)", // Color del borde
-            borderWidth: 1, // Ancho del borde
-          };
-        console.log("HOLA2");
-          const Nacional = {
-            label: "Nacional",
-            data: suelo,
-            borderDash: [3, 5],
-            backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
-            borderColor: "rgba(255, 0, 0, 1)", // Color del borde
-            borderWidth: 1, // Ancho del borde
-          };
-        console.log("HOLA1");
-          var myLineChart = new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: fecha,
-              datasets: [Nacional, Colima],
+      var ctx = document.getElementById("LineasTemperaturaChart");
+      const Valor1 = {
+        label: "Ambiente",
+        data: aire,
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+        borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
+      };
+
+      const Valor2 = {
+        label: "Suelo",
+        data: suelo,
+        borderDash: [3, 5],
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+        borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
+      };
+
+      var myLineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: fecha,
+          datasets: [Valor1, Valor2],
+        },
+        options: {
+          tooltips: {
+            callbacks: {
+              // Esta función se llama cuando se está generando el contenido del tooltip
+              label: function (tooltipItem, data) {
+                var datasetLabel =
+                  data.datasets[tooltipItem.datasetIndex].label || "";
+                var value = tooltipItem.yLabel; // El valor en el eje Y
+                return datasetLabel + ": " + value + "°C"; // Agrega el texto deseado
+              },
             },
-          
+          },
+        },
       });
     },
   });
 }
 
-//Gráfica de Barra
-
-function BarrasAlumnos(elementId) {
+//Gráfica de Humedad
+function LineasHumedad(elementId) {
   var requestData = {
     id: elementId,
   };
@@ -237,53 +240,63 @@ function BarrasAlumnos(elementId) {
     data: requestData, // Envía los datos como parte de la solicitud
     success: function (response) {
       var data = JSON.parse(response);
-      var asistencias = [];
-      var faltas = [];
-      var grado = [];
+      var fecha = [];
+      var aire = [];
+      var suelo = [];
+      var lastDay = null; // Variable para realizar un seguimiento de la última fecha procesada
       for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["stem"]);
-        faltas.push(data[i]["tem"]);
-        grado.push(data[i]["fecha"] + "° Semestre");
+        var dateTime = data[i]["fecha"];
+        var currentDate = dateTime.split(" ")[0]; // Obtener solo la fecha
+
+        // Comprobar si el día es diferente del último día procesado
+        if (currentDate !== lastDay) {
+          fecha.push(currentDate);
+          lastDay = currentDate; // Actualizar el último día procesado
+        } else {
+          fecha.push(""); // Si es el mismo día, dejar el campo en blanco
+        }
+
+        aire.push(data[i]["humendad"]);
+        suelo.push(data[i]["shumendad"]);
       }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      const Asistencias = {
-        label: "Asistencias",
-        data: asistencias,
-        backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-        borderWidth: 1, // Ancho del borde
-      };
-
-      const Faltas = {
-        label: "Faltas",
-        data: faltas,
-        backgroundColor: "rgba(255, 20, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-        borderWidth: 1, // Ancho del borde
-      };
-
       // Bar Chart Example
-      var ctx = document.getElementById("BarrasTemperaturaChart");
+      var ctx = document.getElementById("LineasHumedadChart");
+      const Valor1 = {
+        label: "Ambiente",
+        data: aire,
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+        borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
+      };
+
+      const Valor2 = {
+        label: "Suelo",
+        data: suelo,
+        borderDash: [3, 5],
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+        borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
+      };
+
       var myLineChart = new Chart(ctx, {
-        type: "bar",
+        type: "line",
         data: {
-          labels: grado,
-          datasets: [Asistencias, Faltas],
+          labels: fecha,
+          datasets: [Valor1, Valor2],
         },
         options: {
-          scales: {
-            xAxes: [],
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
+          tooltips: {
+            callbacks: {
+              // Esta función se llama cuando se está generando el contenido del tooltip
+              label: function (tooltipItem, data) {
+                var datasetLabel =
+                  data.datasets[tooltipItem.datasetIndex].label || "";
+                var value = tooltipItem.yLabel; // El valor en el eje Y
+                return datasetLabel + ": " + value + "%"; // Agrega el texto deseado
               },
-            ],
+            },
           },
         },
       });
@@ -291,49 +304,62 @@ function BarrasAlumnos(elementId) {
   });
 }
 
-function BarrasPracticas() {
+//Gráfica de Luz PENDIENTE***************************
+function LineasLuz(elementId) {
+  var requestData = {
+    id: elementId,
+  };
   $.ajax({
-    url: base + "Reportes/PracticasCaras",
+    url: base + "Cultivos/GraficaTemperatura",
     type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
     success: function (response) {
       var data = JSON.parse(response);
-      var descripcion = [];
-      var total = [];
+      var fecha = [];
+      var aire = [];
+      var lastDay = null; // Variable para realizar un seguimiento de la última fecha procesada
       for (var i = 0; i < data.length; i++) {
-        descripcion.push(data[i]["descripcion"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
+        var dateTime = data[i]["fecha"];
+        var currentDate = dateTime.split(" ")[0]; // Obtener solo la fecha
 
-      const Practicas = {
-        label: "Precio $",
-        data: total,
-        backgroundColor: "rgba(255, 20, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
+        // Comprobar si el día es diferente del último día procesado
+        if (currentDate !== lastDay) {
+          fecha.push(currentDate);
+          lastDay = currentDate; // Actualizar el último día procesado
+        } else {
+          fecha.push(""); // Si es el mismo día, dejar el campo en blanco
+        }
+
+        aire.push(data[i]["lum"]);
+      }
+      // Bar Chart Example
+      var ctx = document.getElementById("LineasLuzChart");
+      const Valor1 = {
+        label: "Luz",
+        data: aire,
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
         borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
       };
 
-      // Bar Chart Example
-      var ctx = document.getElementById("PracticasCaras");
       var myLineChart = new Chart(ctx, {
-        type: "bar",
+        type: "line",
         data: {
-          labels: descripcion,
-          datasets: [Practicas],
+          labels: fecha,
+          datasets: [Valor1],
         },
         options: {
-          scales: {
-            xAxes: [],
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
+          tooltips: {
+            callbacks: {
+              // Esta función se llama cuando se está generando el contenido del tooltip
+              label: function (tooltipItem, data) {
+                var datasetLabel =
+                  data.datasets[tooltipItem.datasetIndex].label || "";
+                var value = tooltipItem.yLabel; // El valor en el eje Y
+                return datasetLabel + ": " + value + " lum"; // Agrega el texto deseado
               },
-            ],
+            },
           },
         },
       });
@@ -341,59 +367,62 @@ function BarrasPracticas() {
   });
 }
 
-function BarrasMateriales1() {
+//Gráfica de CO2
+function LineasCO2(elementId) {
+  var requestData = {
+    id: elementId,
+  };
   $.ajax({
-    url: base + "Reportes/EntradasSalidasDinero" + Part,
+    url: base + "Cultivos/GraficaTemperatura",
     type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
     success: function (response) {
       var data = JSON.parse(response);
-      var nombre = [];
-      var ventas = [];
-      var compras = [];
+      var fecha = [];
+      var aire = [];
+      var lastDay = null; // Variable para realizar un seguimiento de la última fecha procesada
       for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        ventas.push(data[i]["ventas"]);
-        compras.push(data[i]["compras"]);
+        var dateTime = data[i]["fecha"];
+        var currentDate = dateTime.split(" ")[0]; // Obtener solo la fecha
+
+        // Comprobar si el día es diferente del último día procesado
+        if (currentDate !== lastDay) {
+          fecha.push(currentDate);
+          lastDay = currentDate; // Actualizar el último día procesado
+        } else {
+          fecha.push(""); // Si es el mismo día, dejar el campo en blanco
+        }
+
+        aire.push(data[i]["co2"]);
       }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      const Ventas = {
-        label: "Salidas $",
-        data: ventas,
-        backgroundColor: "rgba(255, 20, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-        borderWidth: 1, // Ancho del borde
-      };
-
-      const Compras = {
-        label: "Entradas $",
-        data: compras,
-        backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-        borderWidth: 1, // Ancho del borde
-      };
-
       // Bar Chart Example
-      var ctx = document.getElementById("BarrasMateriales1");
+      var ctx = document.getElementById("LineasCO2Chart");
+      const Valor1 = {
+        label: "CO2",
+        data: aire,
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+        borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
+      };
+
       var myLineChart = new Chart(ctx, {
-        type: "bar",
+        type: "line",
         data: {
-          labels: nombre,
-          datasets: [Ventas, Compras],
+          labels: fecha,
+          datasets: [Valor1],
         },
         options: {
-          scales: {
-            xAxes: [],
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
+          tooltips: {
+            callbacks: {
+              // Esta función se llama cuando se está generando el contenido del tooltip
+              label: function (tooltipItem, data) {
+                var datasetLabel =
+                  data.datasets[tooltipItem.datasetIndex].label || "";
+                var value = tooltipItem.yLabel; // El valor en el eje Y
+                return datasetLabel + ": " + value + " ppm"; // Agrega el texto deseado
               },
-            ],
+            },
           },
         },
       });
@@ -401,884 +430,64 @@ function BarrasMateriales1() {
   });
 }
 
-function BarrasMateriales2() {
+
+//Gráfica de Temperatura
+function LineasAltura(elementId) {
+  var requestData = {
+    id: elementId,
+  };
   $.ajax({
-    url: base + "Reportes/EntradasSalidasPiezas" + Part,
+    url: base + "Cultivos/GraficaTemperatura",
     type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
     success: function (response) {
       var data = JSON.parse(response);
-      var nombre = [];
-      var ventas = [];
-      var compras = [];
+      var fecha = [];
+      var aire = [];
+      var lastDay = null; // Variable para realizar un seguimiento de la última fecha procesada
       for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        ventas.push(data[i]["ventas"]);
-        compras.push(data[i]["compras"]);
+        var dateTime = data[i]["fecha"];
+        var currentDate = dateTime.split(" ")[0]; // Obtener solo la fecha
+
+        // Comprobar si el día es diferente del último día procesado
+        if (currentDate !== lastDay) {
+          fecha.push(currentDate);
+          lastDay = currentDate; // Actualizar el último día procesado
+        } else {
+          fecha.push(""); // Si es el mismo día, dejar el campo en blanco
+        }
+
+        aire.push(data[i]["altura"]);
       }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      const Ventas = {
-        label: "Salidas",
-        data: ventas,
-        backgroundColor: "rgba(255, 20, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-        borderWidth: 1, // Ancho del borde
-      };
-
-      const Compras = {
-        label: "Entradas",
-        data: compras,
-        backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
-        borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
-        borderWidth: 1, // Ancho del borde
-      };
-
       // Bar Chart Example
-      var ctx = document.getElementById("BarrasMateriales2");
+      var ctx = document.getElementById("LineasAlturaChart");
+      const Valor1 = {
+        label: "Altura",
+        data: aire,
+        backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+        borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+        borderWidth: 1, // Ancho del borde
+        pointRadius: 0, // Configurar el radio de los puntos a cero para hacerlos prácticamente invisibles
+      };
+
       var myLineChart = new Chart(ctx, {
-        type: "bar",
+        type: "line",
         data: {
-          labels: nombre,
-          datasets: [Ventas, Compras],
+          labels: fecha,
+          datasets: [Valor1],
         },
         options: {
-          scales: {
-            xAxes: [],
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
+          tooltips: {
+            callbacks: {
+              // Esta función se llama cuando se está generando el contenido del tooltip
+              label: function (tooltipItem, data) {
+                var datasetLabel =
+                  data.datasets[tooltipItem.datasetIndex].label || "";
+                var value = tooltipItem.yLabel; // El valor en el eje Y
+                return datasetLabel + ": " + value + " CM"; // Agrega el texto deseado
               },
-            ],
+            },
           },
-        },
-      });
-    },
-  });
-}
-
-//Graficas Pastel
-function PastelSemestre1() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre1",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre1");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre2() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre2",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre2");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre3() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre3",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre3");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre4() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre4",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre4");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre5() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre5",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre5");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre6() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre6",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre6");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre7() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre7",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre7");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelPracticas1() {
-  $.ajax({
-    url: base + "Reportes/PastelPracticas1",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Practicas1");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-function PastelPracticas2() {
-  $.ajax({
-    url: base + "Reportes/PastelPracticas2",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Practicas2");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-function PastelPracticas3() {
-  $.ajax({
-    url: base + "Reportes/PastelPracticas3",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var asistencia = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        asistencia.push(data[i]["asistencia"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Practicas3");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: asistencia,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-function PastelPracticas4() {
-  $.ajax({
-    url: base + "Reportes/PastelPracticas4",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var faltas = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        faltas.push(data[i]["faltas"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Practicas4");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: faltas,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-function PastelPracticas5() {
-  $.ajax({
-    url: base + "Reportes/PastelPracticas5",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Practicas5");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-function PastelPracticas6() {
-  $.ajax({
-    url: base + "Reportes/PastelPracticas6",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Practicas6");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelMateriales1() {
-  $.ajax({
-    url: base + "Reportes/PastelMateriales1" + Part,
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Materiales1");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelMateriales2() {
-  $.ajax({
-    url: base + "Reportes/PastelMateriales2" + Part,
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Materiales2");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelMateriales3() {
-  $.ajax({
-    url: base + "Reportes/PastelMateriales3",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Materiales3");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelMateriales4() {
-  $.ajax({
-    url: base + "Reportes/PastelMateriales4",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Materiales4");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelMateriales5() {
-  $.ajax({
-    url: base + "Reportes/PastelMateriales5",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var nombre = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        nombre.push(data[i]["nombre"]);
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Materiales5");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: nombre,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Salmon",
-                "Wheat",
-                "Peru",
-                "CadetBlue",
-                "Navy",
-                "SandyBrown",
-                "LimeGreen",
-                "SpringGreen",
-              ],
-            },
-          ],
         },
       });
     },

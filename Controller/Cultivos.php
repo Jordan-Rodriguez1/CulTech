@@ -262,7 +262,7 @@
         {
             if(isset($_POST['id'])) {
                 $id = $_POST['id'];
-                $data = $this->model->SelecTemperaturas($id);
+                $data = $this->model->SelecMonitoreo($id);
                 echo json_encode($data);
             } else {
                 echo json_encode(['error' => 'ID no proporcionado']);

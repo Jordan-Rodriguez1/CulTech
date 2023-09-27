@@ -230,10 +230,10 @@
         ----------------------------------------------------------*/
 
         //SELECCIONA ACCIONES REALIZADAS
-        public function SelecTemperaturas(int $id)
+        public function SelecMonitoreo(int $id)
         {
             $this->id = $id;
-            $sql = "SELECT * FROM monitoreo WHERE id_cultivo = '{$this->id}'";
+            $sql = "SELECT * FROM (SELECT * FROM monitoreo WHERE id_cultivo = '{$this->id}' ORDER BY fecha DESC LIMIT 100) AS subquery ORDER BY fecha ASC;";
             $res = $this->select_all($sql);
             return $res;
         }

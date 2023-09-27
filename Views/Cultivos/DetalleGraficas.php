@@ -5,12 +5,13 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-2 text-gray-800">Historial de Registros (Gráficas)</h1>
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h1 class="h3 mb-2 text-gray-800">Historial* de Registros (Gráficas)</h1>
             <div class="d-sm-inline-block">
                 <a href="<?= base_url(); ?>Cultivos/Monitoreo?id=<?= $_GET['id']; ?>" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Regresar</a>
             </div>
         </div>
+        <p class="mb-4">*Últimos 100 datos recabados.</p>
         <!-- Content Row -->
         <div class="row">
             <div class="col-lg-12">
@@ -21,7 +22,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
-                            <canvas id="BarrasTemperaturaChart"></canvas>
+                            <canvas id="LineasTemperaturaChart" style="height:100%; width:100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -34,7 +35,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
-                            <canvas id="myBarChart"></canvas>
+                            <canvas id="LineasHumedadChart" style="height:100%; width:100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
-                            <canvas id="myAreaChart"></canvas>
+                            <canvas id="LineasLuzChart" style="height:100%; width:100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -60,7 +61,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
-                            <canvas id="myBarChart"></canvas>
+                            <canvas id="LineasCO2Chart" style="height:100%; width:100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -73,7 +74,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
-                            <canvas id="myBarChart"></canvas>
+                            <canvas id="LineasAlturaChart" style="height:100%; width:100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -88,7 +89,11 @@
 
             // Asegúrate de que elementoId tenga el valor correcto antes de llamar a BarrasTemperatura
             if (elementoId !== null) {
-              BarrasTemperatura(elementoId);
+              LineasTemperatura(elementoId);
+              LineasHumedad(elementoId);
+              LineasLuz(elementoId);
+              LineasCO2(elementoId);
+              LineasAltura(elementoId);
             } else {
               console.error('El parámetro "id" no se encontró en la URL.');
             }

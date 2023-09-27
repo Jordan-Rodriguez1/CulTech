@@ -161,7 +161,6 @@
                         <h6 class="m-0 font-weight-bold text-primary">Niveles de CO<sub>2</sub></h6>
                     </div>
                     <div class="card-body text-center">
-                        <br>
                       <div class="row no-gutters align-items-center justify-content-center">
                         <!-- /.AQUÍ VA EL GRÁFICO -->
                         <div class="align-items-center justify-content-center" id="CO2Chart"></div>
@@ -176,15 +175,6 @@
 
     <script>
         window.addEventListener("load", function() {
-            // Llama a la función para obtener el valor del parámetro "id" de la URL
-            var elementoId = obtenerParametroDeURL('id');
-
-            // Asegúrate de que elementoId tenga el valor correcto antes de llamar a BarrasTemperatura
-            if (elementoId !== null) {
-              BarrasTemperatura(elementoId);
-            } else {
-              console.error('El parámetro "id" no se encontró en la URL.');
-            }
             TemperaturaAire();
             HumedadAire();  
             TemperaturaSuelo();

@@ -52,6 +52,8 @@ CREATE TABLE `configuracion` (
   `stem_min` decimal(10,2) NOT NULL,
   `shumedad_max` decimal(10,2) NOT NULL,
   `shumedad_min` decimal(10,2) NOT NULL,
+  `co2_max` decimal(10,2) NOT NULL,
+  `luz` decimal(10,2) NOT NULL,
   `altura` decimal(10,2) NOT NULL,
   `dias` int(11) NOT NULL,
   `foto` varchar(50) NOT NULL
@@ -87,6 +89,8 @@ CREATE TABLE `monitoreo` (
   `humendad` decimal(10,2) NOT NULL,
   `stem` decimal(10,2) NOT NULL,
   `shumendad` decimal(10,2) NOT NULL,
+  `lum` decimal(10,2) NOT NULL,
+  `co2` decimal(10,2) NOT NULL,
   `altura` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -137,6 +141,8 @@ CREATE TABLE `plantillas` (
   `stem_min` decimal(10,2) NOT NULL,
   `shumedad_max` decimal(10,2) NOT NULL,
   `shumedad_min` decimal(10,2) NOT NULL,
+  `co2_max` decimal(10,2) NOT NULL,
+  `luz` decimal(10,2) NOT NULL,
   `altura` decimal(10,2) NOT NULL,
   `dias` int(11) NOT NULL,
   `foto` varchar(50) NOT NULL,

@@ -17,7 +17,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Registros Ambientales</h6>
             </div>
             <div class="card-body">
-                <p><strong>Abreviaciones: </strong>Temp. = Temperatura. | Hum. = Humedad.</p>
+                <p><strong>Abreviaciones: </strong>Temp. = Temperatura. | Hum. = Humedad. | lum = Lumenes. | ppm = Partículas por millón.</p>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="Table" width="100%" cellspacing="0">
                         <thead>
@@ -27,6 +27,8 @@
                                 <th>Hum. Ambiente</th>
                                 <th>Temp. Suelo</th>
                                 <th>Hum. Suelo</th>
+                                <th>Iluminación</th>
+                                <th>CO<sub>2</sub></th>
                                 <th>Altura</th>
                             </tr>
                         </thead>
@@ -38,6 +40,8 @@
                                     <td><?= $mon['humendad'] ?>%</td>
                                     <td><?= $mon['stem'] ?>°C</td>
                                     <td><?= $mon['shumendad'] ?>%</td>
+                                    <td><?= $mon['lum'] ?> lum</td>
+                                    <td><?= $mon['co2'] ?> ppm</td>
                                     <td><?= $mon['altura'] ?> CM</td>
                                 </tr>
                             <?php } ?>
