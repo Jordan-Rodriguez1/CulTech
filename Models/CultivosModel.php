@@ -29,7 +29,7 @@
             return $res;
         }
 
-        //SELECCIONA LOS DATOS DE UN CULTIVO
+        //SELECCIONA LOS DATOS DE CONFIGURACION DE UN CULTIVO
         public function datosconfiguracion(int $id)
         {
             $this->id = $id;
@@ -208,6 +208,19 @@
         }
 
         /*--------------------------------------------------------- 
+        --------------- MODELOS VISTAS MONITOREO ------------------
+        ----------------------------------------------------------*/
+
+        //SELECCIONA LA ULTIMA MEDICIÓN DEL CUTLIVO
+        public function SelecUltimaMedicion(int $id)
+        {
+            $this->id = $id;
+            $sql = "SELECT * FROM monitoreo WHERE id_cultivo = '{$this->id}' ORDER BY fecha DESC LIMIT 1;";
+            $res = $this->select($sql);
+            return $res;
+        }
+
+        /*--------------------------------------------------------- 
         ---------- MODELOS VISTAS DETALLE TABLAS ------------------
         ----------------------------------------------------------*/
     
@@ -233,7 +246,7 @@
         -------- MODELOS VISTAS DETALLE GRÁFICAS ------------------
         ----------------------------------------------------------*/
 
-        //SELECCIONA ACCIONES REALIZADAS
+        //SELECCIONA LOS ULTIMOS 100 DATOS DEL CULTIVO
         public function SelecMonitoreo(int $id)
         {
             $this->id = $id;

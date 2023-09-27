@@ -37,7 +37,11 @@
                     header("location: " . base_url() . "Cultivos/Lista");    
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
-                    $this->views->getView($this, "Monitoreo", '', $data1, $data2);
+                    $data3 = $this->model->SelecUltimaMedicion($id);
+                    if ($data3 == null) {
+                        $data3 = array("fecha" => "Aún no se registra ningún dato.");
+                    }
+                    $this->views->getView($this, "Monitoreo", '', $data1, $data2, $data3);
                 }
                 die();
             }
@@ -181,10 +185,25 @@
         ------- CONTROLADORES VISTAS MONITOREO ----------------
         ----------------------------------------------------------*/
 
+        //Datos para los gráficos de ultima medición
+        public function UltimaMedicion()
+        {
+            if(isset($_POST['id'])) {
+                $id = $_POST['id'];
+                $data1 = $this->model->SelecUltimaMedicion($id);
+                $data2 = $this->model->datosconfiguracion($id);
 
+                $response = [
+                    'data1' => $data1,
+                    'data2' => $data2,
+                ];
 
-
-
+                echo json_encode($response);
+            } else {
+                echo json_encode(['error' => 'ID no proporcionado']);
+            }
+            die();
+        }
 
         /*--------------------------------------------------------- 
         ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------

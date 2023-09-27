@@ -56,7 +56,7 @@
 <script src="<?= base_url(); ?>Assets/js/chartjs.min.js"></script>
 <script src="<?= base_url(); ?>Assets/js/sweetalert2@9.js"></script>
 <script src="<?= base_url(); ?>Assets/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url(); ?>Assets/DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+<script src="<?= base_url(); ?>Assets/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function() {
         $('#Table').DataTable({
@@ -141,11 +141,6 @@
 				}
 			}
 		});
-    });
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function() {
-      var fileName = $(this).val().split("\\").pop();
-      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 </script>
 </body>
