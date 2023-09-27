@@ -124,6 +124,8 @@
             $stem_min = $datos['stem_min'];
             $shumedad_max = $datos['shumedad_max'];
             $shumedad_min = $datos['shumedad_min'];
+            $luz = $datos['luz'];
+            $co2 = $datos['co2_max'];
             $altura = $datos['altura'];
             $dias = $datos['dias'];
             //DATOS FOTO PLANTILLA
@@ -145,7 +147,7 @@
             //INSERTA DATOS AL CULTIVO
             $agregar = $this->model->insertarCultivo($nombre, $placa);
             //INSERTA LA CONFIGURACIÓN
-            $insert = $this->model->insertarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $noregistro, $nuevoNombre);
+            $insert = $this->model->insertarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $luz, $co2, $altura, $dias, $noregistro, $nuevoNombre);
             if ($insert == 'registrado') {
                 $alert = 'registrado';
             } else {
@@ -200,10 +202,12 @@
             $stem_min = Limpiar($_POST['stem_min']);
             $shumedad_max = Limpiar($_POST['shumedad_max']);
             $shumedad_min = Limpiar($_POST['shumedad_min']);
+            $luz = Limpiar($_POST['luz']);
+            $co2 = Limpiar($_POST['co2']);
             $altura = Limpiar($_POST['altura']);
             $dias = Limpiar($_POST['dias']);
             $id = Limpiar($_POST['id']);
-            $insert = $this->model->EditarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $id);
+            $insert = $this->model->EditarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $luz, $co2, $altura, $dias, $id);
             if ($insert > 0) {
                 $editar = $this->model->EditarCultivo($nombre, $id);
                 $alert = 'editado';

@@ -58,6 +58,8 @@
             $stem_min = Limpiar($_POST['stem_min']);
             $shumedad_max = Limpiar($_POST['shumedad_max']);
             $shumedad_min = Limpiar($_POST['shumedad_min']);
+            $luz = Limpiar($_POST['luz']);
+            $co2 = Limpiar($_POST['co2']);
             $altura = Limpiar($_POST['altura']);
             $dias = Limpiar($_POST['dias']);
             $usuario = $_SESSION['id'];
@@ -75,7 +77,7 @@
                 if ($error_archivo == UPLOAD_ERR_OK) {
                     $ruta_destino = "Assets/img/cultivos/plantillas/".$nombre_nuevo;
                     if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-                        $insert = $this->model->insertarPlantilla($nombre, $tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $usuario, $nombre_nuevo);
+                        $insert = $this->model->insertarPlantilla($nombre, $tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $luz, $co2, $altura, $dias, $usuario, $nombre_nuevo);
                         if ($insert > 0) {
                             $alert = 'registrado';
                         } else {
@@ -148,10 +150,12 @@
             $stem_min = Limpiar($_POST['stem_min']);
             $shumedad_max = Limpiar($_POST['shumedad_max']);
             $shumedad_min = Limpiar($_POST['shumedad_min']);
+            $luz = Limpiar($_POST['luz']);
+            $co2 = Limpiar($_POST['co2']);
             $altura = Limpiar($_POST['altura']);
             $dias = Limpiar($_POST['dias']);
             $id = Limpiar($_POST['id']);
-            $insert = $this->model->EditarPlantilla($nombre, $tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $id);
+            $insert = $this->model->EditarPlantilla($nombre, $tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $luz, $co2, $altura, $dias, $id);
             if ($insert > 0) {
                 $alert = 'editado';
             } else {

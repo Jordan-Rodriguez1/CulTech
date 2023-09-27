@@ -133,6 +133,14 @@
                                 <input type="number" step="0.01" class="form-control" id="shumedad_min" name="shumedad_min" value="<?= $data1['shumedad_min']; ?>">
                               </div>
                               <div class="form-group col-6">
+                                <label for="luz">Horas de luz</label>
+                                <input type="number" step="0.01" class="form-control" id="luz" name="luz" value="<?= $data1['luz']; ?>">
+                              </div>
+                              <div class="form-group col-6">
+                                <label for="co2">CO<sub>2</sub> Máximo (ppm)</label>
+                                <input type="number" step="0.01" class="form-control" id="co2" name="co2" value="<?= $data1['co2_max']; ?>">
+                              </div>
+                              <div class="form-group col-6">
                                 <label for="altura">Altura de Transplante (cm)</label>
                                 <input type="number" step="0.01" class="form-control" id="altura" name="altura" value="<?= $data1['altura']; ?>">
                               </div>

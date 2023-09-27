@@ -55,7 +55,7 @@
         }
 
         //Registra una nueva plantilla
-        public function insertarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $usuario, string $nombre_nuevo)
+        public function insertarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, string $stem_min, string $shumedad_max, string $shumedad_min, string $luz, string $co2, string $altura, string $dias, string $usuario, string $nombre_nuevo)
         {
             $return = "";
             $this->nombre = $nombre;
@@ -67,12 +67,14 @@
             $this->stem_min = $stem_min;
             $this->shumedad_max = $shumedad_max;
             $this->shumedad_min = $shumedad_min;
+            $this->luz = $luz;
+            $this->co2 = $co2;
             $this->altura = $altura;
             $this->dias = $dias;
             $this->usuario = $usuario;
             $this->nombre_nuevo = $nombre_nuevo;
-            $query = "INSERT INTO plantillas(nombre, tem_max, tem_min, humedad_max, humedad_min, stem_max, stem_min, shumedad_max, shumedad_min, altura, dias, id_usuario, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->usuario, $this->nombre_nuevo);
+            $query = "INSERT INTO plantillas(nombre, tem_max, tem_min, humedad_max, humedad_min, stem_max, stem_min, shumedad_max, shumedad_min, luz, co2_max, altura, dias, id_usuario, foto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, $this->shumedad_max, $this->shumedad_min, $this->luz, $this->co2, $this->altura, $this->dias, $this->usuario, $this->nombre_nuevo);
             $resul = $this->insert($query, $data);
             $return = "registrado";
             return $return;
@@ -97,7 +99,8 @@
 
         //EDITAR UNA PLANTILLA
         public function EditarPlantilla(string $nombre, string $tem_max, string $tem_min, string $humedad_max, string $humedad_min, string $stem_max, 
-                                        string $stem_min, string $shumedad_max, string $shumedad_min, string $altura, string $dias, string $id)
+                                        string $stem_min, string $shumedad_max, string $shumedad_min, string $luz, string $co2, string $altura, 
+                                        string $dias, string $id)
         {
             $return = "";
             $this->nombre = $nombre;
@@ -109,13 +112,15 @@
             $this->stem_min = $stem_min;
             $this->shumedad_max = $shumedad_max;
             $this->shumedad_min = $shumedad_min;
+            $this->luz = $luz;
+            $this->co2 = $co2;
             $this->altura = $altura;
             $this->dias = $dias;
             $this->id = $id;
             $query = "UPDATE plantillas SET nombre=?, tem_max=?, tem_min=?, humedad_max=?, humedad_min=?, stem_max=?, stem_min=?, 
-                        shumedad_max=?, shumedad_min=?, altura=?, dias=? WHERE id=?";
+                        shumedad_max=?, shumedad_min=?, luz=?, co2_max=?, altura=?, dias=? WHERE id=?";
             $data = array($this->nombre, $this->tem_max, $this->tem_min, $this->humedad_max, $this->humedad_min, $this->stem_max, $this->stem_min, 
-                        $this->shumedad_max, $this->shumedad_min, $this->altura, $this->dias, $this->id);
+                        $this->shumedad_max, $this->shumedad_min, $this->luz, $this->co2, $this->altura, $this->dias, $this->id);
             $resul = $this->update($query, $data);
             return $resul;
         }
