@@ -204,7 +204,7 @@
         }
 
         /*--------------------------------------------------------- 
-        ---------- MODELOS VISTAS DETALLE -------------------------
+        ---------- MODELOS VISTAS DETALLE TABLAS ------------------
         ----------------------------------------------------------*/
     
         //SELECCIONA DATOS DE MONITOREO
@@ -224,6 +224,21 @@
             $res = $this->select_all($sql);
             return $res;
         }
+
+        /*--------------------------------------------------------- 
+        -------- MODELOS VISTAS DETALLE GRÁFICAS ------------------
+        ----------------------------------------------------------*/
+
+        //SELECCIONA ACCIONES REALIZADAS
+        public function SelecTemperaturas(int $id)
+        {
+            $this->id = $id;
+            $sql = "SELECT * FROM monitoreo WHERE id_cultivo = '{$this->id}'";
+            $res = $this->select_all($sql);
+            return $res;
+        }
+
+
 
     }
 ?>

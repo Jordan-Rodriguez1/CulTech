@@ -13,35 +13,29 @@
         </div>
         <!-- Content Row -->
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Suelo</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Monitoreo de Temperatura</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
-                            <canvas id="myAreaChart"></canvas>
+                            <canvas id="BarrasTemperaturaChart"></canvas>
                         </div>
-                        <hr>
-                        Styling for the area chart can be found in the
-                        <code>/js/demo/chart-area-demo.js</code> file.
                     </div>
                 </div>
             </div>
             <!-- Donut Chart -->
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Ambiente</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Monitoreo de la Humedad</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
                             <canvas id="myBarChart"></canvas>
                         </div>
-                        <hr>
-                        Styling for the bar chart can be found in the
-                        <code>/js/demo/chart-bar-demo.js</code> file.
                     </div>
                 </div>
             </div>
@@ -49,15 +43,12 @@
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Suelo</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Niveles de Luz</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
                             <canvas id="myAreaChart"></canvas>
                         </div>
-                        <hr>
-                        Styling for the area chart can be found in the
-                        <code>/js/demo/chart-area-demo.js</code> file.
                     </div>
                 </div>
             </div>
@@ -65,15 +56,12 @@
             <div class="col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Ambiente</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Niveles de CO<sub>2</sub></h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
                             <canvas id="myBarChart"></canvas>
                         </div>
-                        <hr>
-                        Styling for the bar chart can be found in the
-                        <code>/js/demo/chart-bar-demo.js</code> file.
                     </div>
                 </div>
             </div>
@@ -87,15 +75,25 @@
                         <div class="chart-bar">
                             <canvas id="myBarChart"></canvas>
                         </div>
-                        <hr>
-                        Styling for the bar chart can be found in the
-                        <code>/js/demo/chart-bar-demo.js</code> file.
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- /.container-fluid -->
+    <script>
+        window.addEventListener("load", function() {
+            // Llama a la función para obtener el valor del parámetro "id" de la URL
+            var elementoId = obtenerParametroDeURL('id');
+
+            // Asegúrate de que elementoId tenga el valor correcto antes de llamar a BarrasTemperatura
+            if (elementoId !== null) {
+              BarrasTemperatura(elementoId);
+            } else {
+              console.error('El parámetro "id" no se encontró en la URL.');
+            }
+        })
+    </script>
 
 <?php 
     pie();

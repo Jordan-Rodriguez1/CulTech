@@ -183,6 +183,7 @@
 
 
 
+
         /*--------------------------------------------------------- 
         ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------
         ----------------------------------------------------------*/
@@ -248,14 +249,26 @@
         }
 
         /*--------------------------------------------------------- 
-        ----------CONTROLADORES VISTAS DETALLE --------------------
+        ----------CONTROLADORES VISTAS DETALLE TABLAS -------------
         ----------------------------------------------------------*/
 
         //EN ESTA VISTA NO SE REALIZA NINGUNA ACCIÓN
 
         /*--------------------------------------------------------- 
-        ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------
+        ------- CONTROLADORES VISTAS DETALLE GRÁFICAS -------------
         ----------------------------------------------------------*/
+
+        public function GraficaTemperatura()
+        {
+            if(isset($_POST['id'])) {
+                $id = $_POST['id'];
+                $data = $this->model->SelecTemperaturas($id);
+                echo json_encode($data);
+            } else {
+                echo json_encode(['error' => 'ID no proporcionado']);
+            }
+            die();
+        }
 
     }
 ?>

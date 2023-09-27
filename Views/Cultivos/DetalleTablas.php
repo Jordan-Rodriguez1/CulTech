@@ -34,10 +34,10 @@
                             <?php foreach ($data2 as $mon) { ?>
                                 <tr>
                                     <td><?= $mon['fecha'] ?></td>
-                                    <td><?= $mon['tem'] ?> °C</td>
-                                    <td><?= $mon['humendad'] ?> %</td>
-                                    <td><?= $mon['stem'] ?> °C</td>
-                                    <td><?= $mon['shumendad'] ?> %</td>
+                                    <td><?= $mon['tem'] ?>°C</td>
+                                    <td><?= $mon['humendad'] ?>%</td>
+                                    <td><?= $mon['stem'] ?>°C</td>
+                                    <td><?= $mon['shumendad'] ?>%</td>
                                     <td><?= $mon['altura'] ?> CM</td>
                                 </tr>
                             <?php } ?>

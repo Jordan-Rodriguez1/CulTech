@@ -27,6 +27,8 @@
     </head>
 
     <body id="page-top">
+        <!-- ESTO ES PARA TENER LA BASE URL EN JS-->
+        <input type="hidden" id="url" value="<?= base_url(); ?>">
         <!-- Page Wrapper -->
         <div id="wrapper">
 

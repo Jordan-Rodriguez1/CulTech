@@ -86,13 +86,16 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative h-100">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Días de Cultivo</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Datos Generales</h6>
                     </div>
                     <div class="card-body text-center">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2 my-5">
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['dias']-$diasDiferencia;?> Días para el transplante</div>
+                                <br>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['altura']-$diasDiferencia;?> CM para el transplante</div>
                             </div>
                         </div>
                     </div>
@@ -155,15 +158,14 @@
                 <!-- Información del perfil -->
                 <div class="card position-relative h-100"">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Altura Aproximada Cultivo</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Niveles de CO<sub>2</sub></h6>
                     </div>
                     <div class="card-body text-center">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 my-5">
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM</div>
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['altura']-$diasDiferencia;?> CM para el transplante</div>
-                            </div>
-                        </div>
+                        <br>
+                      <div class="row no-gutters align-items-center justify-content-center">
+                        <!-- /.AQUÍ VA EL GRÁFICO -->
+                        <div class="align-items-center justify-content-center" id="CO2Chart"></div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -173,12 +175,22 @@
     <!-- /.container-fluid -->
 
     <script>
-      window.addEventListener("load", function() {
-        TemperaturaAire();
-        HumedadAire();  
-        TemperaturaSuelo();
-        HumedadSuelo();  
-      })
+        window.addEventListener("load", function() {
+            // Llama a la función para obtener el valor del parámetro "id" de la URL
+            var elementoId = obtenerParametroDeURL('id');
+
+            // Asegúrate de que elementoId tenga el valor correcto antes de llamar a BarrasTemperatura
+            if (elementoId !== null) {
+              BarrasTemperatura(elementoId);
+            } else {
+              console.error('El parámetro "id" no se encontró en la URL.');
+            }
+            TemperaturaAire();
+            HumedadAire();  
+            TemperaturaSuelo();
+            HumedadSuelo();  
+            CO2();
+        })
     </script>
 
 <?php 

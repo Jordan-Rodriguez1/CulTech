@@ -131,7 +131,6 @@ $(document).ready(function () {
 });
 
 
-
 //EDITAR PLACA DESDE MODAL
 document.querySelectorAll('[data-toggle="modal"]').forEach(function (element) {
   element.addEventListener("click", function () {
@@ -145,24 +144,106 @@ document.querySelectorAll('[data-toggle="modal"]').forEach(function (element) {
   });
 });
 
+//FUNCION PARA OBTENER ID
+function obtenerParametroDeURL(nombreParametro) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(nombreParametro);
+}
 
 const base = document.getElementById("url").value;
 
+//Gráfica de Temperatura
+function BarrasTemperatura(elementId) {
+  var requestData = {
+    id: elementId,
+  };
+  $.ajax({
+    url: base + "Cultivos/GraficaTemperatura",
+    type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
+    success: function (response) {
+      var data = JSON.parse(response);
+      var fecha = [];
+      var aire = [];
+      var suelo = [];
+      for (var i = 0; i < data.length; i++) {
+        fecha.push(data[i]["fecha"]);
+        aire.push(data[i]["tem"]);
+        suelo.push(data[i]["stem"]);
+      }
+      const chartData = {
+        labels: fecha,
+        datasets: [
+          {
+            label: "Ambiente",
+            data: aire,
+            backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
+            borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
+            yAxisID: "y",
+          },
+          {
+            label: "Suelo",
+            data: suelo,
+            backgroundColor: "rgba(20, 255, 20, 0.2)", // Color de fondo
+            borderColor: "rgba(0, 0, 0, 0.2)", // Color del borde
+            yAxisID: "y1",
+          },
+        ],
+      };
+      console.log("HOLA2");
+      // Bar Chart Example
+      var ctx = document.getElementById("BarrasTemperaturaChart");
+      console.log(ctx);
+      console.log("HOLA1");
+  
+          const Colima = {
+            label: "Colima",
+            data: aire,
+            backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+            borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+            borderWidth: 1, // Ancho del borde
+          };
+        console.log("HOLA2");
+          const Nacional = {
+            label: "Nacional",
+            data: suelo,
+            borderDash: [3, 5],
+            backgroundColor: "rgba(0, 168, 198, 0.0)", // Color de fondo
+            borderColor: "rgba(255, 0, 0, 1)", // Color del borde
+            borderWidth: 1, // Ancho del borde
+          };
+        console.log("HOLA1");
+          var myLineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: fecha,
+              datasets: [Nacional, Colima],
+            },
+          
+      });
+    },
+  });
+}
+
 //Gráfica de Barra
 
-function BarrasAlumnos() {
+function BarrasAlumnos(elementId) {
+  var requestData = {
+    id: elementId,
+  };
   $.ajax({
-    url: base + "Reportes/AsistenciasFaltas",
+    url: base + "Cultivos/GraficaTemperatura",
     type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
     success: function (response) {
       var data = JSON.parse(response);
       var asistencias = [];
       var faltas = [];
       var grado = [];
       for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"]);
-        faltas.push(data[i]["faltas"]);
-        grado.push(data[i]["grado"] + "° Semestre");
+        asistencias.push(data[i]["stem"]);
+        faltas.push(data[i]["tem"]);
+        grado.push(data[i]["fecha"] + "° Semestre");
       }
       // Set new default font family and font color to mimic Bootstrap's default styling
       Chart.defaults.global.defaultFontFamily =
@@ -186,7 +267,7 @@ function BarrasAlumnos() {
       };
 
       // Bar Chart Example
-      var ctx = document.getElementById("BarrasAlumnos");
+      var ctx = document.getElementById("BarrasTemperaturaChart");
       var myLineChart = new Chart(ctx, {
         type: "bar",
         data: {
@@ -1321,6 +1402,25 @@ function HumedadSuelo() {
   };
   var chart = new google.visualization.Gauge(
     document.getElementById("HumedadSueloChart")
+  );
+  chart.draw(data, options);
+};
+
+function CO2() {
+  
+  var data = google.visualization.arrayToDataTable([
+    ["Label", "Value"],
+    ["%", 80], //AQUI VA EL VALOR ACTUAL
+  ]);
+  var options = {
+    redFrom: 90, //AQUI ES DESDE EL VALOR MAXIMO
+    redTo: 100,
+    yellowFrom: 0,
+    yellowTo: 60, //AQUI ES DESDE EL VALOR MINIM
+    minorTicks: 5,
+  };
+  var chart = new google.visualization.Gauge(
+    document.getElementById("CO2Chart")
   );
   chart.draw(data, options);
 };
