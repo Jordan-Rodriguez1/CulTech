@@ -34,7 +34,9 @@
                 $id = Limpiar($_GET['id']);
                 $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista");
+                } elseif ($data1['estado'] == 1) {
+                    header("location: " . base_url() . "Cultivos/Inactivos");
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
                     $data3 = $this->model->SelecUltimaMedicion($id);
@@ -56,7 +58,9 @@
                 $id = Limpiar($_GET['id']);
                 $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista"); 
+                } elseif ($data1['estado'] == 1) {
+                    header("location: " . base_url() . "Cultivos/Inactivos"); 
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
                     $this->views->getView($this, "Configuracion", '', $data1, $data2);
@@ -93,7 +97,9 @@
                 $id = Limpiar($_GET['id']);
                 $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista");
+                } elseif ($data1['estado'] == 1) {
+                    header("location: " . base_url() . "Cultivos/Inactivos");
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
                     $this->views->getView($this, "DetalleGraficas", '', $data1, $data2);

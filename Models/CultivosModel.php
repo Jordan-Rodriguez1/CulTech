@@ -14,7 +14,6 @@
         public function DatosPlantilla(int $id)
         {
             $this->id = $id;
-            $this->user = $_SESSION['id'];
             $sql = "SELECT * FROM plantillas WHERE id = '{$this->id}'";
             $res = $this->select($sql);
             return $res;
@@ -24,7 +23,8 @@
         public function datoscultivo(int $id)
         {
             $this->id = $id;
-            $sql = "SELECT * FROM cultivos WHERE id = '{$this->id}'";
+            $this->user = $_SESSION['id'];
+            $sql = "SELECT * FROM cultivos WHERE id = '{$this->id}' AND id_usuario = '{$this->user}'";
             $res = $this->select($sql);
             return $res;
         }

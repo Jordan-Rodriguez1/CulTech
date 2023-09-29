@@ -72,7 +72,7 @@
                       <form id="formulario2" method="post" action="<?php echo base_url(); ?>Usuarios/cambiarpic" autocomplete="off" enctype="multipart/form-data">
                           <div class="form-group">
                             <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="archivo" name="archivo">
+                              <input type="file" class="custom-file-input" id="archivo" name="archivo" required>
                               <label class="custom-file-label" for="archivo">Selecciona el archivos</label>
                             </div>
                             <input type="hidden" class="form-control" id="id" name="id" value="<?= $_SESSION['id']; ?>">
@@ -96,17 +96,17 @@
                         <form id="formulario1" method="post" action="<?php echo base_url(); ?>Usuarios/actualizar" autocomplete="off" enctype="multipart/form-data">
                             <div class="form-group">
                               <label for="correo">Correo</label>
-                              <input type="text" class="form-control" id="correo" name="correo" value="<?= $_SESSION['correo']; ?>">
+                              <input type="text" class="form-control" id="correo" name="correo" value="<?= $_SESSION['correo']; ?>" required>
                               <input type="hidden" class="form-control" id="id" name="id" value="<?= $_SESSION['id']; ?>">
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
                                   <label for="nombre">Nombres</label>
-                                  <input type="text" class="form-control" id="nombre" name="nombre" value="<?= $_SESSION['nombre']; ?>">
+                                  <input type="text" class="form-control" id="nombre" name="nombre" value="<?= $_SESSION['nombre']; ?>" required>
                                 </div>
                                 <div class="form-group col-6">
                                   <label for="apellido">Apellidos</label>
-                                  <input type="text" class="form-control" id="apellido" name="apellido" value="<?= $_SESSION['apellido']; ?>">
+                                  <input type="text" class="form-control" id="apellido" name="apellido" value="<?= $_SESSION['apellido']; ?>" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success btn-icon-split">
@@ -128,16 +128,16 @@
                         <form id="formulario1" method="post" action="<?php echo base_url(); ?>Usuarios/cambiar" autocomplete="off" enctype="multipart/form-data">
                             <div class="form-group">
                               <label for="actual">Contraseña Actual</label>
-                              <input type="password" class="form-control" id="actual" name="actual" value="">
+                              <input type="password" class="form-control" id="actual" name="actual" value="" required>
                               <input type="hidden" class="form-control" id="id" name="id" value="<?= $_SESSION['id']; ?>">
                             </div>
                             <div class="form-group">
                               <label for="nueva">Nueva Contraseña</label>
-                              <input type="password" class="form-control" id="nueva" name="nueva" value="">
+                              <input type="password" class="form-control" id="nueva" name="nueva" value="" required>
                             </div>
                             <div class="form-group">
                               <label for="nuevar">Repite Nueva Contraseña</label>
-                              <input type="password" class="form-control" id="nuevar" name="nuevar" value="">
+                              <input type="password" class="form-control" id="nuevar" name="nuevar" value="" required>
                             </div>
                             <button type="submit" class="btn btn-success btn-icon-split">
                                 <span class="icon text-white-50">

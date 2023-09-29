@@ -86,11 +86,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                           <label for="nombre">Nombre del Cultivo</label>
-                          <input type="text" class="form-control" id="nombre" name="nombre">
+                          <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
                         <div class="form-group">
                             <label for="placa">Selecciones Placa</label>
-                            <select class="form-control" id="placa" name="placa">
+                            <select class="form-control" id="placa" name="placa" required>
                                 <?php foreach ($data3 as $placa) {
                                     echo "<option value='".$placa['id_placa']."'>".$placa['nombre']."</option>";
                                 } ?>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group">
                             <label for="placa">Selecciones Plantilla</label>
-                            <select class="form-control" id="plantilla" name="plantilla">
+                            <select class="form-control" id="plantilla" name="plantilla" required>
                                 <?php foreach ($data2 as $plantilla) {
                                     echo "<option value='".$plantilla['id']."'>".$plantilla['nombre']."</option>";
                                 } ?>
