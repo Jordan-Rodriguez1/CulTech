@@ -52,17 +52,28 @@
                     break;
             }
             
-            $insert = $this->model->insertarAcciones($id_cultivo, $descripcion, $codigo);
+            if ($relevancia == 1) {
+                $insert = $this->model->insertarAcciones($id_cultivo, $descripcion, $codigo);
+            }
+
             $ingresar = $this->model->insertarNotificaciones($id_usuario, $descripcion, $relevancia);
             
-            //Si relevancia es 3 manda correo
+            
+            //Si relevancia es 3 manda correo y pone cultivo con alerta
             if ($relevancia == 3) {
                 //obtiene datos del usuario
                 $usuario = $this->model->DatosUsuario($id_usuario);
                 $asunto = 'ALERTA CULTIVO '.$nombre;
                 $cuerpo = "<p>$descripcion</p><br>";
                 EnviarCorreo($usuario['correo'], $usuario['nombre'], $asunto, $cuerpo);
-            } 
+                //PONE CULTIVO CON ALERTA
+                $alerta = 1;
+                $cultivo = $this->model->CultivoAlerta($id_cultivo, $alerta);
+            } elseif ($data['alerta'] == 1) {
+                //PONE CULTIVO SIN ALERTA
+                $alerta = 0;
+                $cultivo = $this->model->CultivoAlerta($id_cultivo, $alerta);
+            }
             die();   
         }
 
