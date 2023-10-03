@@ -94,7 +94,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['dias']-$diasDiferencia;?> Días para el transplante</div>
                                 <br>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM de altura.</div>
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['altura']-$diasDiferencia;?> CM para el transplante</div>
                             </div>
                         </div>
@@ -169,17 +169,25 @@
                 </div>
             </div>
         </div>
-        <p><strong>Última Medición: </strong></p>
+        <p><strong>Última Medición: </strong><?= $data3['fecha']; ?></p>
     </div>
     <!-- /.container-fluid -->
 
     <script>
         window.addEventListener("load", function() {
-            TemperaturaAire();
-            HumedadAire();  
-            TemperaturaSuelo();
-            HumedadSuelo();  
-            CO2();
+            // Llama a la función para obtener el valor del parámetro "id" de la URL
+            var elementoId = obtenerParametroDeURL('id');
+
+            // Asegúrate de que elementoId tenga el valor correcto antes de llamar a BarrasTemperatura
+            if (elementoId !== null) {
+                TemperaturaAire(elementoId);
+                HumedadAire(elementoId);  
+                TemperaturaSuelo(elementoId);
+                HumedadSuelo(elementoId);  
+                CO2(elementoId);
+            } else {
+              console.error('El parámetro "id" no se encontró en la URL.');
+            }
         })
     </script>
 

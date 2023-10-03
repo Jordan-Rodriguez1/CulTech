@@ -91,11 +91,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                           <label for="nombre">Nombre de la Placa</label>
-                          <input type="text" class="form-control" id="nombre" name="nombre">
+                          <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
                         <div class="form-group">
                           <label for="key">Identificador de la placa</label>
-                          <input type="number" class="form-control" id="key" name="key">
+                          <input type="number" class="form-control" id="key" name="key" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -122,11 +122,11 @@
                         <div class="form-group">
                           <label for="nombree">Nombre de la Placa</label>
                           <input type="hidden" class="form-control" id="ide" name="ide">
-                          <input type="text" class="form-control" id="nombree" name="nombree">
+                          <input type="text" class="form-control" id="nombree" name="nombree" required>
                         </div>
                         <div class="form-group">
                           <label for="keye">Identificador de la placa</label>
-                          <input type="number" class="form-control" id="keye" name="keye">
+                          <input type="number" class="form-control" id="keye" name="keye" required>
                         </div>
                     </div>
                     <div class="modal-footer">

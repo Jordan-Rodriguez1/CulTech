@@ -11,7 +11,30 @@
         
         public function Inicio()
         {
-            $this->views->getView($this, "Inicio");
+            $data1 = $this->model->TotalCultivos(); 
+            $data2 = $this->model->AvanceCultivos();
+            $avance = 0;
+            foreach ($data2 as $pm) {
+                //PROMEDIO DE AVANCE ALTURA
+                if ($pm['altura_m'] == null || $pm['altura_m'] == "") {
+                    $mon = 0;
+                } else {
+                    $mon = $pm['altura_m'];
+                }
+                $final = $pm['altura'];
+                $avance_altura = $mon*100/$final;
+                //PROMEDIO DE AVANCE DIAS
+                $mond = $pm['DiferenciaDias'];
+                $finald = $pm['dias'];
+                $avance_dias = $mond*100/$finald;
+                //PROMEDIO DE LOS DOS
+                $promedio = ($avance_altura+$avance_dias)/2;
+                $avance += $promedio;
+            }
+            $cantidadElementos = count($data2);  // Obtiene la cantidad de elementos
+            $promedioFinal = $avance / $cantidadElementos;  // Calcula el promedio final
+            $data3 = round($promedioFinal,2); 
+            $this->views->getView($this, "Inicio",'', $data1, $data2, $data3);
         }
 
         public function Notificaciones()

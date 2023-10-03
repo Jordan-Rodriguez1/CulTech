@@ -34,10 +34,16 @@
                 $id = Limpiar($_GET['id']);
                 $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista");
+                } elseif ($data1['estado'] == 1) {
+                    header("location: " . base_url() . "Cultivos/Inactivos");
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
-                    $this->views->getView($this, "Monitoreo", '', $data1, $data2);
+                    $data3 = $this->model->SelecUltimaMedicion($id);
+                    if ($data3 == null) {
+                        $data3 = array("fecha" => "Aún no se registra ningún dato.");
+                    }
+                    $this->views->getView($this, "Monitoreo", '', $data1, $data2, $data3);
                 }
                 die();
             }
@@ -52,7 +58,9 @@
                 $id = Limpiar($_GET['id']);
                 $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista"); 
+                } elseif ($data1['estado'] == 1) {
+                    header("location: " . base_url() . "Cultivos/Inactivos"); 
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
                     $this->views->getView($this, "Configuracion", '', $data1, $data2);
@@ -89,7 +97,9 @@
                 $id = Limpiar($_GET['id']);
                 $data1 = $this->model->datoscultivo($id);
                 if ($data1 == null) {
-                    header("location: " . base_url() . "Cultivos/Lista");    
+                    header("location: " . base_url() . "Cultivos/Lista");
+                } elseif ($data1['estado'] == 1) {
+                    header("location: " . base_url() . "Cultivos/Inactivos");
                 } else {
                     $data2 = $this->model->datosconfiguracion($id);
                     $this->views->getView($this, "DetalleGraficas", '', $data1, $data2);
@@ -124,6 +134,8 @@
             $stem_min = $datos['stem_min'];
             $shumedad_max = $datos['shumedad_max'];
             $shumedad_min = $datos['shumedad_min'];
+            $luz = $datos['luz'];
+            $co2 = $datos['co2_max'];
             $altura = $datos['altura'];
             $dias = $datos['dias'];
             //DATOS FOTO PLANTILLA
@@ -145,7 +157,7 @@
             //INSERTA DATOS AL CULTIVO
             $agregar = $this->model->insertarCultivo($nombre, $placa);
             //INSERTA LA CONFIGURACIÓN
-            $insert = $this->model->insertarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $noregistro, $nuevoNombre);
+            $insert = $this->model->insertarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $luz, $co2, $altura, $dias, $noregistro, $nuevoNombre);
             if ($insert == 'registrado') {
                 $alert = 'registrado';
             } else {
@@ -179,10 +191,25 @@
         ------- CONTROLADORES VISTAS MONITOREO ----------------
         ----------------------------------------------------------*/
 
+        //Datos para los gráficos de ultima medición
+        public function UltimaMedicion()
+        {
+            if(isset($_POST['id'])) {
+                $id = $_POST['id'];
+                $data1 = $this->model->SelecUltimaMedicion($id);
+                $data2 = $this->model->datosconfiguracion($id);
 
+                $response = [
+                    'data1' => $data1,
+                    'data2' => $data2,
+                ];
 
-
-
+                echo json_encode($response);
+            } else {
+                echo json_encode(['error' => 'ID no proporcionado']);
+            }
+            die();
+        }
 
         /*--------------------------------------------------------- 
         ------- CONTROLADORES VISTAS CONFIGURACIÓN ----------------
@@ -200,10 +227,12 @@
             $stem_min = Limpiar($_POST['stem_min']);
             $shumedad_max = Limpiar($_POST['shumedad_max']);
             $shumedad_min = Limpiar($_POST['shumedad_min']);
+            $luz = Limpiar($_POST['luz']);
+            $co2 = Limpiar($_POST['co2']);
             $altura = Limpiar($_POST['altura']);
             $dias = Limpiar($_POST['dias']);
             $id = Limpiar($_POST['id']);
-            $insert = $this->model->EditarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $altura, $dias, $id);
+            $insert = $this->model->EditarConfiguracion($tem_max, $tem_min, $humedad_max, $humedad_min, $stem_max, $stem_min, $shumedad_max, $shumedad_min, $luz, $co2, $altura, $dias, $id);
             if ($insert > 0) {
                 $editar = $this->model->EditarCultivo($nombre, $id);
                 $alert = 'editado';

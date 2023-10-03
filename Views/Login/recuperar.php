@@ -23,7 +23,7 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="correo" name="correo" aria-describedby="emailHelp"
-                                                placeholder="Ingresa tu email ...">
+                                                placeholder="Ingresa tu email ..." required>
                                         </div>
                                         <?php if (isset($_GET['msg'])) {
                                             $alert = $_GET['msg'];

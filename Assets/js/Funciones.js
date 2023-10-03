@@ -494,6 +494,214 @@ function LineasAltura(elementId) {
   });
 }
 
+//VELOCIMETRO TEMPERATURA
+ function TemperaturaAire(elementId) {
+  var requestData = {
+    id: elementId,
+  };
+  $.ajax({
+    url: base + "Cultivos/UltimaMedicion",
+    type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
+    success: function (response) {
+      var data = JSON.parse(response);
+      var data1 = data.data1; // Acceder a la variable data1 del JSON
+      var data2 = data.data2; // Acceder a la variable data2 del JSON
+      var variable1 = 0;
+      var max = 0;
+      var min = 0;
+
+      variable1 = parseInt(data1["tem"]);
+      max = parseInt(data2["tem_max"]);
+      min = parseInt(data2["tem_min"]);
+
+      var data = google.visualization.arrayToDataTable([
+        ["Label", "Value"],
+        ["°C", variable1], //AQUI VA EL VALOR ACTUAL
+      ]);
+      var options = {
+        max: 40,
+        redFrom: max, //AQUI ES DESDE EL VALOR MAXIMO
+        redTo: 40,
+        yellowFrom: 0,
+        yellowTo: min, //AQUI ES DESDE EL VALOR MINIMO
+        minorTicks: 10,
+      };
+      var chart = new google.visualization.Gauge(
+        document.getElementById("TemperaturaAireChart")
+      );
+      chart.draw(data, options);
+    },
+  });
+};
+
+//VELOCIMETRO HUMEDAD
+function HumedadAire(elementId) {
+  var requestData = {
+    id: elementId,
+  };
+  $.ajax({
+    url: base + "Cultivos/UltimaMedicion",
+    type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
+    success: function (response) {
+      var data = JSON.parse(response);
+      var data1 = data.data1; // Acceder a la variable data1 del JSON
+      var data2 = data.data2; // Acceder a la variable data2 del JSON
+      var variable1 = 0;
+      var max = 0;
+      var min = 0;
+
+      variable1 = parseInt(data1["humendad"]);
+      max = parseInt(data2["humedad_max"]);
+      min = parseInt(data2["humedad_min"]);
+
+      var data = google.visualization.arrayToDataTable([
+        ["Label", "Value"],
+        ["%", variable1], //AQUI VA EL VALOR ACTUAL
+      ]);
+      var options = {
+        redFrom: max, //AQUI ES DESDE EL VALOR MAXIMO
+        redTo: 100,
+        yellowFrom: 0,
+        yellowTo: min, //AQUI ES DESDE EL VALOR MINIMO
+        minorTicks: 5,
+      };
+      var chart = new google.visualization.Gauge(
+        document.getElementById("HumedadAireChart")
+      );
+      chart.draw(data, options);
+    },
+  });
+};
+
+//VELOCIMETRO TEMPERATURA SUELO
+function TemperaturaSuelo(elementId) {
+  var requestData = {
+    id: elementId,
+  };
+  $.ajax({
+    url: base + "Cultivos/UltimaMedicion",
+    type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
+    success: function (response) {
+      var data = JSON.parse(response);
+      var data1 = data.data1; // Acceder a la variable data1 del JSON
+      var data2 = data.data2; // Acceder a la variable data2 del JSON
+      var variable1 = 0;
+      var max = 0;
+      var min = 0;
+
+      variable1 = parseInt(data1["stem"]);
+      max = parseInt(data2["stem_max"]);
+      min = parseInt(data2["stem_min"]);
+
+      console.log(variable1);
+      console.log(max);
+      console.log(min);
+      var data = google.visualization.arrayToDataTable([
+        ["Label", "Value"],
+        ["°C", variable1], //AQUI VA EL VALOR ACTUAL
+      ]);
+      var options = {
+        max: 40,
+        redFrom: max, //AQUI ES DESDE EL VALOR MAXIMO
+        redTo: 40,
+        yellowFrom: 0,
+        yellowTo: min, //AQUI ES DESDE EL VALOR MINIMO
+        minorTicks: 10,
+      };
+      var chart = new google.visualization.Gauge(
+        document.getElementById("TemperaturaSueloChart")
+      );
+      chart.draw(data, options);
+    },
+  });
+};
+
+//VELOCIMETRO HUMEDAD SUELO
+function HumedadSuelo(elementId) {
+  var requestData = {
+    id: elementId,
+  };
+  $.ajax({
+    url: base + "Cultivos/UltimaMedicion",
+    type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
+    success: function (response) {
+      var data = JSON.parse(response);
+      var data1 = data.data1; // Acceder a la variable data1 del JSON
+      var data2 = data.data2; // Acceder a la variable data2 del JSON
+      var variable1 = 0;
+      var max = 0;
+      var min = 0;
+
+      variable1 = parseInt(data1["shumendad"]);
+      max = parseInt(data2["shumedad_max"]);
+      min = parseInt(data2["shumedad_min"]);
+
+      var data = google.visualization.arrayToDataTable([
+        ["Label", "Value"],
+        ["%", variable1], //AQUI VA EL VALOR ACTUAL
+      ]);
+      var options = {
+        redFrom: max, //AQUI ES DESDE EL VALOR MAXIMO
+        redTo: 100,
+        yellowFrom: 0,
+        yellowTo: min, //AQUI ES DESDE EL VALOR MINIMO
+        minorTicks: 5,
+      };
+      var chart = new google.visualization.Gauge(
+        document.getElementById("HumedadSueloChart")
+      );
+      chart.draw(data, options);
+    },
+  });
+};
+
+//VELOCIMETRO CO2
+function CO2(elementId) {
+  var requestData = {
+    id: elementId,
+  };
+  $.ajax({
+    url: base + "Cultivos/UltimaMedicion",
+    type: "POST",
+    data: requestData, // Envía los datos como parte de la solicitud
+    success: function (response) {
+      var data = JSON.parse(response);
+      var data1 = data.data1; // Acceder a la variable data1 del JSON
+      var data2 = data.data2; // Acceder a la variable data2 del JSON
+      var variable1 = 0;
+      var max = 0;
+      var min = 0;
+
+      variable1 = parseInt(data1["co2"]);
+      max = parseInt(data2["co2_max"]);
+      min = max - max * 0.1;
+
+      var data = google.visualization.arrayToDataTable([
+        ["Label", "Value"],
+        ["ppm", variable1], //AQUI VA EL VALOR ACTUAL
+      ]);
+      var options = {
+        max: 1000, //INVESTIGAR RANGOS
+        redFrom: max, //AQUI ES DESDE EL VALOR MAXIMO
+        redTo: 1000,
+        yellowFrom: min,
+        yellowTo: max, //AQUI ES DESDE EL VALOR MINIMO
+        minorTicks: 5,
+      };
+      var chart = new google.visualization.Gauge(
+        document.getElementById("CO2Chart")
+      );
+      chart.draw(data, options);
+    },
+  });
+};
+
+
+//-----------------
 function PastelMateriales6() {
   $.ajax({
     url: base + "Reportes/PastelMateriales6",
@@ -539,97 +747,3 @@ function PastelMateriales6() {
     },
   });
 }
-
-function TemperaturaAire() {
-  var data = google.visualization.arrayToDataTable([
-    ["Label", "Value"],
-    ["°C", 25], //AQUI VA EL VALOR ACTUAL
-  ]);
-  var options = {
-    max: 40,
-    redFrom: 30, //AQUI ES DESDE EL VALOR MAXIMO
-    redTo: 40,
-    yellowFrom: 0,
-    yellowTo: 10, //AQUI ES DESDE EL VALOR MINIMO
-    minorTicks: 10,
-  };
-  var chart = new google.visualization.Gauge(
-    document.getElementById("TemperaturaAireChart")
-  );
-  chart.draw(data, options);
-};
-
-function HumedadAire() {
-  var data = google.visualization.arrayToDataTable([
-    ["Label", "Value"],
-    ["%", 80], //AQUI VA EL VALOR ACTUAL
-  ]);
-  var options = {
-    redFrom: 90, //AQUI ES DESDE EL VALOR MAXIMO
-    redTo: 100,
-    yellowFrom: 0,
-    yellowTo: 60, //AQUI ES DESDE EL VALOR MINIM
-    minorTicks: 5,
-  };
-  var chart = new google.visualization.Gauge(
-    document.getElementById("HumedadAireChart")
-  );
-  chart.draw(data, options);
-};
-
-function TemperaturaSuelo() {
-  var data = google.visualization.arrayToDataTable([
-    ["Label", "Value"],
-    ["°C", 80], //AQUI VA EL VALOR ACTUAL
-  ]);
-  var options = {
-    max: 40,
-    redFrom: 30, //AQUI ES DESDE EL VALOR MAXIMO
-    redTo: 40,
-    yellowFrom: 0,
-    yellowTo: 10, //AQUI ES DESDE EL VALOR MINIMO
-    minorTicks: 10,
-  };
-  var chart = new google.visualization.Gauge(
-    document.getElementById("TemperaturaSueloChart")
-  );
-  chart.draw(data, options);
-};
-
-function HumedadSuelo() {
-  
-  var data = google.visualization.arrayToDataTable([
-    ["Label", "Value"],
-    ["%", 80], //AQUI VA EL VALOR ACTUAL
-  ]);
-  var options = {
-    redFrom: 90, //AQUI ES DESDE EL VALOR MAXIMO
-    redTo: 100,
-    yellowFrom: 0,
-    yellowTo: 60, //AQUI ES DESDE EL VALOR MINIM
-    minorTicks: 5,
-  };
-  var chart = new google.visualization.Gauge(
-    document.getElementById("HumedadSueloChart")
-  );
-  chart.draw(data, options);
-};
-
-function CO2() {
-  
-  var data = google.visualization.arrayToDataTable([
-    ["Label", "Value"],
-    ["%", 80], //AQUI VA EL VALOR ACTUAL
-  ]);
-  var options = {
-    redFrom: 90, //AQUI ES DESDE EL VALOR MAXIMO
-    redTo: 100,
-    yellowFrom: 0,
-    yellowTo: 60, //AQUI ES DESDE EL VALOR MINIM
-    minorTicks: 5,
-  };
-  var chart = new google.visualization.Gauge(
-    document.getElementById("CO2Chart")
-  );
-  chart.draw(data, options);
-};
