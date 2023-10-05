@@ -1,5 +1,6 @@
 <?php
-    const BASE_URL = "http://localhost/CulTech/";
+    //const BASE_URL = "http://localhost/CulTech/";
+    const BASE_URL = "http://192.168.1.5/CulTech/";
     const HOST = "localhost";
     const BD = "cultech";
     const DB_USER = "root";
