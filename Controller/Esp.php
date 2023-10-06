@@ -12,7 +12,7 @@
         //INGRESA LAS MEDICIONES TOMADAS
         public function RegistroDatos()
         {
-            $id_placa = Limpiar($_POST['nombre']);
+            $id_placa = Limpiar($_POST['id_placa']);
             //Obtenemos el id del cultivo que tiene asignada esa placa.
             $data = $this->model->BuscarCultivo($id_placa); 
             $id_cultivo = $data['id'];
@@ -20,12 +20,13 @@
             $tem = Limpiar($_POST['tem']);
             $humendad = Limpiar($_POST['humendad']);
             $stem = Limpiar($_POST['key']);
-            $shumendad = Limpiar($_POST['nombre']);
-            $lum = Limpiar($_POST['key']);
-            $co2 = Limpiar($_POST['nombre']);
-            $altura = Limpiar($_POST['key']);
+            $shumendad = Limpiar($_POST['shumendad']);
+            $lum = Limpiar($_POST['luz']);
+            $co2 = Limpiar($_POST['co2']);
+            $altura = Limpiar($_POST['altura']);
 
-            $insert = $this->model->insertarMonitoreo($id_cultivo, $tem);
+            $insert = $this->model->insertarMonitoreo($id_cultivo, $tem, $humendad, $stem, $shumendad, $lum, $co2, $altura);
+            return $insert;
             die();   
         }
 

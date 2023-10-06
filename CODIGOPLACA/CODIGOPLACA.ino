@@ -1,121 +1,51 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-#include "FirebaseESP8266.h"
-#include <DHT.h>
-#include <DHT_U.h>
 
-// Pines
-#define SENSORDHT11 2
-
-DHT dht(SENSORDHT11, DHT11);
-float t, h;
-// Host servidor
-#define FIREBASE_HOST "riegoiot-a1261-default-rtdb.firebaseio.com"
-// Secretos de la base de datos
-#define FIREBASE_AUTH "FdxPj9EvnEuHI4Y8kCDWFb4ofNTUyzkYGBJoGgmb"
-
-
-// Punte acceso Wifi
-#define WIFI_SSID "MEGACABLE_2.4G_EBC8"
-#define WIFI_PASSWORD "J6T7e2M8J4T5D4Z7a2a2"
-
-WiFiClient client; 
-FirebaseData firebaseData;
-
-
+// Puente acceso Wifi
+#define WIFI_SSID "MEGACABLE_2.4G_EBC8";
+#define WIFI_PASSWORD "J6T7e2M8J4T5D4Z7a2a2";
+#define serverURL = "http://192.168.1.5/CulTech/Esp/RegistroDatos";
+#define id_placa = "12345678";
 
 void setup() {
-  
   Serial.begin(115200);
-  pinMode(5,OUTPUT);
-  pinMode(16,OUTPUT);
-  WiFi.begin (WIFI_SSID, WIFI_PASSWORD);
-    
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-      
-  Serial.println ("");
-  Serial.println ("Se conectó al wifi!");
-  Serial.println(WiFi.localIP());
-    
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-  dht.begin();
+  WiFi.begin(ssid, password);
 
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando a la red WiFi...");
+  }
+  Serial.println("Conexión WiFi establecida.");
 }
 
 void loop() {
-  t = dht.readTemperature();
-  h = dht.readHumidity(); 
-  uploadTemperatura(t,h);
-  Firebase.getInt(firebaseData, "/otros/foco");
-  Serial.println("Data= " + String(firebaseData.intData()));
-  if(firebaseData.intData()==1)
-  {
-    digitalWrite(16,1);
-      Serial.print("H1");
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin(serverURL);
+
+    // Configura el encabezado HTTP
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    // Crea los datos a enviar en el cuerpo POST
+    String data = "id_placa=12345678&tem=30.5&humendad=90&stem=25&shumendad=100&luz=100&co2=100&altura=5"; // Puedes agregar más datos según tus necesidades
+
+    // Realiza la solicitud POST
+    int httpResponseCode = http.POST(data);
+
+    // Verifica la respuesta del servidor
+    if (httpResponseCode > 0) {
+      Serial.print("Respuesta del servidor: ");
+      Serial.println(httpResponseCode);
+
+      String response = http.getString();
+      Serial.println(response);
+    } else {
+      Serial.print("Error en la solicitud. Código de respuesta: ");
+      Serial.println(httpResponseCode);
+    }
+
+    http.end();
   }
-  else{
-    digitalWrite(16,0
-    );
-    Serial.print("H2");
-  }
-   Firebase.getInt(firebaseData, "/otros/bomba");
-   Serial.println("Data= " + String(firebaseData.intData()));
-  if(firebaseData.intData()==1)
-  {
-    Serial.print("Regando");
-    digitalWrite(5,HIGH);
-    Serial.print("A1");
-    delay(17000);
-    Serial.print("Regado");
-    float valor = 0.5;
-    uploadRiego(valor);
-    digitalWrite(5,LOW);
-    Serial.print("A2");
-  }
-  else{
-    digitalWrite(5,LOW);
-    Serial.print("No Regado");
-  }
- 
-  Serial.print("Humidity: ");
-  Serial.print(h);
-  Serial.println("%");
-  Serial.print("Temperature: ");
-  Serial.print(t);
-  Serial.println("°C ");
-  delay(10000);
+
+  delay(5000); // Espera 5 segundos antes de enviar otra solicitud POST
 }
-
-
-void uploadTemperatura(float value, float value2) {
-        Serial.print("uploadTemperatura -> ");
-        Serial.println(value);
-        Serial.print("uploadHumedad -> ");
-        Serial.println(value);     
-        String path = "medidas/"; 
-        String Temp = String(value, 2);
-        String Hum = String(value2, 2);
-        FirebaseJson json;
-        json.setDoubleDigits(3);
-        json.add("temperatura", Temp);
-        json.add("humedad", Hum);
-        Firebase.pushJSON(firebaseData, path, json); 
-        Firebase.setString(firebaseData, "/fijos/A/temperatura", Temp); 
-        Firebase.setString(firebaseData, "/fijos/A/humedad", Hum); 
-    }
-
-    
-void uploadRiego(float Value) {
-        Serial.print("uploadRiego -> ");
-        Serial.println(Value);   
-        String path = "riegos/"; 
-        String Rig = String(Value, 2);
-        FirebaseJson json;
-        json.setDoubleDigits(3);
-        json.add("litros", Rig);
-        Firebase.pushJSON(firebaseData, path, json);
-        Firebase.setInt(firebaseData, "/otros/bomba", 0); 
-    }
