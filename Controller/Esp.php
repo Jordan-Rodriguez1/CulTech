@@ -12,6 +12,7 @@
         //INGRESA LAS MEDICIONES TOMADAS
         public function RegistroDatos()
         {
+            echo 'hola';
             $id_placa = Limpiar($_POST['id_placa']);
             //Obtenemos el id del cultivo que tiene asignada esa placa.
             $data = $this->model->BuscarCultivo($id_placa); 
@@ -26,6 +27,7 @@
             $altura = Limpiar($_POST['altura']);
 
             $insert = $this->model->insertarMonitoreo($id_cultivo, $tem, $humendad, $stem, $shumendad, $lum, $co2, $altura);
+            echo 'adios';
             return $insert;
             die();   
         }

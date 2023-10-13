@@ -27,7 +27,7 @@ void loop() {
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     // Crea los datos a enviar en el cuerpo POST
-    String data = "id_placa=12345678&tem=30.5&humendad=90&stem=25&shumendad=100&luz=100&co2=100&altura=5"; // Puedes agregar más datos según tus necesidades
+    String data = "?id_placa=12345678&tem=30.5&humendad=90&stem=25&shumendad=100&luz=100&co2=100&altura=5"; // Puedes agregar más datos según tus necesidades
 
     // Realiza la solicitud POST
     int httpResponseCode = http.POST(data);
@@ -47,5 +47,5 @@ void loop() {
     http.end();
   }
 
-  delay(5000); // Espera 5 segundos antes de enviar otra solicitud POST
+  delay(60000); // Espera 60 segundos antes de enviar otra solicitud POST
 }
