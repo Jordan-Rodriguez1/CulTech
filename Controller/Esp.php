@@ -14,13 +14,14 @@
         {
             echo 'hola';
             $id_placa = Limpiar($_POST['id_placa']);
+            echo $id_placa;
             //Obtenemos el id del cultivo que tiene asignada esa placa.
             $data = $this->model->BuscarCultivo($id_placa); 
             $id_cultivo = $data['id'];
-
+            print_r($data);
             $tem = Limpiar($_POST['tem']);
             $humendad = Limpiar($_POST['humendad']);
-            $stem = Limpiar($_POST['key']);
+            $stem = Limpiar($_POST['stem']);
             $shumendad = Limpiar($_POST['shumendad']);
             $lum = Limpiar($_POST['luz']);
             $co2 = Limpiar($_POST['co2']);

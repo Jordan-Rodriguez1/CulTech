@@ -1,5 +1,5 @@
 <?php
-    class EspnModel extends Mysql{
+    class EspModel extends Mysql{
     
         public function __construct()
         {
@@ -11,7 +11,7 @@
         {
             $return = "";
             $this->id_placa = $id_placa;
-            $sql = "SELECT * FROM cultivos WHERE id_placa = '{$this->id_placa}' AND estado = 1";
+            $sql = "SELECT * FROM cultivos WHERE id_placa = '{$this->id_placa}' AND estado = 0";
             $result = $this->selecT($sql);
             return $result;
         }
@@ -31,7 +31,7 @@
             $query = "INSERT INTO monitoreo(id_cultivo, tem, humendad, stem, shumendad, lum, co2, altura) VALUES (?,?,?,?,?,?,?,?)";
             $data = array($this->id_cultivo, $this->tem, $this->humendad, $this->stem, $this->shumendad, $this->lum, $this->co2, $this->altura);
             $resul = $this->insert($query, $data);
-            return $return;
+            return $resul;
         }
 
         //Registra una nueva acción
