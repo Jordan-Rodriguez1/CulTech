@@ -4,7 +4,7 @@
         {
         session_start();
             if (!empty($_SESSION['activo'])) {
-                header("location: " . base_url()."Dashboard/Inicio");
+                //header("location: " . base_url()."Dashboard/Inicio");
             }
             parent::__construct();
         }
@@ -84,20 +84,13 @@
         //OBTENER LA CONFIGURACIÓN DEL CULTIVO
         public function ObtenerConfiguracion()
         {
-            $id_placa = Limpiar($_POST['nombre']);
-            //Obtenemos el id del cultivo que tiene asignada esa placa.
-            $data = $this->model->BuscarCultivo($id_placa); 
-            $id_cultivo = $data['id'];
+            $response = array();
 
-            $tem = Limpiar($_POST['tem']);
-            $humendad = Limpiar($_POST['humendad']);
-            $stem = Limpiar($_POST['key']);
-            $shumendad = Limpiar($_POST['nombre']);
-            $lum = Limpiar($_POST['key']);
-            $co2 = Limpiar($_POST['nombre']);
-            $altura = Limpiar($_POST['key']);
+            $response['number1'] = 8;
+            $response['number2'] = 10;
 
-            $insert = $this->model->insertarMonitoreo($id_cultivo, $tem);
+            echo json_encode($response);
+
             die();   
         }
 
