@@ -105,7 +105,8 @@ CREATE TABLE `notificaciones` (
   `id_usuario` int(10) NOT NULL,
   `relevancia` int(2) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
-  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
+  `estado` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

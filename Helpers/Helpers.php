@@ -100,39 +100,166 @@ function generarContrasenaAleatoria($longitud = 12) {
 }
 
 //Para esta función debe ser en cascada, es decir poner los códigos menos importantes arriba y los más abajo.
-function EvaluarMinMax($medicion, $min, $max) {
+function EvaluarMinMax($medicion, $min, $max, $nombre) {
     
-    $minrango
-    $maxrango
+    $rango = ($max - $min) * 0.1;
+    $minrango = $min + $rango;
+    $maxrango = $max - $rango;
 
-    if ($medicion <= $min) {
-        $codigo == 1
-    }
-
-    if ($medicion >= $max) {
-        $codigo == 1
-    }
-
-    if ($medicion <= $min) {
-        $codigo == 1
-    }
-
-    if ($medicion >= $max) {
-        $codigo == 1
+    if ($medicion <= $minrango) {
+        $codigo = 2001;
+    } elseif ($medicion >= $maxrango) {
+        $codigo = 2002;
+    } elseif ($medicion <= $min) {
+        $codigo = 3001;
+    } elseif ($medicion >= $max) {
+        $codigo = 3002;
+    } else {
+        $codigo = 0;
     }
 
     switch ($codigo) {
         case 2001:
-            $descripcion = '';
-            $relevancia = 2;
+            $resultados = array(
+            'codigo' => 2001,
+            'descripcion' => "Precaución: se está llegando al rango mínimo de $nombre, toma precauciones.",
+            'relevancia' => 2
+            );
             break;
-        //...
+        case 2002:
+            $resultados = array(
+            'codigo' => 2002,
+            'descripcion' => "Precaución: se está llegando al rango máximo de $nombre, toma precauciones.",
+            'relevancia' => 2
+            );
+            break;
+        case 3001:
+            $resultados = array(
+            'codigo' => 3001,
+            'descripcion' => "Alerta: se llegó al rango mínimo de $nombre, realiza acciones necesarias.",
+            'relevancia' => 3
+            );
+            break;
+        case 3002:
+            $resultados = array(
+            'codigo' => 3002,
+            'descripcion' => "Alerta: se llegó al rango máximo de $nombre, realiza acciones necesarias.",
+            'relevancia' => 3
+            );
+            break;
         default:
-            $resultados = 0;
+            $resultados = array(
+            'codigo' => 0,
+            'descripcion' => '',
+            'relevancia' => 0
+            );
             break;
     }
-
     return $resultados;
+}
+
+//Para esta función debe ser en cascada, es decir poner los códigos menos importantes arriba y los más abajo.
+function EvaluarMax($medicion, $max, $nombre) {
+    
+    $maxrango = $max - $max * 0.1;
+
+    if ($medicion >= $maxrango) {
+        $codigo = 2002;
+    } elseif ($medicion >= $max) {
+        $codigo = 3002;
+    } else {
+        $codigo = 0;
+    }
+
+    switch ($codigo) {
+        case 2002:
+            $resultados = array(
+            'codigo' => 2002,
+            'descripcion' => "Precaución: se está llegando al rango máximo de $nombre, toma precauciones.",
+            'relevancia' => 2
+            );
+            break;
+        case 3002:
+            $resultados = array(
+            'codigo' => 3002,
+            'descripcion' => "Alerta: se llegó al rango máximo de $nombre, realiza acciones necesarias.",
+            'relevancia' => 3
+            );
+            break;
+        default:
+            $resultados = array(
+            'codigo' => 0,
+            'descripcion' => '',
+            'relevancia' => 0
+            );
+            break;
+    }
+    return $resultados;
+}
+
+//NOTIFICACIONES
+function notificaciones() {  
+
+	// Configuración de la conexión a la base de datos
+    $servername = HOST;
+    $username = DB_USER;
+    $password = PASS;
+    $dbname = BD;
+
+    try {
+        // Crear una nueva conexión PDO
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+
+        // Configurar el modo de error de PDO para mostrar excepciones
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Ejecutar la consulta
+        $sql = "SELECT COUNT(*) AS total FROM notificaciones WHERE id_usuario = '{$_SESSION['id']}' AND estado = 0";
+        $querry = $conn->prepare($sql);
+        $querry->execute();
+        $data = $querry->fetchAll(PDO::FETCH_ASSOC);
+
+       // Cerrar la conexión
+       $conn = null;
+    } catch (PDOException $e) {
+       echo "Error de conexión: " . $e->getMessage();
+    }
+							
+    //VARIABLES GLOBALES
+    $dato = $data[0]['total'];
+    return $dato;
+}
+
+//NOTIFICACIONES
+function ultimasnotificaciones() {  
+
+	// Configuración de la conexión a la base de datos
+    $servername = HOST;
+    $username = DB_USER;
+    $password = PASS;
+    $dbname = BD;
+
+    try {
+        // Crear una nueva conexión PDO
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+
+        // Configurar el modo de error de PDO para mostrar excepciones
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Ejecutar la consulta
+        $sql = "SELECT * FROM notificaciones WHERE id_usuario = '{$_SESSION['id']}' AND estado = 0 ORDER BY fecha DESC LIMIT 3";
+        $querry = $conn->prepare($sql);
+        $querry->execute();
+        $data = $querry->fetchAll(PDO::FETCH_ASSOC);
+
+       // Cerrar la conexión
+       $conn = null;
+    } catch (PDOException $e) {
+       echo "Error de conexión: " . $e->getMessage();
+    }
+							
+    //VARIABLES GLOBALES
+    return $data;
 }
 
 ?>

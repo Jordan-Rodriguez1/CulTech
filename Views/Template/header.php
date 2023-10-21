@@ -112,8 +112,13 @@
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-bell fa-fw"></i>
                                     <!-- Counter - Alerts -->
-
-                                    <span class="badge badge-danger badge-counter">+3</span>
+                                    <?php if (notificaciones() != 0) { ?>
+                                        <?php if (notificaciones() <= 3) { ?>
+                                            <span class="badge badge-danger badge-counter"><?=notificaciones();?></span>
+									    <?php } elseif (notificaciones() > 3) { ?>
+                                            <span class="badge badge-danger badge-counter">+3</span>
+                                        <?php } ?>
+									<?php } ?>
                                 </a>
                                 <!-- Dropdown - Alerts -->
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -122,39 +127,27 @@
                                         Centro de Notificaciones
                                     </h6>
                                     <!-- Aquí va un foreach y sun switch -->
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                            <div class="icon-circle bg-primary">
-                                <i class="fas fa-heart text-white"></i>
-                            </div>
-                                        </div>
-                        <div>
-                            <div class="small text-gray-500">December 2, 2019</div>
-                            Spending Alert: We've noticed unusually high spending for your account.
-                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                            <div class="icon-circle bg-warning">
-                                <i class="fas fa-exclamation-triangle text-white"></i>
-                            </div>
-                                        </div>
-                        <div>
-                            <div class="small text-gray-500">December 2, 2019</div>
-                            Spending Alert: We've noticed unusually high spending for your account.
-                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                            <div class="icon-circle bg-danger">
-                                <i class="fas fa-skull-crossbones text-white"></i>
-                            </div>
-                                        </div>
-                        <div>
-                            <div class="small text-gray-500">December 2, 2019</div>
-                            Spending Alert: We've noticed unusually high spending for your account.
-                        </div>
-                                    </a>
+                                    <?php foreach (ultimasnotificaciones() as $activas) { ?>
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="mr-3">
+                                                <?php switch ($activas['relevancia']) {
+                                                    case 1:
+                                                        echo "<div class='icon-circle bg-warning'><i class='fas fa-exclamation-triangle text-white'></i></div>";
+                                                        break;
+                                                    case 2:
+                                                        echo "<div class='icon-circle bg-danger'><i class='fas fa-skull-crossbones text-white'></i></div>";
+                                                        break;
+                                                    default:
+                                                        echo "<div class='icon-circle bg-primary'><i class='fas fa-heart text-white'></i></div>";
+                                                        break;
+                                                } ?>
+                                            </div>
+                                            <div>
+                                                <div class="small text-gray-500"><?= $activas['fecha'];?></div>
+                                                <?= $activas['descripcion'];?>
+                                            </div>
+                                        </a>
+                                    <?php } ?>
                                     <a class="dropdown-item text-center small text-gray-500" href="<?= base_url(); ?>Dashboard/Notificaciones">Mostrar Todas Las Alertas</a>
                                 </div>
                             </li>

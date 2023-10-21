@@ -1,5 +1,5 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
 #include <ArduinoJson.h>
 
 const char* ssid = "MEGACABLE_2.4G_EBC8";

@@ -21,7 +21,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $data1['alerta_0']+$data1['alerta_1']; ?></div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                <i class="fab fa-pagelines fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                <i class="fas fa-battery-three-quarters fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $data1['alerta_1']; ?></div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $data1['alerta_0']; ?></div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@
         public function TotalCultivos()
         {
             $this->user = $_SESSION['id'];
-            $sql = "SELECT SUM(CASE WHEN alerta = 0 THEN 1 ELSE 0 END) AS alerta_0, SUM(CASE WHEN alerta = 1 THEN 1 ELSE 0 END) AS alerta_1 FROM cultivos WHERE id_usuario = '{$this->user}' AND estado = 0;";
+            $sql = "SELECT SUM(CASE WHEN alerta = 0 THEN 1 ELSE 0 END) AS alerta_0, SUM(CASE WHEN alerta = 1 OR alerta = 2 THEN 1 ELSE 0 END) AS alerta_1 FROM cultivos WHERE id_usuario = '{$this->user}' AND estado = 0;";
             $res = $this->select($sql);
             return $res;
         }
@@ -25,6 +25,27 @@
                     WHERE c.estado = 0 AND id_usuario = '{$this->user}';";
             $res = $this->select_all($sql);
             return $res;
+        }
+
+        //SELECCIONA LOS DATOS DE NOTIFICACIONES
+        public function MostrarNotificaciones()
+        {
+            $this->user = $_SESSION['id'];
+            $sql = "SELECT * FROM notificaciones WHERE id_usuario = '{$this->user}' AND estado = 0;";
+            $res = $this->select_all($sql);
+            return $res;
+        }
+
+        //CAMBIA EL ESTADO DE ALERTA DE UNA NOTIFICACIÓN
+        public function EliminarNotificacion(int $id)
+        {
+            $return = "";
+            $this->id = $id;
+            $query = "UPDATE notificaciones SET estado = 1 WHERE id=?";
+            $data = array($this->id);
+            $resul = $this->update($query, $data);
+            $return = $resul;
+            return $return;
         }
     
     }

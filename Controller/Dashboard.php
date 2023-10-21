@@ -43,7 +43,17 @@
 
         public function Notificaciones()
         {
-            $this->views->getView($this, "Notificaciones");
+            $data1 = $this->model->MostrarNotificaciones(); 
+            $this->views->getView($this, "Notificaciones", '', $data1);
+            die();
+        }
+
+        public function EliminarNoti()
+        {
+            $id = $_GET['id'];
+            $this->model->EliminarNotificacion($id); 
+            header('location: ' . base_url() . "Dashboard/Notificaciones");
+            die();
         }
     }
 ?>

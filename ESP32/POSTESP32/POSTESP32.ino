@@ -1,5 +1,5 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
 
 // Puente acceso Wifi
 const char* WIFI_SSID = "MEGACABLE_2.4G_EBC8";
@@ -19,21 +19,22 @@ void setup() {
 }
 
 void loop() {
-  if (WiFi.status() == WL_CONNECTED) {
+  while (WiFi.status() == WL_CONNECTED) {
     WiFiClient client;
     HTTPClient http;
     http.begin(client, serverURL);
 
-    // Configura el encabezado HTTP
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    // Crea los datos a enviar en el cuerpo POST
-    String data = "id_placa=12345678&tem=30.5&humendad=90&stem=25&shumendad=100&luz=100&co2=100&altura=5"; // Puedes agregar más datos según tus necesidades
+    Serial.println("Introduce los datos en el siguiente formato: id_placa=12345678&tem=20.8&humendad=90.6&stem=20.8&shumendad=100&luz=100&co2=100&altura=5");
+    while (!Serial.available()) {
+      // Espera a que se ingresen los datos desde el Monitor Serial
+    }
 
-    // Realiza la solicitud POST
+    String data = Serial.readStringUntil('\n');
+
     int httpResponseCode = http.POST(data);
 
-    // Verifica la respuesta del servidor
     if (httpResponseCode > 0) {
       Serial.print("Respuesta del servidor: ");
       Serial.println(httpResponseCode);
@@ -46,7 +47,7 @@ void loop() {
     }
 
     http.end();
-  }
 
-  delay(60000); // Espera 60 segundos antes de enviar otra solicitud POST
+    delay(60000); // Espera 60 segundos antes de enviar la siguiente solicitud POST
+  }
 }

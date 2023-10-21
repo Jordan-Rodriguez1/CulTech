@@ -130,6 +130,24 @@ $(document).ready(function () {
   });
 });
 
+  //Mensaje de alerta al eliminar noti
+  $(".elimnoti").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de eliminar la notificación?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
 
 //EDITAR PLACA DESDE MODAL
 document.querySelectorAll('[data-toggle="modal"]').forEach(function (element) {

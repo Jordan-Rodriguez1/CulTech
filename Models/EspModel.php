@@ -53,6 +53,32 @@
             $result = $this->select($sql);
             return $result;
         }
+
+        //Registra una nueva notificación
+        public function insertarNotificaciones(string $id_usuario, string $descripcion, string $relevancia)
+        {
+            $return = "";
+            $this->id_usuario = $id_usuario;
+            $this->descripcion = $descripcion;
+            $this->relevancia = $relevancia;
+            $query = "INSERT INTO notificaciones(id_usuario, descripcion, relevancia) VALUES (?,?,?)";
+            $data = array($this->id_usuario, $this->descripcion, $this->relevancia);
+            $resul = $this->insert($query, $data);
+            return $return;
+        }
+
+        //CAMBIA EL ESTADO DE ALERTA DE UN CULTIVO
+        public function CultivoAlerta(int $id_cultivo, int $alerta)
+        {
+            $return = "";
+            $this->id_cultivo = $id_cultivo;
+            $this->alerta = $alerta;
+            $query = "UPDATE cultivos SET alerta = ? WHERE id=?";
+            $data = array($this->alerta, $this->id_cultivo);
+            $resul = $this->update($query, $data);
+            $return = $resul;
+            return $return;
+        }
 //----------------------
         //Registra una nueva acción
         public function insertarAcciones(string $id_cultivo, string $tem, string $humendad)
@@ -64,32 +90,6 @@
             $query = "INSERT INTO monitoreo(id_cultivo, tem, humendaa) VALUES (?,?,?)";
             $data = array($this->id_cultivo, $this->tem, $this->humendad);
             $resul = $this->insert($query, $data);
-            return $return;
-        }
-
-        //Registra una nueva notificación
-        public function insertarNotificaciones(string $id_cultivo, string $tem, string $humendad)
-        {
-            $return = "";
-            $this->id_cultivo = $id_cultivo;
-            $this->tem = $tem;
-            $this->humendad = $humendad;
-            $query = "INSERT INTO monitoreo(id_cultivo, tem, humendaa) VALUES (?,?,?)";
-            $data = array($this->id_cultivo, $this->tem, $this->humendad);
-            $resul = $this->insert($query, $data);
-            return $return;
-        }
-
-        //CAMBIA EL ESTADO DE ALERTA DE UN CULTIVO
-        public function CultivoAlerta(int $id, int $estado)
-        {
-            $return = "";
-            $this->id = $id;
-            $this->estado = $estado;
-            $query = "UPDATE cultivos SET alerta = ? WHERE id=?";
-            $data = array($this->estado, $this->id);
-            $resul = $this->update($query, $data);
-            $return = $resul;
             return $return;
         }
     
