@@ -12,13 +12,12 @@
         //INGRESA LAS MEDICIONES TOMADAS
         public function RegistroDatos()
         {
-            echo 'hola';
             $id_placa = Limpiar($_POST['id_placa']);
             echo $id_placa;
             //Obtenemos el id del cultivo que tiene asignada esa placa.
-            $data = $this->model->BuscarCultivo($id_placa); 
+            $data = $this->model->BuscarCultivo($id_placa);
+            $id_usuario = $data['id_usuario']
             $id_cultivo = $data['id'];
-            print_r($data);
             $tem = Limpiar($_POST['tem']);
             $humendad = Limpiar($_POST['humendad']);
             $stem = Limpiar($_POST['stem']);
@@ -28,20 +27,67 @@
             $altura = Limpiar($_POST['altura']);
 
             $insert = $this->model->insertarMonitoreo($id_cultivo, $tem, $humendad, $stem, $shumendad, $lum, $co2, $altura);
-            echo 'adios';
-            return $insert;
+
+            //En esta parte analiza los datos y en base a ello determinamos un código.
+            //Primero trae la información de configuración.
+            $config = $this->model->CultivoConfiguracion($id_cultivo);
+            //Traigo los los datos del usuario en base al id cultivo
+            $usuario = $this->model->DatosUsuario($id_usuario);
+
+            //---AQUI EMPIEZA LA EVALUACIÓN DE LA VARIABLE CON MIN-MAX.
+            $airet = EvaluarMinMax($tem, $config['tem_min'], $config['tem_max']);
+            //SI APLICA MANDAMOS LA NOTIFICACIÓN Y EL CORREO
+            if ($airet != 0) {
+                $this->model->insertarNotificaciones($id_usuario, $airet['descripcion'], $airet['relevancia']);
+                if ($airet['relevancia'] == 3) {
+                    $asunto = 'ALERTA CULTIVO '.$nombre;
+                    $cuerpo = "<p>$descripcion</p><br>";
+                    EnviarCorreo($usuario['correo'], $usuario['nombre'], $asunto, $cuerpo);
+                    $alerta = 2;
+                } else {
+                    $alerta = 1;
+                }
+            } else {
+                $alerta = 0;
+            }
+            //-------AQUÍ TERMINA LA EVALUACIÓN DE LA VARIABLE CON MIN-MAX
+
+            //---AQUI EMPIEZA LA EVALUACIÓN DE LA VARIABLE CON MAX.
+            $co2 = EvaluarMax($co2, $config['co2_max']);
+            //ASIGNAMOS LOS DATOS SEGUN EL CODIGO
+            switch ($airet) {
+                case 2001:
+                    $descripcion = '';
+                    $relevancia = 1;
+                    break;
+                //...
+                default:
+                    break;
+            }
+            if ($airet != 0) {
+                $this->model->insertarNotificaciones($id_usuario, $descripcion, $relevancia);
+                if ($relevancia == 3) {
+                    $asunto = 'ALERTA CULTIVO '.$nombre;
+                    $cuerpo = "<p>$descripcion</p><br>";
+                    EnviarCorreo($usuario['correo'], $usuario['nombre'], $asunto, $cuerpo);
+                }
+            }
+            //-------AQUÍ TERMINA LA EVALUACIÓN DE LA VARIABLE CON MAX
+
+            //En esta parte revisa el array y determina cual es la relevancia máxima del cultivo y pone el cultivo en esa alerta.
+                $alerta = 0;
+                $cultivo = $this->model->CultivoAlerta($id_cultivo, $alerta);
+
             die();   
         }
-
+//----------------------
         //INGRESA ALERTAS DE ACCIONES
-        public function Alertas()
+        public function Acciones()
         {
             $id_placa = Limpiar($_POST['id_placa']);
             //Obtenemos el id del cultivo que tiene asignada esa placa.
             $data = $this->model->BuscarCultivo($id_placa); 
             $id_cultivo = $data['id'];
-            $id_usuario = $data['id_usuario'];
-            $nombre = $data['nombre'];
 
             $codigo = Limpiar($_POST['codigo']);
             //ASIGNAMOS LOS DATOS SEGUN EL CODIGO
@@ -63,21 +109,6 @@
             $ingresar = $this->model->insertarNotificaciones($id_usuario, $descripcion, $relevancia);
             
             
-            //Si relevancia es 3 manda correo y pone cultivo con alerta
-            if ($relevancia == 3) {
-                //obtiene datos del usuario
-                $usuario = $this->model->DatosUsuario($id_usuario);
-                $asunto = 'ALERTA CULTIVO '.$nombre;
-                $cuerpo = "<p>$descripcion</p><br>";
-                EnviarCorreo($usuario['correo'], $usuario['nombre'], $asunto, $cuerpo);
-                //PONE CULTIVO CON ALERTA
-                $alerta = 1;
-                $cultivo = $this->model->CultivoAlerta($id_cultivo, $alerta);
-            } elseif ($data['alerta'] == 1) {
-                //PONE CULTIVO SIN ALERTA
-                $alerta = 0;
-                $cultivo = $this->model->CultivoAlerta($id_cultivo, $alerta);
-            }
             die();   
         }
 

@@ -26,7 +26,7 @@
                 $diasDiferencia = $diferencia->days;?>
                 <!-- Tarjeta de Cultivos -->
                 <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card <?php if ($activas['alerta'] == 0) { echo 'border-left-success'; }else { echo 'border-left-danger'; }?> shadow h-100 py-2">
+                    <div class="card <?php if ($activas['alerta'] == 0) { echo 'border-left-success'; } elseif ($activas['alerta'] == 1) { echo 'border-left-warning'; }else { echo 'border-left-danger'; }?> shadow h-100 py-2">
                         <div class="card-body text-center">
                             <form action="<?= base_url(); ?>Cultivos/InactivarCultivo?id=<?= $activas['id'];?>" method="post" class="inactcult">
                                 <button class="d-sm-inline-block float-right btn btn-light" type="submit"><i class="fas fa-times fa-sm"></i></button>

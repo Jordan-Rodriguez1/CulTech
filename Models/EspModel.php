@@ -34,6 +34,26 @@
             return $resul;
         }
 
+        //Trae la configuración del cultivo.
+        public function CultivoConfiguracion(string $id_cultivo)
+        {
+            $return = "";
+            $this->id_cultivo = $id_cultivo;
+            $sql = "SELECT * FROM configuracion WHERE id_cultivo = '{$this->id_cultivo}'";
+            $result = $this->select($sql);
+            return $result;
+        }
+
+        //Trae la configuración del cultivo.
+        public function DatosUsuario(string $id_usuario)
+        {
+            $return = "";
+            $this->id_usuario = $id_usuario;
+            $sql = "SELECT * FROM usuarios WHERE id = '{$this->id_usuario}'";
+            $result = $this->select($sql);
+            return $result;
+        }
+//----------------------
         //Registra una nueva acción
         public function insertarAcciones(string $id_cultivo, string $tem, string $humendad)
         {

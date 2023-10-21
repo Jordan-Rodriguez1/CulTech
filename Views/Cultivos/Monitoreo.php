@@ -115,6 +115,11 @@
                                         <i class="fas fa-check"></i>
                                     </a>
                                     <div class="h5 my-2 font-weight-bold text-gray-800">Cultivo en Orden</div>
+                                <?php } elseif ($data1['alerta'] == 1) { ?>
+                                    <a href="" class="btn btn-warning btn-circle btn-lg">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </a>
+                                    <div class="h5 my-2 font-weight-bold text-gray-800">Precaución el cultivo está saliendo de rango</div>
                                 <?php } else { ?>
                                     <a href="" class="btn btn-danger btn-circle btn-lg">
                                         <i class="fas fa-exclamation-triangle"></i>

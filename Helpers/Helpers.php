@@ -99,4 +99,40 @@ function generarContrasenaAleatoria($longitud = 12) {
     return $contrasena;
 }
 
+//Para esta función debe ser en cascada, es decir poner los códigos menos importantes arriba y los más abajo.
+function EvaluarMinMax($medicion, $min, $max) {
+    
+    $minrango
+    $maxrango
+
+    if ($medicion <= $min) {
+        $codigo == 1
+    }
+
+    if ($medicion >= $max) {
+        $codigo == 1
+    }
+
+    if ($medicion <= $min) {
+        $codigo == 1
+    }
+
+    if ($medicion >= $max) {
+        $codigo == 1
+    }
+
+    switch ($codigo) {
+        case 2001:
+            $descripcion = '';
+            $relevancia = 2;
+            break;
+        //...
+        default:
+            $resultados = 0;
+            break;
+    }
+
+    return $resultados;
+}
+
 ?>
