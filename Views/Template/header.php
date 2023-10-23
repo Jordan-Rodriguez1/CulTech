@@ -31,7 +31,6 @@
         <input type="hidden" id="url" value="<?= base_url(); ?>">
         <!-- Page Wrapper -->
         <div id="wrapper">
-
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
@@ -44,7 +43,7 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
                 <!-- Nav Item - Dashboard -->
-                <li class="nav-item <?php if ($link == "/".DOM."/Dashboard/Inicio") { echo "active"; } ?>">
+                <li class="nav-item <?php if ($link == DOM."/Dashboard/Inicio") { echo "active"; } ?>">
                     <a class="nav-link" href="<?= base_url(); ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Inicio</span></a>
@@ -56,7 +55,7 @@
                     Administración
                 </div>
                 <!-- Nav Item - Charts -->
-                <li class="nav-item <?php if ($link == "/".DOM."/Cultivos/Lista") { echo "active"; } ?>">
+                <li class="nav-item <?php if ($link == DOM."/Cultivos/Lista") { echo "active"; } ?>">
                     <a class="nav-link" href="<?= base_url(); ?>Cultivos/Lista">
                         <i class="fas fa-seedling"></i>
                         <span>Cultivos</Plantillas></a>
@@ -68,19 +67,19 @@
                     Utilidades
                 </div>
                 <!-- Nav Item - Charts -->
-                <li class="nav-item <?php if ($link == "/".DOM."/Plantillas/Lista") { echo "active"; } ?>">
+                <li class="nav-item <?php if ($link == DOM."/Plantillas/Lista") { echo "active"; } ?>">
                     <a class="nav-link" href="<?= base_url(); ?>Plantillas/Lista">
                         <i class="fas fa-book"></i>
                         <span>Plantillas</span></a>
                 </li>
                 <!-- Nav Item - Charts -->
-                <li class="nav-item <?php if ($link == "/".DOM."/Control/Placas") { echo "active"; } ?>">
+                <li class="nav-item <?php if ($link == DOM."/Control/Placas") { echo "active"; } ?>">
                     <a class="nav-link" href="<?= base_url(); ?>Control/Placas">
                         <i class="fas fa-microchip"></i>
                         <span>Placas</span></a>
                 </li>
                 <!-- Nav Item - Tables -->
-                <li class="nav-item <?php if ($link == "/".DOM."/Guia/Ayuda") { echo "active"; } ?>">
+                <li class="nav-item <?php if ($link == DOM."/Guia/Ayuda") { echo "active"; } ?>">
                     <a class="nav-link" href="<?= base_url(); ?>Guia/Ayuda">
                         <i class="fas fa-info-circle"></i>
                         <span>Guia</span></a>
