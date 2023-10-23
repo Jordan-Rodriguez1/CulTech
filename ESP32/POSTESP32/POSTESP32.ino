@@ -1,5 +1,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <ArduinoJson.h>
 
 // Puente acceso Wifi
 const char* WIFI_SSID = "MEGACABLE_2.4G_EBC8";
@@ -41,6 +42,25 @@ void loop() {
 
       String response = http.getString();
       Serial.println(response);
+
+      // Procesa la respuesta JSON
+      DynamicJsonDocument doc(1024); // Ajusta el tamaño según tus necesidades
+      DeserializationError error = deserializeJson(doc, response);
+
+      if (error) {
+        Serial.println("Error al analizar JSON");
+      } else {
+        // Extrae los datos de configuración del JSON y guárdalos en variables
+        float parametro1 = doc["tem_max"];
+        float parametro2 = doc["tem_min"];
+
+        // Haz lo que necesites con los datos
+        Serial.print("parametro1: ");
+        Serial.println(parametro1);
+        Serial.print("parametro2: ");
+        Serial.println(parametro2);
+      }
+      
     } else {
       Serial.print("Error en la solicitud. Código de respuesta: ");
       Serial.println(httpResponseCode);
@@ -48,6 +68,6 @@ void loop() {
 
     http.end();
 
-    delay(60000); // Espera 60 segundos antes de enviar la siguiente solicitud POST
+    delay(30000); // Espera 30 segundos antes de enviar la siguiente solicitud POST
   }
 }

@@ -106,14 +106,14 @@ function EvaluarMinMax($medicion, $min, $max, $nombre) {
     $minrango = $min + $rango;
     $maxrango = $max - $rango;
 
-    if ($medicion <= $minrango) {
-        $codigo = 2001;
-    } elseif ($medicion >= $maxrango) {
-        $codigo = 2002;
-    } elseif ($medicion <= $min) {
+    if ($medicion <= $min) {
         $codigo = 3001;
     } elseif ($medicion >= $max) {
         $codigo = 3002;
+    } elseif ($medicion <= $minrango) {
+        $codigo = 2001;
+    } elseif ($medicion >= $maxrango) {
+        $codigo = 2002;
     } else {
         $codigo = 0;
     }
@@ -123,28 +123,28 @@ function EvaluarMinMax($medicion, $min, $max, $nombre) {
             $resultados = array(
             'codigo' => 2001,
             'descripcion' => "Precaución: se está llegando al rango mínimo de $nombre, toma precauciones.",
-            'relevancia' => 2
+            'relevancia' => 1
             );
             break;
         case 2002:
             $resultados = array(
             'codigo' => 2002,
             'descripcion' => "Precaución: se está llegando al rango máximo de $nombre, toma precauciones.",
-            'relevancia' => 2
+            'relevancia' => 1
             );
             break;
         case 3001:
             $resultados = array(
             'codigo' => 3001,
             'descripcion' => "Alerta: se llegó al rango mínimo de $nombre, realiza acciones necesarias.",
-            'relevancia' => 3
+            'relevancia' => 2
             );
             break;
         case 3002:
             $resultados = array(
             'codigo' => 3002,
             'descripcion' => "Alerta: se llegó al rango máximo de $nombre, realiza acciones necesarias.",
-            'relevancia' => 3
+            'relevancia' => 2
             );
             break;
         default:
@@ -163,10 +163,10 @@ function EvaluarMax($medicion, $max, $nombre) {
     
     $maxrango = $max - $max * 0.1;
 
-    if ($medicion >= $maxrango) {
-        $codigo = 2002;
-    } elseif ($medicion >= $max) {
+    if ($medicion >= $max) {
         $codigo = 3002;
+    } elseif ($medicion >= $maxrango) {
+        $codigo = 2002;
     } else {
         $codigo = 0;
     }
@@ -176,14 +176,14 @@ function EvaluarMax($medicion, $max, $nombre) {
             $resultados = array(
             'codigo' => 2002,
             'descripcion' => "Precaución: se está llegando al rango máximo de $nombre, toma precauciones.",
-            'relevancia' => 2
+            'relevancia' => 1
             );
             break;
         case 3002:
             $resultados = array(
             'codigo' => 3002,
             'descripcion' => "Alerta: se llegó al rango máximo de $nombre, realiza acciones necesarias.",
-            'relevancia' => 3
+            'relevancia' => 2
             );
             break;
         default:

@@ -79,16 +79,16 @@
             $return = $resul;
             return $return;
         }
-//----------------------
+
         //Registra una nueva acción
-        public function insertarAcciones(string $id_cultivo, string $tem, string $humendad)
+        public function insertarAcciones(string $id_cultivo, string $descripcion, string $codigo)
         {
             $return = "";
             $this->id_cultivo = $id_cultivo;
-            $this->tem = $tem;
-            $this->humendad = $humendad;
-            $query = "INSERT INTO monitoreo(id_cultivo, tem, humendaa) VALUES (?,?,?)";
-            $data = array($this->id_cultivo, $this->tem, $this->humendad);
+            $this->descripcion = $descripcion;
+            $this->codigo = $codigo;
+            $query = "INSERT INTO acciones(id_cultivo, descripcion, codigo) VALUES (?,?,?)";
+            $data = array($this->id_cultivo, $this->descripcion, $this->codigo);
             $resul = $this->insert($query, $data);
             return $return;
         }
