@@ -17,7 +17,7 @@
 #define LDR_PIN 35   // Pin analógico del ESP32 al que está conectada la fotorresistencia
 
 #define SOIL_MOISTURE_SENSOR_PIN 34 // Pin analógico del ESP32 al que está conectado el sensor de humedad del suelo
-#define SOIL_DRY_VALUE 1023        // Valor de lectura cuando el suelo está seco
+#define SOIL_DRY_VALUE 4095        // Valor de lectura cuando el suelo está seco
 #define SOIL_WET_VALUE 0           // Valor de lectura cuando el suelo está húmedo
 
 #define GAS_SENSOR_PIN 13 // Pin del ESP32 conectado al sensor MQ-4
@@ -47,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  delay(15000);  // Espera 15 segundos entre lecturas
+  delay(5000);  // Espera 15 segundos entre lecturas
 
   float temperature = dht.readTemperature();
   float humidity = dht.readHumidity();
@@ -110,6 +110,8 @@ void loop() {
   Serial.print("Humedad: ");
   Serial.print(humidity);
   Serial.println(" %");
+  Serial.print("Humedad del suelo valor: ");
+  Serial.println(soilMoisture);
   Serial.print("Humedad del suelo: ");
   Serial.print(map(soilMoisture, SOIL_DRY_VALUE, SOIL_WET_VALUE, 0, 100));
   Serial.println("%");

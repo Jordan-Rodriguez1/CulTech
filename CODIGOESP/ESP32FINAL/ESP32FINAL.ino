@@ -18,7 +18,7 @@
 #define RELAY_SUELO 14 // Pin del ESP32 conectado al relé (ajusta según tu configuración)
 #define LDR_PIN 35   // Pin analógico del ESP32 al que está conectada la fotorresistencia
 #define SOIL_MOISTURE_SENSOR_PIN 34 // Pin analógico del ESP32 al que está conectado el sensor de humedad del suelo
-#define SOIL_DRY_VALUE 1023        // Valor de lectura cuando el suelo está seco
+#define SOIL_DRY_VALUE 4095        // Valor de lectura cuando el suelo está seco
 #define SOIL_WET_VALUE 0           // Valor de lectura cuando el suelo está húmedo
 #define GAS_SENSOR_PIN 13 // Pin del ESP32 conectado al sensor MQ-4
 #define lm35Pin 32 // Pin del ESP32 conectado al sensor LM35
@@ -33,6 +33,8 @@ const char* WIFI_SSID = "MEGACABLE_2.4G_EBC8";
 const char* WIFI_PASSWORD = "J6T7e2M8J4T5D4Z7a2a2";
 const char* IngresarDatos = "http://192.168.1.5/CulTech/Esp/RegistroDatos";
 const char* IngresarAcciones = "http://192.168.1.5/CulTech/Esp/Acciones";
+//const char* IngresarDatos = "http://tesis.42web.io/Esp/RegistroDatos";
+//const char* IngresarAcciones = "http://tesis.42web.io/Esp/Acciones";
 const char* id_placa = "12345678";
 
 void setup() {
@@ -45,7 +47,6 @@ void setup() {
 
   //CONECTAMOS A INTERNET
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
     Serial.println("Conectando a la red WiFi...");
     //LCD
     lcd.clear();
@@ -53,6 +54,7 @@ void setup() {
     lcd.print("Conectando a la");
     lcd.setCursor(0,1);
     lcd.print("red WiFi...");
+    delay(1000);
   }
   Serial.println("Conexión WiFi establecida.");
   //LCD
@@ -91,6 +93,7 @@ void loop() {
     //DEFINIMOS TODAS LAS VARIABLES
     //Lee Distancia
     unsigned int distance = sonar.ping_cm();
+    distance = 10 - distance; //AQUI DEBE SER 100 cm-------------------------------------------------------------
     // Lee el valor analógico luz
     int lightValue = analogRead(LDR_PIN);
     String estadoluz = "";
@@ -159,12 +162,11 @@ void loop() {
       Serial.print("Respuesta del servidor: ");
       Serial.println(httpResponseCode);
       String response = http.getString();
-      Serial.println(response);
 
       //LCD
       lcd.clear();
       lcd.setCursor(0,0);
-      lcd.print("Analizando datos...");
+      lcd.print("Analizando datos");
 
       // Procesa la respuesta JSON
       DynamicJsonDocument doc(1024); // Ajusta el tamaño según tus necesidades
@@ -172,6 +174,13 @@ void loop() {
 
       if (error) {
         Serial.println("Error al analizar JSON");
+        //LCD
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("Error al");
+        lcd.setCursor(0,1);
+        lcd.print("analizar JSON.");
+        delay(20000);
       } else {
         // Extrae los datos de configuración del JSON y guárdalos en variables
         float tem_max = doc["tem_max"];
@@ -184,28 +193,6 @@ void loop() {
         float shumedad_min = doc["shumedad_min"];
         float co2_max = doc["co2_max"];
         float luz = doc["luz"];
-
-        // Haz lo que necesites con los datos
-        Serial.print("tem_max: ");
-        Serial.println(tem_max);
-        Serial.print("tem_min: ");
-        Serial.println(tem_min);
-        Serial.print("humedad_max: ");
-        Serial.println(humedad_max);
-        Serial.print("humedad_min: ");
-        Serial.println(humedad_min);
-        Serial.print("stem_max: ");
-        Serial.println(stem_max);
-        Serial.print("stem_min: ");
-        Serial.println(stem_min);
-        Serial.print("shumedad_max: ");
-        Serial.println(shumedad_max);
-        Serial.print("shumedad_min: ");
-        Serial.println(shumedad_min);
-        Serial.print("co2_max: ");
-        Serial.println(co2_max);
-        Serial.print("luz: ");
-        Serial.println(luz);
         delay(5000); //20 SEGUNDOS ACUMULADOS
 
         //AHORA ANALIZAMOS LOS DATOS TOMANDO EN CUENTA LA CONFIGURACIÓN
@@ -216,14 +203,11 @@ void loop() {
             lightValue = analogRead(LDR_PIN);
             if (lightValue > 500) {
               estadoluz = "ERR";
-              Serial.println("Error en las Luces");
             } else {
               estadoluz = "ON";
-              Serial.println("Luz Encendida");
             }
           } else {
             estadoluz = "ON";
-            Serial.println("Luz Encendida");
           }
         } else {
           if (lightValue < 500) {
@@ -231,28 +215,26 @@ void loop() {
             lightValue = analogRead(LDR_PIN);
             if (lightValue < 500) {
               estadoluz = "ERR";
-              Serial.println("Error en las Luces");
             } else {
               estadoluz = "OFF";
-              Serial.println("Luz Apagada");
             }
           } else {
             estadoluz = "OFF";
-            Serial.println("Luz Apagada");
           }
         }
 
-        //AGUA
+        //AGUA - FALTA HUMEDAD
         float rango =  (shumedad_max - shumedad_min) * 0.3;
         if (hsuelo < (shumedad_min + rango)){ 
           while (hsuelo < (shumedad_min + rango + rango) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
             digitalWrite(RELAY_AGUA, HIGH);
             tiempoDeRetardo -= 60000;
-            Serial.println(tiempoDeRetardo);
             //LCD
             lcd.clear();
             lcd.setCursor(0,0);
             lcd.print("Regando Cultivo");
+            lcd.setCursor(0,1);
+            lcd.print("Hum Suelo=" + String(hsuelo) + "%");
 
             http.begin(client, IngresarAcciones);
             http.addHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -260,7 +242,7 @@ void loop() {
             String accion = "id_placa=" + String(id_placa)+"&codigo=1001";
             //HACEMOS EL POST
             int httpResponseCode = http.POST(accion);
-            delay(60000); // Espera 55 segundos
+            delay(55000); // Espera 55 segundos
             if (httpResponseCode > 0) {
               Serial.print("Respuesta del servidor: ");
               Serial.println(httpResponseCode);
@@ -268,7 +250,9 @@ void loop() {
               //LCD
               lcd.clear();
               lcd.setCursor(0,0);
-              lcd.print("Accion registrada...");
+              lcd.print("Accion");
+              lcd.setCursor(0,1);
+              lcd.print("registrada...");
             } else {
               Serial.print("Error en la solicitud. Código de respuesta: ");
               Serial.println(httpResponseCode);
@@ -286,28 +270,170 @@ void loop() {
           digitalWrite(RELAY_AGUA, LOW); // Apaga el relé
         }
 
+        //FALTA TEMPERATURA
+        float rangoT =  (stem_max - stem_min) * 0.3;
+        if (temperatureC < (stem_min + rangoT)){ 
+          while (temperatureC < (stem_min + rangoT + rangoT) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
+            digitalWrite(RELAY_SUELO, HIGH);
+            tiempoDeRetardo -= 60000;
+            //LCD
+            lcd.clear();
+            lcd.setCursor(0,0);
+            lcd.print("Calentador ON");
+            lcd.setCursor(0,1);
+            lcd.print("Temp Suelo=" + String(temperatureC) + " C");
+
+            http.begin(client, IngresarAcciones);
+            http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            String accion = "id_placa=" + String(id_placa)+"&codigo=1002";
+            //HACEMOS EL POST
+            int httpResponseCode = http.POST(accion);
+            delay(55000); // Espera 55 segundos
+            if (httpResponseCode > 0) {
+              Serial.print("Respuesta del servidor: ");
+              Serial.println(httpResponseCode);
+
+              //LCD
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print("Accion");
+              lcd.setCursor(0,1);
+              lcd.print("registrada...");
+            } else {
+              Serial.print("Error en la solicitud. Código de respuesta: ");
+              Serial.println(httpResponseCode);
+              //LCD
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print("Error al mandar");
+              lcd.setCursor(0,1);
+              lcd.print("los datos...");
+            }
+            delay(5000); // Espera 5 segundos
+
+            rawValue = analogRead(lm35Pin);
+            temperatureC = (rawValue * 330) / 4095;
+          }
+          digitalWrite(RELAY_SUELO, LOW); // Apaga el relé
+        }
+
+        //SOBRA TEMP o CO2 MAX
+        float rangoG =  co2_max - co2_max * 0.3;
+        if ((temperatureC > (stem_max - rangoT) || gasValue > (co2_max - rangoG))){ 
+          while ((temperatureC > (stem_max - rangoT - rangoT) || gasValue > (co2_max - rangoG - rangoG)) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
+            digitalWrite(RELAY_VENT, HIGH);
+            tiempoDeRetardo -= 60000;
+            //LCD
+            lcd.clear();
+            lcd.setCursor(0,0);
+            lcd.print("Ventilacion ON");
+            lcd.setCursor(0,1);
+            lcd.print("T=" + String(temperatureC) + " C G=" + String(gasValue) + " PPM");
+
+            http.begin(client, IngresarAcciones);
+            http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            String accion = "id_placa=" + String(id_placa)+"&codigo=1003";
+            //HACEMOS EL POST
+            int httpResponseCode = http.POST(accion);
+            delay(55000); // Espera 55 segundos
+            if (httpResponseCode > 0) {
+              Serial.print("Respuesta del servidor: ");
+              Serial.println(httpResponseCode);
+
+              //LCD
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print("Accion");
+              lcd.setCursor(0,1);
+              lcd.print("registrada...");
+            } else {
+              Serial.print("Error en la solicitud. Código de respuesta: ");
+              Serial.println(httpResponseCode);
+              //LCD
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print("Error al mandar");
+              lcd.setCursor(0,1);
+              lcd.print("los datos...");
+            }
+            delay(5000); // Espera 5 segundos
+            rawValue = analogRead(lm35Pin);
+            temperatureC = (rawValue * 330) / 4095;
+            gasValue = analogRead(GAS_SENSOR_PIN);
+          }
+          digitalWrite(RELAY_VENT, LOW); // Apaga el relé
+        }
+
+        //SOBRA HUMEDAD
+        if (hsuelo > (shumedad_max - rango) && shumedad_max != 100){ 
+          while (hsuelo > (shumedad_max - rango - rango) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
+            digitalWrite(RELAY_VENT, HIGH);
+            digitalWrite(RELAY_SUELO, HIGH);
+            tiempoDeRetardo -= 60000;
+            //LCD
+            lcd.clear();
+            lcd.setCursor(0,0);
+            lcd.print("Exceso Humedad");
+            lcd.setCursor(0,1);
+            lcd.print("Hum Suelo=" + String(hsuelo) + "%");
+
+            http.begin(client, IngresarAcciones);
+            http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            String accion = "id_placa=" + String(id_placa)+"&codigo=1004";
+            //HACEMOS EL POST
+            int httpResponseCode = http.POST(accion);
+            delay(55000); // Espera 55 segundos
+            if (httpResponseCode > 0) {
+              Serial.print("Respuesta del servidor: ");
+              Serial.println(httpResponseCode);
+
+              //LCD
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print("Accion");
+              lcd.setCursor(0,1);
+              lcd.print("registrada...");
+            } else {
+              Serial.print("Error en la solicitud. Código de respuesta: ");
+              Serial.println(httpResponseCode);
+              //LCD
+              lcd.clear();
+              lcd.setCursor(0,0);
+              lcd.print("Error al mandar");
+              lcd.setCursor(0,1);
+              lcd.print("los datos...");
+            }
+            delay(5000); // Espera 5 segundos
+            soilMoisture = analogRead(SOIL_MOISTURE_SENSOR_PIN);
+            hsuelo = map(soilMoisture, SOIL_DRY_VALUE, SOIL_WET_VALUE, 0, 100);
+          }
+          digitalWrite(RELAY_VENT, LOW); // Apaga el relé
+          digitalWrite(RELAY_SUELO, LOW); // Apaga el relé
+        }
+
       }
 
-      //LCD
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("Activando rele...");
-      // Activa el relé durante 5 segundos
-      digitalWrite(RELAY_VENT, HIGH);
-      delay(1000); // Espera 5 segundos (5000 ms)
-      digitalWrite(RELAY_VENT, LOW); // Apaga el relé
-      // Activa el relé durante 5 segundos
-      digitalWrite(RELAY_SUELO, HIGH);
-      delay(1000); // Espera 5 segundos (5000 ms)
-      digitalWrite(RELAY_SUELO, LOW); // Apaga el relé
-
-      //LCD
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("T=" + String(temperature) + " H=" + String(humidity) + " ST=" + String(temperatureC));
-      lcd.setCursor(0, 1);
-      lcd.print("SH=" + String(hsuelo) + " L=" + String(estadoluz) + " C=" + String(gasValue) + " A=" + String(distance));
-
+      //MUESTRA LOS DATOS EN PANTALLA
+      while (tiempoDeRetardo > 5000) { //AQUI DEBE SER 5 SEC (5000)
+        tiempoDeRetardo -= 20000;
+        //LCD
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("T=" + String(temperature) + " C H=" + String(humidity) + "%");
+        lcd.setCursor(0, 1);
+        lcd.print("SH=" + String(hsuelo) + "% L=" + String(estadoluz));
+        delay(10000); // Espera 10 segundos (10000 ms)
+        //LCD
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("ST=" + String(temperatureC) + " C");
+        lcd.setCursor(0, 1);
+        lcd.print("G=" + String(gasValue) + " PPM A=" + String(distance) + " CM");
+        delay(10000); // Espera 10 segundos (10000 ms)
+      }
 
     } else {
       Serial.print("Error en la solicitud. Código de respuesta: ");

@@ -151,13 +151,13 @@
                     $descripcion = 'Se realizó un riego en el cultivo.';
                     break;
                 case 1002:
-                    $descripcion = 'Se realizó un riego en el cultivo.';
+                    $descripcion = 'Se activó el calentador del cultivo.';
                     break;
                 case 1003:
-                    $descripcion = 'Se realizó un riego en el cultivo.';
+                    $descripcion = 'Se encendió la ventilación del cultivo.';
                     break;
                 case 1004:
-                    $descripcion = 'Se realizó un riego en el cultivo.';
+                    $descripcion = 'Se accionó el calentador y la ventilación del cultivo.';
                     break;
             }
             $insert = $this->model->insertarAcciones($id_cultivo, $descripcion, $codigo);
