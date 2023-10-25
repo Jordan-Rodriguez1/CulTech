@@ -94,8 +94,8 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> Días de cultivo.</div>
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['dias']-$diasDiferencia;?> Días para el transplante</div>
                                 <br>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $diasDiferencia;?> CM de altura.</div>
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['altura']-$diasDiferencia;?> CM para el transplante</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $data3['altura'];?> CM de altura.</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Faltan <?= $data2['altura']-$data3['altura'];?> CM para el transplante</div>
                             </div>
                         </div>
                     </div>

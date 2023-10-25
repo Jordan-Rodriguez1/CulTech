@@ -79,7 +79,7 @@ function EnviarCorreo($correo, $nombre, $asunto, $cuerpo)
         $mail->Body = $cuerpo."<br><br>".'Mensaje generado automaticamente, favor de no responder.';
     
         // Agregar archivo adjunto
-        $mail->send();
+        //$mail->send();
 }
 
 function generarContrasenaAleatoria($longitud = 12) {

@@ -29,10 +29,12 @@ DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // CONSTANTES
-const char* WIFI_SSID = "MEGACABLE_2.4G_EBC8";
-const char* WIFI_PASSWORD = "J6T7e2M8J4T5D4Z7a2a2";
-const char* IngresarDatos = "http://192.168.1.5/CulTech/Esp/RegistroDatos";
-const char* IngresarAcciones = "http://192.168.1.5/CulTech/Esp/Acciones";
+//const char* WIFI_SSID = "MEGACABLE_2.4G_EBC8";
+//const char* WIFI_PASSWORD = "J6T7e2M8J4T5D4Z7a2a2";
+const char* WIFI_SSID = "Jordan";
+const char* WIFI_PASSWORD = "Inception11";
+const char* IngresarDatos = "http://192.168.200.222/CulTech/Esp/RegistroDatos";
+const char* IngresarAcciones = "http://192.168.200.222/CulTech/Esp/Acciones";
 //const char* IngresarDatos = "http://tesis.42web.io/Esp/RegistroDatos";
 //const char* IngresarAcciones = "http://tesis.42web.io/Esp/Acciones";
 const char* id_placa = "12345678";
