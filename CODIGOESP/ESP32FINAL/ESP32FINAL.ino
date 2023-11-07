@@ -226,7 +226,7 @@ void loop() {
         }
 
         //AGUA - FALTA HUMEDAD
-        float rango =  (shumedad_max - shumedad_min) * 0.3;
+        float rango =  (shumedad_max - shumedad_min) * 0.2;
         if (hsuelo < (shumedad_min + rango)){ 
           while (hsuelo < (shumedad_min + rango + rango) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
             digitalWrite(RELAY_AGUA, HIGH);
@@ -273,7 +273,7 @@ void loop() {
         }
 
         //FALTA TEMPERATURA
-        float rangoT =  (stem_max - stem_min) * 0.3;
+        float rangoT =  (stem_max - stem_min) * 0.2;
         if (temperatureC < (stem_min + rangoT)){ 
           while (temperatureC < (stem_min + rangoT + rangoT) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
             digitalWrite(RELAY_SUELO, HIGH);
@@ -321,7 +321,7 @@ void loop() {
         }
 
         //SOBRA TEMP o CO2 MAX
-        float rangoG =  co2_max - co2_max * 0.3;
+        float rangoG =  co2_max - co2_max * 0.2;
         if ((temperatureC > (stem_max - rangoT) || gasValue > (co2_max - rangoG))){ 
           while ((temperatureC > (stem_max - rangoT - rangoT) || gasValue > (co2_max - rangoG - rangoG)) && tiempoDeRetardo > 120000) { //AQUI DEBE SER 5 MIN (300000)-------------------------------------------------------------
             digitalWrite(RELAY_VENT, HIGH);
